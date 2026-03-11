@@ -1,0 +1,20 @@
+#include<R.h>
+#include"qual.h"
+#include"keyword.h"
+
+static struct keyword_enum_row qual_keyword_enum_table[] = {
+  {"jittered", JITTERED},
+  {"regression", REGRESSION},
+  {"unstacked", UNSTACKED}
+};
+
+static int qual_count = KEYWORD_COUNT(qual_keyword_enum_table);
+
+int valid_qual_str(char *qual_str) {
+  return valid_keyword_str(qual_str, qual_keyword_enum_table, qual_count);
+}
+
+enum qual qual_enum(char *qual_str) {
+  return (enum qual)enum_int(qual_str, qual_keyword_enum_table, qual_count);
+}
+

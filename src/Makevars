@@ -1,0 +1,6 @@
+OBJECTS = RcppExports.o sgl_to_rgs.o parser.tab.o scanner.o aes.o geom.o cta.o qual.o scale.o keyword.o
+
+all: $(SHLIB)
+
+parser.tab.o: parser.tab.c parser.tab.h
+scanner.o: scanner.c parser.tab.h
