@@ -1,0 +1,39 @@
+Package: rsgl
+Title: An Implementation of the SGL Graphics Language
+Version: 0.1.0
+Authors@R:
+    person(
+        "Jon", "Chapman", , "jochapjo@proton.me",
+        role = c("aut", "cre")
+    )
+Description: Parses and executes SGL (Structured Graphics Language) statements
+    against 'DuckDB' databases to produce 'ggplot2' visualizations. SGL is a
+    declarative language for generating statistical graphics from relational
+    data. See Chapman (2025) <doi:10.48550/arXiv.2505.14690> for the language
+    specification.
+License: MIT + file LICENSE
+URL: https://github.com/sgl-projects/rsgl
+BugReports: https://github.com/sgl-projects/rsgl/issues
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Suggests:
+    testthat (>= 3.0.0),
+    vdiffr,
+    lubridate,
+    knitr,
+    rmarkdown,
+    patrick,
+    tibble,
+    withr
+Config/testthat/edition: 3
+Imports:
+    DBI,
+    dplyr,
+    duckdb,
+    ggplot2,
+    purrr,
+    Rcpp
+LinkingTo:
+    Rcpp
+VignetteBuilder: knitr
