@@ -137,7 +137,7 @@ patrick::with_parameters_test_that(
       "mpg"
     )
   },
-  aes = c("x", "y", "theta", "r", "color", "size"),
+  aes = .all_aes,
   .test_name = aes
 )
 

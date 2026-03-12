@@ -22,10 +22,9 @@ is_cat_or_bin_mapping <- function(layer, df, aes) {
 #' @export
 valid_aesthetics.sgl_geom_box <- function(geom, layer, df) {
   valid_positional_aes(layer)
-  all_pos_aes_names <- c("x", "y", "theta", "r")
   aes_mappings <- layer$aes_mappings
-  pos_aes_names <- all_pos_aes_names[
-    all_pos_aes_names %in% names(aes_mappings)
+  pos_aes_names <- .pos_aes[
+    .pos_aes %in% names(aes_mappings)
   ]
   if (length(pos_aes_names) == 1) {
     if (is_cat_or_bin_mapping(layer, df, pos_aes_names)) {

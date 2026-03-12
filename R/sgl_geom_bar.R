@@ -24,7 +24,7 @@ is_cat_or_bin_mapping <- function(layer, df, aes) {
 valid_aesthetics.sgl_geom_bar <- function(geom, layer, df) {
   valid_positional_aes(layer)
   all_aes <- names(layer$aes_mappings)
-  pos_aes <- intersect(c("x", "y", "theta", "r"), all_aes)
+  pos_aes <- intersect(.pos_aes, all_aes)
   if (length(pos_aes) == 1) {
     if (is_cat_or_bin_mapping(layer, df, pos_aes)) {
       errmsg <- paste(

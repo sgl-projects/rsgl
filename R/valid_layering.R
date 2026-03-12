@@ -7,8 +7,7 @@ all_aesthetics <- function(rgs) {
 }
 
 valid_layering_for_aes <- function(rgs, dfs, aes) {
-  pos_aes <- c("x", "y", "theta", "r")
-  if (aes %in% pos_aes) {
+  if (aes %in% .pos_aes) {
     aes_in_layer <- sapply(
       rgs$layers,
       function(layer) aes %in% names(layer$aes_mappings)
