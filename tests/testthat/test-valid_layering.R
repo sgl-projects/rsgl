@@ -283,15 +283,14 @@ patrick::with_parameters_test_that(
       valid_layering(rgs, dfs)
     )
   },
-  coords = list(c("x", "y"), c("theta", "r")),
+  coords = list(.cart_aes, .polar_aes),
   .test_name = c("cartesian", "polar")
 )
 
 patrick::with_parameters_test_that(
   "error is raised if positional aesthetics are inconsistent across layers:",
   {
-    all_pos_aes <- c("x", "y", "theta", "r")
-    different_aes <- all_pos_aes[all_pos_aes != test_aes][1]
+    different_aes <- .pos_aes[.pos_aes != test_aes][1]
     sgl <- sprintf(
       "
 				visualize
@@ -325,6 +324,6 @@ patrick::with_parameters_test_that(
       fixed = TRUE
     )
   },
-  test_aes = c("x", "y", "theta", "r"),
+  test_aes = .pos_aes,
   .test_name = test_aes
 )

@@ -72,10 +72,9 @@ valid_collections.sgl_geom_line <- function(geom, layer, df) {
       stop(errmsg)
     }
   } else {
-    pos_aes <- c("x", "y", "theta", "r")
     aes_mappings <- layer$aes_mappings
     pos_mappings <- aes_mappings[
-      names(aes_mappings) %in% pos_aes
+      names(aes_mappings) %in% .pos_aes
     ]
     groupings <- layer$groupings
     positional_groupings <- groupings[
