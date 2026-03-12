@@ -9,6 +9,10 @@ Sync the rsgl package with the next unsynced commit from the sglref reference im
 - rsgl tracks sglref closely. Most files are 1:1 copies with the package name changed (`sglref` → `rsgl`).
 - The file `sglref-sync.txt` in the rsgl root contains the short hash of the last sglref commit that rsgl is synced to.
 
+## Flow
+
+Sync **one commit at a time**. After opening the PR, stop and wait for the user to review and merge it before syncing the next commit. Do not batch multiple commits or start the next sync unprompted.
+
 ## Instructions
 
 Use a **worktree agent** to perform all of the steps below.
