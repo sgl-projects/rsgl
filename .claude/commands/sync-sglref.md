@@ -11,7 +11,7 @@ Sync the rsgl package with the next unsynced commit from the sglref reference im
 
 ## Flow
 
-Sync **one commit at a time**. After opening the PR, stop and wait for the user to review and merge it before syncing the next commit. Do not batch multiple commits or start the next sync unprompted.
+Sync **one commit at a time**. After opening the PR, stop and wait for the user to review and merge it before syncing the next commit. Do not batch multiple commits or start the next sync unprompted. Once the user confirms the PR has been merged, perform cleanup (Step 7) before proceeding.
 
 ## Instructions
 
@@ -58,3 +58,11 @@ Run `R CMD build . && R CMD check --as-cran rsgl_*.tar.gz` from the rsgl directo
 Commit all changes with the original sglref commit message.
 
 Open a PR against `main` with the original sglref commit message as the title. The PR body should describe what changed.
+
+### Step 7: Cleanup
+
+Once the user confirms the PR has been merged:
+
+1. Pull latest main: `git pull`
+2. Remove any worktrees created during the sync: `git worktree remove <path>` (use `--force` if needed).
+3. Delete the local branch used for the PR: `git branch -D <branch>`.
