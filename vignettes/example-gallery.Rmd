@@ -1,0 +1,400 @@
+---
+title: "Example Gallery"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example Gallery}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 6,
+  fig.height = 4
+)
+```
+
+A collection of SGL examples organized by plot type. Each example is a
+self-contained SGL statement you can copy and adapt. For a full syntax
+reference, see `vignette("sgl-language-guide")`.
+
+```{r setup, include = FALSE}
+library(rsgl)
+library(duckdb)
+
+con <- dbConnect(duckdb())
+dbWriteTable(con, "cars", mtcars)
+dbWriteTable(con, "trees", as.data.frame(Orange))
+
+diamonds <- ggplot2::diamonds
+diamonds$cut <- as.character(diamonds$cut)
+diamonds$color <- as.character(diamonds$color)
+diamonds$clarity <- as.character(diamonds$clarity)
+dbWriteTable(con, "diamonds", diamonds)
+```
+
+## Scatterplots
+
+### Basic scatterplot
+
+```{r scatter-basic}
+dbGetPlot(con, "
+  visualize
+    hp as x,
+    mpg as y
+  from cars
+  using points
+")
+```
+
+### Colored by group
+
+```{r scatter-color}
+dbGetPlot(con, "
+  visualize
+    hp as x,
+    mpg as y,
+    cyl as color
+  from cars
+  using points
+")
+```
+
+### Sized by variable
+
+```{r scatter-size}
+dbGetPlot(con, "
+  visualize
+    hp as x,
+    mpg as y,
+    wt as size
+  from cars
+  using points
+")
+```
+
+### With regression line
+
+```{r scatter-regression}
+dbGetPlot(con, "
+  visualize
+    hp as x,
+    mpg as y
+  from cars
+  using (
+    points
+    layer
+    regression line
+  )
+")
+```
+
+### Jittered points
+
+```{r scatter-jittered}
+set.seed(42)
+dbGetPlot(con, "
+  visualize
+    cyl_cat as x,
+    mpg as y
+  from (
+    select mpg, cast(cyl as varchar) as cyl_cat
+    from cars
+  )
+  using jittered points
+")
+```
+
+### Filtered with SQL subquery
+
+```{r scatter-subquery}
+dbGetPlot(con, "
+  visualize
+    hp as x,
+    mpg as y,
+    cyl as color
+  from (
+    select
+      hp, mpg,
+      cyl::varchar as cyl
+    from cars
+    where cyl = 4 or cyl = 6
+  )
+  using points
+")
+```
+
+## Bar charts
+
+### Counts per category
+
+```{r bar-count}
+dbGetPlot(con, "
+  visualize
+    cut as x,
+    count(*) as y
+  from diamonds
+  group by
+    cut
+  using bars
+")
+```
+
+### Stacked bars
+
+```{r bar-stacked}
+dbGetPlot(con, "
+  visualize
+    cut as x,
+    count(*) as y,
+    color as color
+  from diamonds
+  group by
+    cut, color
+  using bars
+")
+```
+
+### Unstacked (dodged) bars
+
+```{r bar-unstacked}
+dbGetPlot(con, "
+  visualize
+    cut as x,
+    count(*) as y,
+    color as color
+  from diamonds
+  group by
+    cut, color
+  using unstacked bars
+")
+```
+
+## Histograms
+
+### Basic histogram
+
+```{r hist-basic}
+dbGetPlot(con, "
+  visualize
+    bin(mpg) as x,
+    count(*) as y
+  from cars
+  group by
+    bin(mpg)
+  using bars
+")
+```
+
+### Stacked histogram by group
+
+```{r hist-grouped}
+dbGetPlot(con, "
+  visualize
+    bin(mpg) as x,
+    count(*) as y,
+    cyl_cat as color
+  from (
+    select *, cast(cyl as varchar) as cyl_cat
+    from cars
+  )
+  group by
+    bin(mpg), cyl_cat
+  using bars
+")
+```
+
+## Line plots
+
+### Single line
+
+```{r line-single}
+dbGetPlot(con, "
+  visualize
+    age as x,
+    circumference as y
+  from trees
+  using line
+")
+```
+
+### Multiple lines with collect by
+
+```{r line-multiple}
+dbGetPlot(con, "
+  visualize
+    age as x,
+    circumference as y
+  from trees
+  collect by
+    Tree
+  using lines
+")
+```
+
+### Regression lines by group
+
+```{r line-regression-grouped}
+dbGetPlot(con, "
+  visualize
+    hp as x,
+    mpg as y,
+    cyl as color
+  from (
+    select hp, mpg, cyl::varchar as cyl
+    from cars
+  )
+  using regression lines
+")
+```
+
+## Box plots
+
+### Basic box plot
+
+```{r box-basic}
+dbGetPlot(con, "
+  visualize
+    cut as x,
+    price as y
+  from diamonds
+  using boxes
+")
+```
+
+## Pie charts
+
+A pie chart is a stacked bar chart in polar coordinates. Map a count to `theta`
+and a category to `color`:
+
+```{r pie}
+dbGetPlot(con, "
+  visualize
+    count(*) as theta,
+    cut as color
+  from diamonds
+  group by
+    cut
+  using bars
+")
+```
+
+## Faceted plots
+
+### Horizontal facets
+
+```{r facet-horizontal}
+dbGetPlot(con, "
+  visualize
+    hp as x,
+    mpg as y
+  from (
+    select *, cast(cyl as varchar) as cyl_cat
+    from cars
+  )
+  using points
+  facet by
+    cyl_cat
+")
+```
+
+### Vertical facets
+
+```{r facet-vertical}
+dbGetPlot(con, "
+  visualize
+    hp as x,
+    mpg as y
+  from (
+    select *, cast(cyl as varchar) as cyl_cat
+    from cars
+  )
+  using points
+  facet by
+    cyl_cat vertically
+")
+```
+
+### Facet grid
+
+```{r facet-grid}
+dbGetPlot(con, "
+  visualize
+    hp as x,
+    mpg as y
+  from (
+    select *,
+      cast(cyl as varchar) as cyl_cat,
+      cast(am as varchar) as am_cat
+    from cars
+  )
+  using points
+  facet by
+    cyl_cat,
+    am_cat
+")
+```
+
+## Log-scaled plots
+
+```{r log-scale}
+dbGetPlot(con, "
+  visualize
+    hp as x,
+    mpg as y
+  from cars
+  using (
+    points
+    layer
+    regression line
+  )
+  scale by
+    log(x),
+    log(y)
+")
+```
+
+## Multi-layer plots
+
+### Points and regression line
+
+```{r multi-layer-basic}
+dbGetPlot(con, "
+  visualize
+    hp as x,
+    mpg as y
+  from cars
+  using points
+
+  layer
+
+  visualize
+    hp as x,
+    mpg as y
+  from cars
+  using regression line
+")
+```
+
+### Custom titles
+
+```{r multi-with-titles}
+dbGetPlot(con, "
+  visualize
+    hp as x,
+    mpg as y,
+    cyl as color
+  from cars
+  using points
+  title
+    x as 'Horsepower',
+    y as 'Miles Per Gallon',
+    color as 'Cylinders'
+")
+```
+
+```{r cleanup, include = FALSE}
+DBI::dbDisconnect(con, shutdown = TRUE)
+```
