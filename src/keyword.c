@@ -2,7 +2,7 @@
 #include<R.h>
 #include"keyword.h"
 
-int valid_keyword_str(char *keyword_str, struct keyword_enum_row *keyword_enum_table, int keyword_count) {
+int valid_keyword_str(const char *keyword_str, struct keyword_enum_row *keyword_enum_table, int keyword_count) {
   if (!keyword_str) return 0;
 
 	for(int i=0; i<keyword_count; i++) {
@@ -14,7 +14,7 @@ int valid_keyword_str(char *keyword_str, struct keyword_enum_row *keyword_enum_t
   return 0;
 }
 
-int enum_int(char *keyword_str, struct keyword_enum_row *keyword_enum_table, int keyword_count) {
+int enum_int(const char *keyword_str, struct keyword_enum_row *keyword_enum_table, int keyword_count) {
   struct keyword_enum_row current_row;
   for(int i=0; i<keyword_count; i++) {
     current_row = keyword_enum_table[i];

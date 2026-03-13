@@ -10,11 +10,11 @@ static struct keyword_enum_row qual_keyword_enum_table[] = {
 
 static int qual_count = KEYWORD_COUNT(qual_keyword_enum_table);
 
-int valid_qual_str(char *qual_str) {
+int valid_qual_str(const char *qual_str) {
   return valid_keyword_str(qual_str, qual_keyword_enum_table, qual_count);
 }
 
-enum qual qual_enum(char *qual_str) {
+enum qual qual_enum(const char *qual_str) {
   return (enum qual)enum_int(qual_str, qual_keyword_enum_table, qual_count);
 }
 

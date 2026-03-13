@@ -7,8 +7,8 @@ enum cta {
 	COUNT
 };
 
-int valid_cta_str(char *cta_str);
+int valid_cta_str(const char *cta_str);
 
-enum cta cta_enum(char *cta_str);
+enum cta cta_enum(const char *cta_str);
 
 #endif
