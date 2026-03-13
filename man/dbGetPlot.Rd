@@ -7,28 +7,67 @@
 dbGetPlot(con, sgl_stmt)
 }
 \arguments{
-\item{con}{A duckdb connection}
+\item{con}{A DuckDB connection created with \code{\link[DBI:dbConnect]{DBI::dbConnect()}}}
 
-\item{sgl_stmt}{A SGL statement that defines the plot}
+\item{sgl_stmt}{A SGL statement string that defines the plot}
 }
 \value{
-The plot defined by the SGL statement (a ggplot2 plot object)
+A ggplot2 plot object
 }
 \description{
-\code{dbGetPlot} takes a duckdb connection and a SGL statement
+\code{dbGetPlot} takes a DuckDB connection and a SGL statement
 and returns the plot defined by the SGL statement.
+}
+\details{
+The SGL statement is parsed into an internal graphics structure, the
+referenced data is queried from DuckDB, semantic validation is performed,
+any column-level transformations and aggregations are applied, and the
+result is converted to a ggplot2 plot object.
+
+SGL statements support the following clauses: \code{visualize} (aesthetic
+mappings), \code{from} (data source or SQL subquery), \code{using} (geom type),
+\verb{group by}, \verb{collect by}, \verb{scale by}, \verb{facet by}, \code{title}, and the
+\code{layer} operator for combining multiple layers.
 }
 \examples{
 library(duckdb)
 con <- dbConnect(duckdb())
 dbWriteTable(con, "cars", mtcars)
-p <- dbGetPlot(con, "
+
+# Scatterplot
+dbGetPlot(con, "
   visualize
     hp as x,
     mpg as y
   from cars
   using points
 ")
-print(p)
 
+# Histogram
+dbGetPlot(con, "
+  visualize
+    bin(mpg) as x,
+    count(*) as y
+  from cars
+  group by
+    bin(mpg)
+  using bars
+")
+
+# Scatterplot with regression line overlay
+dbGetPlot(con, "
+  visualize
+    hp as x,
+    mpg as y
+  from cars
+  using (
+    points
+    layer
+    regression line
+  )
+")
+
+}
+\seealso{
+\code{vignette("sgl-language-guide")} for the full SGL syntax reference.
 }
