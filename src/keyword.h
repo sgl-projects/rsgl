@@ -9,13 +9,13 @@ struct keyword_enum_row {
 };
 
 int valid_keyword_str(
-	char *keyword_str,
+	const char *keyword_str,
 	struct keyword_enum_row *keyword_enum_table,
 	int keyword_count
 );
 
 int enum_int(
-	char *keyword_str,
+	const char *keyword_str,
 	struct keyword_enum_row *keyword_enum_table,
 	int keyword_count
 );

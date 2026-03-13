@@ -8,8 +8,8 @@ enum geom {
 	BOX
 };
 
-int valid_geom_str(char *geom_str);
+int valid_geom_str(const char *geom_str);
 
-enum geom geom_enum(char *geom_str);
+enum geom geom_enum(const char *geom_str);
 
 #endif

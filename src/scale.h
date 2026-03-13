@@ -6,8 +6,8 @@ enum scale {
 	LOG
 };
 
-int valid_scale_str(char *scale_str);
+int valid_scale_str(const char *scale_str);
 
-enum scale scale_enum(char *scale_str);
+enum scale scale_enum(const char *scale_str);
 
 #endif

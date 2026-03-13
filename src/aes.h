@@ -10,8 +10,8 @@ enum aes {
 	SIZE
 };
 
-int valid_aes_str(char *aes_str);
+int valid_aes_str(const char *aes_str);
 
-enum aes aes_enum(char *aes_str);
+enum aes aes_enum(const char *aes_str);
 
 #endif
