@@ -12,11 +12,12 @@ column_exists <- function(col_exprs, df) {
 
 raise_if_col_missing <- function(col_exprs, df) {
   exists_results <- column_exists(col_exprs, df)
-  if (!all(exists_results)) {
-    unformatted_msg <- "Error: referenced column '%s' not found"
-    missing_col_index <- which(!exists_results)[1]
-    missing_col_name <- names(exists_results)[missing_col_index]
-    errmsg <- sprintf(unformatted_msg, missing_col_name)
+  missing_col_names <- names(exists_results)[!exists_results]
+  if (length(missing_col_names) > 0) {
+    errmsg <- sprintf(
+      "Error: referenced column '%s' not found",
+      missing_col_names[1]
+    )
     stop(errmsg)
   }
 }
