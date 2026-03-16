@@ -19,7 +19,7 @@ language for generating statistical graphics from relational data.
 }
 }
 \author{
-\strong{Maintainer}: Jon Chapman \email{jochapjo@proton.me}
+\strong{Maintainer}: Jon Chapman \email{jochapjo@icloud.com}
 
 }
 \keyword{internal}
