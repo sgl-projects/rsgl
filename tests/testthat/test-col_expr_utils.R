@@ -1,70 +1,31 @@
-test_that("col_expr_has_cta returns true for bin tran with bin arg", {
-  col_expr <- list(
-    column = "col_1",
-    cta = new_sgl_cta_bin()
+col_expr_has_cta_cases <- function() {
+  tibble::tribble(
+    ~.test_name, ~col_expr_cta, ~fn_arg_cta_name, ~expected_result,
+    "id expr has id", new_sgl_cta_identity(), "identity", TRUE,
+    "bin expr does not have id", new_sgl_cta_bin(), "identity", FALSE,
+    "count expr does not id", new_sgl_cta_count(), "identity", FALSE,
+    "id expr does not have bin", new_sgl_cta_identity(), "bin", FALSE,
+    "bin expr has bin", new_sgl_cta_bin(), "bin", TRUE,
+    "count expr does not have bin", new_sgl_cta_count(), "bin", FALSE,
+    "id expr does not have count", new_sgl_cta_identity(), "count", FALSE,
+    "bin expr does not have count", new_sgl_cta_bin(), "count", FALSE,
+    "count expr has count", new_sgl_cta_count(), "count", TRUE
   )
-
-  expect_true(
-    col_expr_has_cta(col_expr, "bin")
-  )
-})
-
-test_that("col_expr_has_cta returns false for non-bin tran with bin arg", {
-  col_expr <- list(
-    column = "col_1",
-    cta = new_sgl_cta_identity()
-  )
-
-  expect_false(
-    col_expr_has_cta(col_expr, "bin")
-  )
-})
-
-test_that("col_expr_has_cta returns true for count tran with count arg", {
-  col_expr <- list(
-    column = "col_1",
-    cta = new_sgl_cta_count()
-  )
-
-  expect_true(
-    col_expr_has_cta(col_expr, "count")
-  )
-})
-
-test_that("col_expr_has_cta returns false for non-count tran with count arg", {
-  col_expr <- list(
-    column = "col_1",
-    cta = new_sgl_cta_identity()
-  )
-
-  expect_false(
-    col_expr_has_cta(col_expr, "count")
-  )
-})
-
-test_that("col_expr_has_cta returns true for identity tran with identity arg", {
-  col_expr <- list(
-    column = "col_1",
-    cta = new_sgl_cta_identity()
-  )
-
-  expect_true(
-    col_expr_has_cta(col_expr, "identity")
-  )
-})
-
-test_that(
-  "col_expr_has_cta returns false for non-identity tran with identity arg",
+}
+patrick::with_parameters_test_that(
+  "col_expr_has_cta:",
   {
     col_expr <- list(
       column = "col_1",
-      cta = new_sgl_cta_count()
+      cta = col_expr_cta
     )
 
-    expect_false(
-      col_expr_has_cta(col_expr, "identity")
+    expect_equal(
+      col_expr_has_cta(col_expr, fn_arg_cta_name),
+      expected_result
     )
-  }
+  },
+  .cases = col_expr_has_cta_cases()
 )
 
 test_that("col_expr_has_cta raises error for invalid cta_name arg", {
