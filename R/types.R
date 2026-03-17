@@ -8,6 +8,7 @@ rsgl_types <- function(class) {
     "LOGICAL", # BOOLEAN alias
     "DATE",
     "DECIMAL",
+    "TEST_ENUM",
     "NUMERIC", # DECIMAL alias
     "DOUBLE",
     "FLOAT8", # DOUBLE alias
@@ -47,8 +48,10 @@ rsgl_types <- function(class) {
   }
 
   con <- DBI::dbConnect(duckdb::duckdb())
-  test_stmt <- create_tbl_stmt_for_type_test(all_types)
-  DBI::dbExecute(con, test_stmt)
+  enum_type_stmt <- create_enum_stmt_for_type_test()
+  DBI::dbExecute(con, enum_type_stmt)
+  tbl_stmt <- create_tbl_stmt_for_type_test(all_types)
+  DBI::dbExecute(con, tbl_stmt)
   df <- DBI::dbGetQuery(con, "select * from type_test")
   class_check_fn_list <- list(
     "numerical" = is_numerical_col,
@@ -66,6 +69,10 @@ rsgl_types <- function(class) {
   types_in_class
 }
 
+create_enum_stmt_for_type_test <- function() {
+  "create type TEST_ENUM as ENUM ('test')"
+}
+
 create_tbl_stmt_for_type_test <- function(types) {
   column_defs <- paste0("\t\"COL_", types, "\" ", types, collapse = ",\n")
   paste0("create table type_test (\n", column_defs, "\n)")
@@ -73,8 +80,10 @@ create_tbl_stmt_for_type_test <- function(types) {
 
 valid_duckdb_types <- function(types) {
   con <- DBI::dbConnect(duckdb::duckdb())
-  test_stmt <- create_tbl_stmt_for_type_test(types)
-  DBI::dbExecute(con, test_stmt)
+  enum_type_stmt <- create_enum_stmt_for_type_test()
+  DBI::dbExecute(con, enum_type_stmt)
+  tbl_stmt <- create_tbl_stmt_for_type_test(types)
+  DBI::dbExecute(con, tbl_stmt)
 }
 
 types_are_supported_by_duckdb <- function() {
@@ -84,8 +93,10 @@ types_are_supported_by_duckdb <- function() {
 map_rsgl_types_to_r_classes <- function() {
   map <- list()
   con <- DBI::dbConnect(duckdb::duckdb())
-  test_stmt <- create_tbl_stmt_for_type_test(rsgl_types())
-  DBI::dbExecute(con, test_stmt)
+  enum_type_stmt <- create_enum_stmt_for_type_test()
+  DBI::dbExecute(con, enum_type_stmt)
+  tbl_stmt <- create_tbl_stmt_for_type_test(rsgl_types())
+  DBI::dbExecute(con, tbl_stmt)
   df <- DBI::dbGetQuery(con, "select * from type_test")
   for (col_name in colnames(df)) {
     duckdb_type <- substring(col_name, 5)
@@ -101,7 +112,7 @@ is_numerical_col <- function(col) {
 }
 
 is_categorical_col <- function(col) {
-  categorical_classes <- c("logical", "character")
+  categorical_classes <- c("logical", "character", "factor")
   class(col)[1] %in% categorical_classes
 }
 

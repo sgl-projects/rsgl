@@ -15,11 +15,6 @@ create_con_and_load_data <- function() {
       boolean = c(rep(TRUE, 3), rep(FALSE, 3))
     )
   )
-  diamonds <- ggplot2::diamonds
-  categorical_cols <- c("cut", "color", "clarity")
-  for (col in categorical_cols) {
-    diamonds[[col]] <- as.character(diamonds[[col]])
-  }
-  DBI::dbWriteTable(con, "diamonds", diamonds)
+  DBI::dbWriteTable(con, "diamonds", ggplot2::diamonds)
   con
 }
