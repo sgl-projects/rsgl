@@ -6,7 +6,8 @@ df_with_supported_r_classes <- function() {
     integer_col = 1L,
     difftime_col = lubridate::make_difftime(1),
     POSIXct_col = as.POSIXct("2025-01-01 00:00:00"),
-    character_col = "1"
+    character_col = "1",
+    factor_col = as.factor("a")
   )
 
   stopifnot(
@@ -16,7 +17,8 @@ df_with_supported_r_classes <- function() {
     class(df$integer_col) == "integer",
     class(df$difftime_col) == "difftime",
     class(df$POSIXct_col)[1] == "POSIXct",
-    class(df$character_col) == "character"
+    class(df$character_col) == "character",
+    class(df$factor_col) == "factor"
   )
 
   df
@@ -72,6 +74,7 @@ test_that("rsgl types map to R classes as expected", {
     ),
     logical = c("BOOLEAN", "BOOL", "LOGICAL"),
     Date = c("DATE"),
+    factor = c("TEST_ENUM"),
     integer = c(
       "INTEGER", "INT4", "INT", "SIGNED",
       "SMALLINT", "INT2", "SHORT",
@@ -102,6 +105,7 @@ test_that("is_numerical_col determines whether column is numerical", {
   expect_equal(is_numerical_col(df$difftime_col), TRUE)
   expect_equal(is_numerical_col(df$POSIXct_col), FALSE)
   expect_equal(is_numerical_col(df$character_col), FALSE)
+  expect_equal(is_numerical_col(df$factor_col), FALSE)
 })
 
 test_that("is_categorical_col determines whether column is categorical", {
@@ -114,6 +118,7 @@ test_that("is_categorical_col determines whether column is categorical", {
   expect_equal(is_categorical_col(df$difftime_col), FALSE)
   expect_equal(is_categorical_col(df$POSIXct_col), FALSE)
   expect_equal(is_categorical_col(df$character_col), TRUE)
+  expect_equal(is_categorical_col(df$factor_col), TRUE)
 })
 
 test_that("is_temporal_col determines whether column is temporal", {
@@ -126,6 +131,7 @@ test_that("is_temporal_col determines whether column is temporal", {
   expect_equal(is_temporal_col(df$difftime_col), FALSE)
   expect_equal(is_temporal_col(df$POSIXct_col), TRUE)
   expect_equal(is_temporal_col(df$character_col), FALSE)
+  expect_equal(is_temporal_col(df$factor_col), FALSE)
 })
 
 test_that(
@@ -142,6 +148,7 @@ test_that(
       "LOGICAL",
       "DATE",
       "DECIMAL",
+      "TEST_ENUM",
       "NUMERIC",
       "DOUBLE",
       "FLOAT8",
@@ -224,6 +231,7 @@ test_that("rsgl_types returns all categorical types", {
     "BOOLEAN",
     "BOOL",
     "LOGICAL",
+    "TEST_ENUM",
     "UUID",
     "VARCHAR",
     "CHAR",
