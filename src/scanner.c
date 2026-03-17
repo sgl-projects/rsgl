@@ -1988,7 +1988,7 @@ void yyfree (void * ptr )
 #line 96 "src/scanner.l"
 
 
-void set_scanner_input(char *input_string) {
+void set_scanner_input(const char *input_string) {
 	yy_scan_string(input_string);
 }
 

@@ -82,7 +82,7 @@
 #include "scale.h"
 #include "direction.h"
 
-void set_scanner_input(char *input_string);
+void set_scanner_input(const char *input_string);
 void delete_scanner_buffer(void);
 void reset_scanner_state(void);
 
@@ -1692,7 +1692,7 @@ yyreturnlab:
 #line 310 "src/parser.y"
 
 
-void sgl_to_cgs(char *sgl_stmt, struct cgs *cgs, char **errmsg) {
+void sgl_to_cgs(const char *sgl_stmt, struct cgs *cgs, char **errmsg) {
 	set_scanner_input(sgl_stmt);
 	int parse_result = yyparse(cgs, errmsg);
 	delete_scanner_buffer();

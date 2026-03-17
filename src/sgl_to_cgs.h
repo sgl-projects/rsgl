@@ -3,6 +3,6 @@
 
 #include"cgs.h"
 
-void sgl_to_cgs(char *sgl_stmt, struct cgs *cgs, char **errmsg);
+void sgl_to_cgs(const char *sgl_stmt, struct cgs *cgs, char **errmsg);
 
 #endif
