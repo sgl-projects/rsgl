@@ -28,8 +28,18 @@ add_trans_cols_from_col_exprs <- function(col_exprs, df) {
 }
 
 perform_cts_for_layer <- function(layer, df, scales) {
-  df <- add_trans_cols_from_aes(layer$aes_mappings, df, scales)
-  df <- add_trans_cols_from_col_exprs(layer$groupings, df)
-  df <- add_trans_cols_from_col_exprs(layer$collections, df)
+  aes_mappings <- layer$aes_mappings
+  groupings <- layer$groupings
+  collections <- layer$collections
+  df <- add_trans_cols_from_aes(aes_mappings, df, scales)
+  additional_group_cols <- groupings[
+    !(groupings %in% aes_mappings)
+  ]
+  df <- add_trans_cols_from_col_exprs(additional_group_cols, df)
+  additional_collect_cols <- collections[
+    !(collections %in% aes_mappings) &
+      !(collections %in% groupings)
+  ]
+  df <- add_trans_cols_from_col_exprs(additional_collect_cols, df)
   df
 }
