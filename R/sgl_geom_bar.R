@@ -12,14 +12,6 @@ ggplot_geom.sgl_geom_bar <- function(geom) {
   ggplot2::geom_bar
 }
 
-is_cat_or_bin_mapping <- function(layer, df, aes) {
-  if (is_categorical_mapping(layer, df, aes) || is_binned_mapping(layer, aes)) {
-    TRUE
-  } else {
-    FALSE
-  }
-}
-
 #' @export
 valid_aesthetics.sgl_geom_bar <- function(geom, layer, df) {
   valid_positional_aes(layer)
