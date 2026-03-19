@@ -12,13 +12,6 @@ is_collective.sgl_geom_box <- function(geom) {
   TRUE
 }
 
-is_cat_or_bin_mapping <- function(layer, df, aes) {
-  if (is_categorical_mapping(layer, df, aes) || is_binned_mapping(layer, aes)) {
-    return(TRUE)
-  }
-  FALSE
-}
-
 #' @export
 valid_aesthetics.sgl_geom_box <- function(geom, layer, df) {
   valid_positional_aes(layer)

@@ -17,17 +17,6 @@ ggplot_geom.sgl_geom_line <- function(geom) {
   ggplot2::geom_line
 }
 
-is_cat_or_bin_mapping <- function(layer, df, aes) {
-  if (
-    is_categorical_mapping(layer, df, aes) ||
-      is_binned_mapping(layer, aes)
-  ) {
-    TRUE
-  } else {
-    FALSE
-  }
-}
-
 #' @export
 ggplot_aes.sgl_geom_line <- function(geom, layer, df, scales) {
   ggplot_aes <- NextMethod()
