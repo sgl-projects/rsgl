@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 This guide covers the full syntax of SGL (Structured Graphics Language) as
 implemented in rsgl. For the formal language specification, see
-[Chapman (2025)](https://doi.org/10.48550/arXiv.2505.14690).
+[Chapman (2025)](https://arxiv.org/pdf/2505.14690).
 
 ## Setup
 
