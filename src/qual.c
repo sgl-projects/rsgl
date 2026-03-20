@@ -1,4 +1,3 @@
-#include<R.h>
 #include"qual.h"
 #include"keyword.h"
 

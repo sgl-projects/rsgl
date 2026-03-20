@@ -1,4 +1,3 @@
-#include<R.h>
 #include"scale.h"
 #include"keyword.h"
 
