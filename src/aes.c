@@ -1,4 +1,3 @@
-#include<R.h>
 #include"aes.h"
 #include"keyword.h"
 

@@ -1,4 +1,3 @@
-#include<R.h>
 #include"geom.h"
 #include"keyword.h"
 
