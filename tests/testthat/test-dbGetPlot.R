@@ -474,6 +474,22 @@ test_that("generates faceted scatterplot", {
   vdiffr::expect_doppelganger("faceted scatterplot", p)
 })
 
+test_that("generates plot faceted on non-categorical column", {
+  sgl_stmt <- "
+		visualize
+			hp as x,
+			mpg as y
+		from cars
+		using points
+		facet by
+			cyl
+  "
+
+  p <- dbGetPlot(test_con, sgl_stmt)
+
+  vdiffr::expect_doppelganger("non-categorical facet", p)
+})
+
 test_that("generates plot with explicit titles", {
   sgl_stmt <- "
 		visualize
