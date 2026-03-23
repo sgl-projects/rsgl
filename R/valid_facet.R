@@ -7,15 +7,23 @@ in_at_least_one_data_source <- function(col_name, dfs) {
   FALSE
 }
 
-categorical_in_all_layers <- function(col_name, dfs) {
-  for (df in dfs) {
-    if (col_name %in% colnames(df)) {
-      if (!is_categorical_col(df[[col_name]])) {
-        return(FALSE)
-      }
-    }
+col_type <- function(col_name, df) {
+  if (!(col_name %in% names(df))) {
+    return(character(0))
   }
-  TRUE
+  col <- df[[col_name]]
+  if (is_categorical_col(col)) {
+    return("categorical")
+  }
+  if (is_numerical_col(col)) {
+    return("numerical")
+  }
+  if (is_temporal_col(col)) {
+    "temporal"
+  }
+}
+all_types <- function(col_name, dfs) {
+  unique(unlist(sapply(dfs, function(df) col_type(col_name, df))))
 }
 
 valid_facet <- function(rgs, dfs) {
@@ -51,17 +59,16 @@ valid_facet <- function(rgs, dfs) {
     )
     stop(errmsg)
   }
-  cols_are_categorical <- sapply(
-    facet_col_names,
-    function(col_name) categorical_in_all_layers(col_name, dfs)
-  )
-  non_categorical_cols <- facet_col_names[!cols_are_categorical]
-  if (length(non_categorical_cols) > 0) {
-    unformatted_msg <- paste(
-      "Error: facet column '%s' is not categorical in at least one layer.",
-      "Facet columns must be categorical type."
-    )
-    errmsg <- sprintf(unformatted_msg, non_categorical_cols[1])
-    stop(errmsg)
+  for (facet_col in facet_col_names) {
+    facet_col_types <- all_types(facet_col, dfs)
+    if (length(facet_col_types) > 1) {
+      unformatted_msg <- paste(
+        "Error: facet column '%s' does not have a consistent type",
+        "(categorical, numerical, or temporal) across",
+        "all layers where it is present."
+      )
+      errmsg <- sprintf(unformatted_msg, facet_col)
+      stop(errmsg)
+    }
   }
 }

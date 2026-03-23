@@ -230,17 +230,15 @@ test_that("raises error for invalid faceting", {
     from cars
     using points
 		facet by
-			cyl
+			cyl,
+			vs,
+			am
   ")
   dfs <- result_dfs(rgs, test_con)
 
-  expected_msg <- paste(
-    "Error: facet column 'cyl' is not categorical in at least",
-    "one layer. Facet columns must be categorical type."
-  )
   expect_error(
     validate_semantics(rgs, dfs),
-    expected_msg,
+    "Error: cannot have more than two facets.",
     fixed = TRUE
   )
 })

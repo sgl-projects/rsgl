@@ -155,52 +155,38 @@ test_that("raises error for faceting on a column that doesn't exist", {
   )
 })
 
-
-test_that("raises error for faceting on a numerical column", {
-  rgs <- sgl_to_rgs("
-    visualize
-      letter as x,
-      day as y
-    from synth
-    using points
-		facet by
-			number
-  ")
-  dfs <- result_dfs(rgs, test_con)
-
-  expected_msg <- paste(
-    "Error: facet column 'number' is not categorical in at least",
-    "one layer. Facet columns must be categorical type."
+facet_type_cases <- function() {
+  tibble::tribble(
+    ~.test_name, ~column_name,
+    "numerical", "number",
+    "temporal", "day_and_time",
+    "categorical", "boolean",
   )
-  expect_error(
-    valid_facet(rgs, dfs),
-    expected_msg,
-    fixed = TRUE
-  )
-})
+}
+patrick::with_parameters_test_that(
+  "doesn't raise error due to facet column type:",
+  {
+    sgl <- sprintf(
+      "
+        visualize
+        	letter as x,
+					day as y
+        from synth
+        using points
+				facet by
+					%s
+      ",
+      column_name
+    )
+    rgs <- sgl_to_rgs(sgl)
+    dfs <- result_dfs(rgs, test_con)
 
-test_that("raises error for faceting on a temporal column", {
-  rgs <- sgl_to_rgs("
-    visualize
-      letter as x,
-      number as y
-    from synth
-    using points
-		facet by
-			day
-  ")
-  dfs <- result_dfs(rgs, test_con)
-
-  expected_msg <- paste(
-    "Error: facet column 'day' is not categorical in at least",
-    "one layer. Facet columns must be categorical type."
-  )
-  expect_error(
-    valid_facet(rgs, dfs),
-    expected_msg,
-    fixed = TRUE
-  )
-})
+    expect_no_error(
+      valid_facet(rgs, dfs)
+    )
+  },
+  .cases = facet_type_cases()
+)
 
 test_that("raises error for two horizontal facets", {
   rgs <- sgl_to_rgs("
@@ -268,71 +254,106 @@ test_that("raises error for more than two facets", {
   )
 })
 
-test_that("doesn't raise error for valid faceting with multiple layers", {
-  rgs <- sgl_to_rgs("
-    visualize
-      day as x,
-      number as y
-    from synth
-		using points
-
-		layer
-
-		visualize
-			day as x,
-			number as y
-		from synth
-		using line
-
-		facet by
-			boolean
-  ")
-  dfs <- result_dfs(rgs, test_con)
-
-  expect_no_error(
-    valid_facet(rgs, dfs)
+valid_multiple_layer_cases <- function() {
+  tibble::tribble(
+    ~.test_name, ~column_name,
+    "numerical", "number",
+    "temporal", "day_and_time",
+    "categorical", "boolean",
   )
-})
-
-test_that(
-  "raises error when facet column is non-categorical in at least one layer",
+}
+patrick::with_parameters_test_that(
+  "doesn't raise error for valid faceting with multiple layers:",
   {
-    rgs <- sgl_to_rgs("
-			visualize
-				letter as x,
-				day as y
-			from (
-				select
-					letter,
-					day,
-					cast(number as varchar) as number
+    sgl <- sprintf(
+      "
+				visualize
+					letter as x,
+					day as y
 				from synth
-			)
-			using points
+				using points
 
-			layer
+				layer
 
-			visualize
-				letter as x,
-				day as y
-			from synth
-			using points
+				visualize
+					letter as x,
+					day as y
+				from synth
+				using line
 
-			facet by
-				number
-		")
+				facet by
+					%s
+			",
+      column_name
+    )
+    rgs <- sgl_to_rgs(sgl)
+    dfs <- result_dfs(rgs, test_con)
+
+    expect_no_error(
+      valid_facet(rgs, dfs)
+    )
+  },
+  .cases = valid_multiple_layer_cases()
+)
+
+inconsistent_type_cases <- function() {
+  tibble::tribble(
+    ~.test_name, ~first_col, ~second_col,
+    "num and tmp", "number", "day_and_time",
+    "num and cat", "number", "boolean",
+    "tmp and cat", "day_and_time", "boolean"
+  )
+}
+patrick::with_parameters_test_that(
+  "raises error when facet column has inconsistent type across layers:",
+  {
+    sgl <- sprintf(
+      "
+				visualize
+					letter as x,
+					day as y
+				from (
+					select
+						*,
+						%s as facet_col
+					from synth
+				)
+				using points
+
+				layer
+
+				visualize
+					letter as x,
+					day as y
+				from (
+					select
+						*,
+						%s as facet_col
+					from synth
+				)
+				using points
+
+				facet by
+					facet_col
+			",
+      first_col,
+      second_col
+    )
+    rgs <- sgl_to_rgs(sgl)
     dfs <- result_dfs(rgs, test_con)
 
     expected_msg <- paste(
-      "Error: facet column 'number' is not categorical in at least",
-      "one layer. Facet columns must be categorical type."
+      "Error: facet column 'facet_col' does not have a",
+      "consistent type (categorical, numerical, or temporal)",
+      "across all layers where it is present."
     )
     expect_error(
       valid_facet(rgs, dfs),
       expected_msg,
       fixed = TRUE
     )
-  }
+  },
+  .cases = inconsistent_type_cases()
 )
 
 test_that("raises error for invalid faceting with multiple layers", {
