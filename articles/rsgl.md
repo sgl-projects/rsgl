@@ -4,10 +4,10 @@
 
 SGL (Structured Graphics Language) is a declarative language for
 generating statistical graphics from relational data. It is designed to
-feel like SQL — if you can write a `SELECT` statement, you can write an
+feel like SQL — if you can write a `SELECT` statement, you can write a
 SGL statement.
 
-rsgl implements SGL as an R package. You pass an SGL statement and a
+rsgl implements SGL as an R package. You pass a SGL statement and a
 DuckDB connection to
 [`dbGetPlot()`](https://sgl-projects.github.io/rsgl/reference/dbGetPlot.md),
 and it returns a ggplot2 plot object.
@@ -38,7 +38,7 @@ The `cars` table now contains the `mtcars` dataset with columns like
 
 ## Your first plot
 
-An SGL statement has three required parts:
+A SGL statement has three required parts:
 
 - **`visualize`** — maps columns to visual properties (aesthetics)
 - **`from`** — specifies the data source

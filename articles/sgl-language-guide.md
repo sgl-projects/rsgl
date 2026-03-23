@@ -8,7 +8,7 @@ as implemented in rsgl. For the formal language specification, see
 
 All examples use
 [`dbGetPlot()`](https://sgl-projects.github.io/rsgl/reference/dbGetPlot.md),
-which takes a DuckDB connection and an SGL statement. We’ll load some
+which takes a DuckDB connection and a SGL statement. We’ll load some
 datasets into an in-memory DuckDB database to work with.
 
 ``` r
@@ -29,7 +29,7 @@ dbWriteTable(con, "diamonds", diamonds)
 
 ## Statement structure
 
-An SGL statement is built from clauses. A minimal statement has three:
+A SGL statement is built from clauses. A minimal statement has three:
 `visualize`, `from`, and `using`. Additional clauses control grouping,
 scaling, faceting, and titles. The statement ends with a semicolon
 (optional when passed as a string to

@@ -93,7 +93,7 @@ document.
 ### 4. “Example Gallery” vignette
 
 A visual cookbook organized by what users want to create, not by
-language feature. Each entry is an SGL statement and its rendered plot,
+language feature. Each entry is a SGL statement and its rendered plot,
 with minimal explanation. Categories:
 
 - **Scatterplots** — basic, colored by group, with regression line

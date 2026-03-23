@@ -73,7 +73,7 @@ see <a href="https://arxiv.org/pdf/2505.14690" class="external-link">Chapman (20
 <h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
 </h2>
 <p>All examples use <code><a href="../reference/dbGetPlot.html">dbGetPlot()</a></code>, which takes a DuckDB
-connection and an SGL statement. We’ll load some datasets into an
+connection and a SGL statement. We’ll load some datasets into an
 in-memory DuckDB database to work with.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sgl-projects.github.io/rsgl/">rsgl</a></span><span class="op">)</span></span>
@@ -93,11 +93,11 @@ in-memory DuckDB database to work with.</p>
 <div class="section level2">
 <h2 id="statement-structure">Statement structure<a class="anchor" aria-label="anchor" href="#statement-structure"></a>
 </h2>
-<p>An SGL statement is built from clauses. A minimal statement has
-three: <code>visualize</code>, <code>from</code>, and
-<code>using</code>. Additional clauses control grouping, scaling,
-faceting, and titles. The statement ends with a semicolon (optional when
-passed as a string to <code><a href="../reference/dbGetPlot.html">dbGetPlot()</a></code>).</p>
+<p>A SGL statement is built from clauses. A minimal statement has three:
+<code>visualize</code>, <code>from</code>, and <code>using</code>.
+Additional clauses control grouping, scaling, faceting, and titles. The
+statement ends with a semicolon (optional when passed as a string to
+<code><a href="../reference/dbGetPlot.html">dbGetPlot()</a></code>).</p>
 <pre><code>visualize
   &lt;aesthetic mappings&gt;
 from &lt;data source&gt;
