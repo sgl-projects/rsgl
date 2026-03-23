@@ -11,7 +11,7 @@
 rsgl implements [SGL (Structured Graphics
 Language)](https://arxiv.org/pdf/2505.14690), a declarative language for
 specifying statistical graphics that is designed to feel like SQL. You
-write an SGL statement, pass it to `dbGetPlot()` with a DuckDB
+write a SGL statement, pass it to `dbGetPlot()` with a DuckDB
 connection, and get back a ggplot2 plot.
 
 ## Installation

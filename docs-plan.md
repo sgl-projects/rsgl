@@ -59,7 +59,7 @@ Each section should have at least one runnable example with plot output. This vi
 
 ### 4. "Example Gallery" vignette
 
-A visual cookbook organized by what users want to create, not by language feature. Each entry is an SGL statement and its rendered plot, with minimal explanation. Categories:
+A visual cookbook organized by what users want to create, not by language feature. Each entry is a SGL statement and its rendered plot, with minimal explanation. Categories:
 
 - **Scatterplots** — basic, colored by group, with regression line overlay, jittered
 - **Bar charts** — simple counts, stacked, unstacked, grouped
