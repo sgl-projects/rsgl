@@ -85,13 +85,12 @@ dbGetPlot(con, "
     cyl_cat as x,
     mpg as y
   from (
-    select mpg, cast(cyl as varchar) as cyl_cat,
-      cast(am as varchar) as am_cat
+    select mpg, cast(cyl as varchar) as cyl_cat, am
     from cars
   )
   using boxes
   facet by
-    am_cat
+    am
 ")
 ```
 
