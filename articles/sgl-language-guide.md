@@ -581,15 +581,10 @@ dbGetPlot(con, "
   visualize
     hp as x,
     mpg as y
-  from (
-    select
-      *,
-      cast(cyl as varchar) as cyl_cat
-    from cars
-  )
+  from cars
   using points
   facet by
-    cyl_cat
+    cyl
 ")
 ```
 
@@ -602,15 +597,10 @@ dbGetPlot(con, "
   visualize
     hp as x,
     mpg as y
-  from (
-    select
-      *,
-      cast(cyl as varchar) as cyl_cat
-    from cars
-  )
+  from cars
   using points
   facet by
-    cyl_cat vertically
+    cyl vertically
 ")
 ```
 
@@ -624,17 +614,11 @@ dbGetPlot(con, "
   visualize
     hp as x,
     mpg as y
-  from (
-    select
-      *,
-      cast(cyl as varchar) as cyl_cat,
-      cast(am as varchar) as am_cat
-    from cars
-  )
+  from cars
   using points
   facet by
-    cyl_cat,
-    am_cat
+    cyl,
+    am
 ")
 ```
 

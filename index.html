@@ -128,13 +128,12 @@
 <span><span class="st">    cyl_cat as x,</span></span>
 <span><span class="st">    mpg as y</span></span>
 <span><span class="st">  from (</span></span>
-<span><span class="st">    select mpg, cast(cyl as varchar) as cyl_cat,</span></span>
-<span><span class="st">      cast(am as varchar) as am_cat</span></span>
+<span><span class="st">    select mpg, cast(cyl as varchar) as cyl_cat, am</span></span>
 <span><span class="st">    from cars</span></span>
 <span><span class="st">  )</span></span>
 <span><span class="st">  using boxes</span></span>
 <span><span class="st">  facet by</span></span>
-<span><span class="st">    am_cat</span></span>
+<span><span class="st">    am</span></span>
 <span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-faceted-1.png" alt="" width="70%"></p>
 </div>

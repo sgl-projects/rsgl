@@ -603,15 +603,10 @@ by default:</p>
 <span><span class="st">  visualize</span></span>
 <span><span class="st">    hp as x,</span></span>
 <span><span class="st">    mpg as y</span></span>
-<span><span class="st">  from (</span></span>
-<span><span class="st">    select</span></span>
-<span><span class="st">      *,</span></span>
-<span><span class="st">      cast(cyl as varchar) as cyl_cat</span></span>
-<span><span class="st">    from cars</span></span>
-<span><span class="st">  )</span></span>
+<span><span class="st">  from cars</span></span>
 <span><span class="st">  using points</span></span>
 <span><span class="st">  facet by</span></span>
-<span><span class="st">    cyl_cat</span></span>
+<span><span class="st">    cyl</span></span>
 <span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="sgl-language-guide_files/figure-html/facet-single-1.png" class="r-plt" alt="" width="576"></p>
 <p>The orientation can be changed with the <code>vertically</code>
@@ -621,15 +616,10 @@ keyword:</p>
 <span><span class="st">  visualize</span></span>
 <span><span class="st">    hp as x,</span></span>
 <span><span class="st">    mpg as y</span></span>
-<span><span class="st">  from (</span></span>
-<span><span class="st">    select</span></span>
-<span><span class="st">      *,</span></span>
-<span><span class="st">      cast(cyl as varchar) as cyl_cat</span></span>
-<span><span class="st">    from cars</span></span>
-<span><span class="st">  )</span></span>
+<span><span class="st">  from cars</span></span>
 <span><span class="st">  using points</span></span>
 <span><span class="st">  facet by</span></span>
-<span><span class="st">    cyl_cat vertically</span></span>
+<span><span class="st">    cyl vertically</span></span>
 <span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="sgl-language-guide_files/figure-html/facet-vertical-1.png" class="r-plt" alt="" width="576"></p>
 <p>Two facet expressions produce a grid — one varies horizontally, the
@@ -639,17 +629,11 @@ other vertically:</p>
 <span><span class="st">  visualize</span></span>
 <span><span class="st">    hp as x,</span></span>
 <span><span class="st">    mpg as y</span></span>
-<span><span class="st">  from (</span></span>
-<span><span class="st">    select</span></span>
-<span><span class="st">      *,</span></span>
-<span><span class="st">      cast(cyl as varchar) as cyl_cat,</span></span>
-<span><span class="st">      cast(am as varchar) as am_cat</span></span>
-<span><span class="st">    from cars</span></span>
-<span><span class="st">  )</span></span>
+<span><span class="st">  from cars</span></span>
 <span><span class="st">  using points</span></span>
 <span><span class="st">  facet by</span></span>
-<span><span class="st">    cyl_cat,</span></span>
-<span><span class="st">    am_cat</span></span>
+<span><span class="st">    cyl,</span></span>
+<span><span class="st">    am</span></span>
 <span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="sgl-language-guide_files/figure-html/facet-grid-1.png" class="r-plt" alt="" width="576"></p>
 </div>
