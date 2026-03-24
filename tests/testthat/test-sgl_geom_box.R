@@ -1,34 +1,31 @@
+test_box <- new_sgl_geom_box()
+
 test_that("new_sgl_geom_box returns an instance of the sgl_geom_box subclass", {
-  box <- new_sgl_geom_box()
-  expect_equal(attr(box, "class"), c("sgl_geom_box", "sgl_geom"))
+  expect_equal(attr(test_box, "class"), c("sgl_geom_box", "sgl_geom"))
 })
 
 test_that("new_sgl_geom_box only adds class attribute", {
-  box <- new_sgl_geom_box()
-  all_attributes <- names(attributes(box))
+  all_attributes <- names(attributes(test_box))
   expect_equal(all_attributes, "class")
 })
 
 test_that("new_sgl_geom_box sets empty list as base object", {
-  base_object <- unclass(new_sgl_geom_box())
+  base_object <- unclass(test_box)
 
   expect_equal(base_object, list())
 })
 
 test_that("geom_name returns box", {
-  box <- new_sgl_geom_box()
-  actual <- geom_name(box)
+  actual <- geom_name(test_box)
   expect_equal(actual, "box")
 })
 
 test_that("is_collective returns TRUE", {
-  box <- new_sgl_geom_box()
-  expect_equal(is_collective(box), TRUE)
+  expect_equal(is_collective(test_box), TRUE)
 })
 
 test_that("ggplot_geom returns geom_boxplot function", {
-  box <- new_sgl_geom_box()
-  actual <- ggplot_geom(box)
+  actual <- ggplot_geom(test_box)
   expect_equal(actual, ggplot2::geom_boxplot)
 })
 
