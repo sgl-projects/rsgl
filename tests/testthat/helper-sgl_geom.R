@@ -1,3 +1,4 @@
+# nolint start: object_usage_linter.
 valid_aesthetics_tests <- function(geom, valid_non_pos_aes) {
   describe("valid_aesthetics", {
     describe("no positional aes", {
@@ -198,3 +199,4 @@ valid_aesthetics_tests <- function(geom, valid_non_pos_aes) {
     })
   })
 }
+# nolint end
