@@ -1,4 +1,5 @@
 url: https://sgl-projects.github.io/rsgl/
 template:
   bootstrap: 5
+  light-switch: true
 
