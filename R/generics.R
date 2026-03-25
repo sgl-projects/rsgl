@@ -1,4 +1,4 @@
-valid_aesthetics <- function(geom, layer, df) {
+valid_aesthetics <- function(geom, layer) {
   UseMethod("valid_aesthetics")
 }
 
@@ -60,4 +60,8 @@ apply_scale_inverse <- function(scale, values) {
 
 ggplot_scales <- function(scale, aes, rgs) {
   UseMethod("ggplot_scales")
+}
+
+valid_non_pos_aes <- function(geom) {
+  UseMethod("valid_non_pos_aes")
 }

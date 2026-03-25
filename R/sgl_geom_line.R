@@ -35,11 +35,8 @@ ggplot_aes.sgl_geom_line <- function(geom, layer, df, scales) {
 }
 
 #' @export
-valid_aesthetics.sgl_geom_line <- function(geom, layer, df) {
-  valid_positional_aes(layer)
-  if ("size" %in% names(layer$aes_mappings)) {
-    stop("Error: size is not a valid aesthetic for the line geom.")
-  }
+valid_non_pos_aes.sgl_geom_line <- function(geom) {
+  "color"
 }
 
 #' @export
