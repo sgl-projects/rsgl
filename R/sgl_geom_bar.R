@@ -13,45 +13,8 @@ ggplot_geom.sgl_geom_bar <- function(geom) {
 }
 
 #' @export
-valid_aesthetics.sgl_geom_bar <- function(geom, layer, df) {
-  valid_positional_aes(layer)
-  all_aes <- names(layer$aes_mappings)
-  pos_aes <- intersect(.pos_aes, all_aes)
-  if (length(pos_aes) == 1) {
-    if (is_cat_or_bin_mapping(layer, df, pos_aes)) {
-      errmsg <- paste(
-        "Error: if only one positional aesthetic is provided for the bar geom,",
-        "then it must be mapped to a numerical or temporal type (unbinned)."
-      )
-      stop(errmsg)
-    }
-  } else {
-    if (
-      is_cat_or_bin_mapping(layer, df, pos_aes[1]) &&
-        is_cat_or_bin_mapping(layer, df, pos_aes[2])
-    ) {
-      unformatted_msg <- paste(
-        "Error: one of '%s' or '%s' should be a numerical",
-        "or temporal mapping (unbinned) for the bar geom"
-      )
-      errmsg <- sprintf(unformatted_msg, pos_aes[1], pos_aes[2])
-      stop(errmsg)
-    }
-    if (
-      !is_cat_or_bin_mapping(layer, df, pos_aes[1]) &&
-        !is_cat_or_bin_mapping(layer, df, pos_aes[2])
-    ) {
-      unformatted_msg <- paste(
-        "Error: one of '%s' or '%s' should be a categorical",
-        "or binned mapping for the bar geom"
-      )
-      errmsg <- sprintf(unformatted_msg, pos_aes[1], pos_aes[2])
-      stop(errmsg)
-    }
-  }
-  if ("size" %in% all_aes) {
-    stop("Error: size is not a valid aesthetic for the bar geom.")
-  }
+valid_non_pos_aes.sgl_geom_bar <- function(geom) {
+  "color"
 }
 
 #' @export

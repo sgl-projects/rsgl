@@ -13,59 +13,8 @@ is_collective.sgl_geom_box <- function(geom) {
 }
 
 #' @export
-valid_aesthetics.sgl_geom_box <- function(geom, layer, df) {
-  valid_positional_aes(layer)
-  aes_mappings <- layer$aes_mappings
-  pos_aes_names <- .pos_aes[
-    .pos_aes %in% names(aes_mappings)
-  ]
-  if (length(pos_aes_names) == 1) {
-    if (is_cat_or_bin_mapping(layer, df, pos_aes_names)) {
-      errmsg <- paste(
-        "Error: for a box geom with one positional aesthetic mapping,",
-        "the mapping must be to a numerical or temporal (unbinned) type."
-      )
-      stop(errmsg)
-    }
-  } else {
-    first_is_cat_or_binned <-
-      is_cat_or_bin_mapping(layer, df, pos_aes_names[1])
-    second_is_cat_or_binned <-
-      is_cat_or_bin_mapping(layer, df, pos_aes_names[2])
-    both_are_cat_or_binned <- first_is_cat_or_binned && second_is_cat_or_binned
-    neither_is_cat_or_binned <-
-      !first_is_cat_or_binned && !second_is_cat_or_binned
-    if (both_are_cat_or_binned || neither_is_cat_or_binned) {
-      errmsg <- paste(
-        "Error: for a box geom with two positional aesthetic mappings,",
-        "one mapping must be categorical or binned,",
-        "and the other must be numerical or temporal (unbinned)."
-      )
-      stop(errmsg)
-    }
-  }
-  if ("size" %in% names(aes_mappings)) {
-    errmsg <- sprintf(
-      "Error: the size aesthetic is not valid for the %s geom.",
-      geom_name(geom)
-    )
-    stop(errmsg)
-  }
-  color <- "color"
-  if (color %in% names(aes_mappings)) {
-    if (!is_cat_or_bin_mapping(layer, df, color)) {
-      unformatted_msg <- paste(
-        "Error: for the %s geom, %s can only be mapped",
-        "to a categorical or binned column."
-      )
-      errmsg <- sprintf(
-        unformatted_msg,
-        geom_name(geom),
-        color
-      )
-      stop(errmsg)
-    }
-  }
+valid_non_pos_aes.sgl_geom_box <- function(geom) {
+  "color"
 }
 
 #' @export
