@@ -70,7 +70,8 @@ dbGetPlot(con, "
     regression line
   )
   scale by
-    log(x)
+    log(x),
+    log(y)
 ")
 #> `geom_smooth()` using formula = 'y ~ x'
 ```
