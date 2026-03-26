@@ -54,6 +54,27 @@ valid_aesthetics.sgl_geom <- function(geom, layer) {
 }
 
 #' @export
+valid_qual_list.sgl_geom <- function(geom) {
+  .all_quals
+}
+
+#' @export
+valid_qualifier.sgl_geom <- function(geom, layer) {
+  qual <- layer$geom_expr$qual
+  if (qual == "default") {
+    return()
+  }
+  if (!(qual %in% valid_qual_list(geom))) {
+    errmsg <- sprintf(
+      "Error: the %s qualifier is not valid for the %s geom.",
+      qual,
+      geom_name(geom)
+    )
+    stop(errmsg)
+  }
+}
+
+#' @export
 valid_collections.sgl_geom <- function(geom, layer, df) {
   if ("collections" %in% names(layer)) {
     unformatted_msg <- paste(

@@ -106,40 +106,6 @@ valid_collections.sgl_geom_line <- function(geom, layer, df) {
 }
 
 #' @export
-valid_qualifier.sgl_geom_line <- function(geom, layer, df) {
-  qualifier <- layer$geom_expr$qual
-  potentially_valid_qualifiers <- c("default", "regression")
-  if (!(qualifier %in% potentially_valid_qualifiers)) {
-    unformatted_errmsg <-
-      "Error: the %s qualifier is not supported for the %s geom."
-    errmsg <- sprintf(
-      unformatted_errmsg,
-      qualifier,
-      geom_name(layer$geom_expr$geom)
-    )
-    stop(errmsg)
-  }
-  if (qualifier == "regression") {
-    aes_mappings <- layer$aes_mappings
-    identity_mappings <- filter_col_exprs_by_cta(aes_mappings, "identity")
-    if (length(identity_mappings) < length(aes_mappings)) {
-      errmsg <- paste(
-        "Error: column-level transformations and aggregations",
-        "are not allowed with the regression qualifier"
-      )
-      stop(errmsg)
-    }
-    if ("color" %in% names(aes_mappings)) {
-      if (
-        is_numerical_mapping(layer, df, "color") ||
-          is_temporal_mapping(layer, df, "color")
-      ) {
-        errmsg <- paste(
-          "Error: numerical and temporal color mappings are",
-          "not allowed with the regression qualifier"
-        )
-        stop(errmsg)
-      }
-    }
-  }
+valid_qual_list.sgl_geom_line <- function(geom) {
+  "regression"
 }

@@ -154,12 +154,6 @@ ggplot_aes.sgl_geom_box <- function(geom, layer, df, scales) {
 }
 
 #' @export
-valid_qualifier.sgl_geom_box <- function(geom, layer, df) {
-  if (layer$geom_expr$qual != "default") {
-    errmsg <- sprintf(
-      "Error: geom qualifiers are not allowed for the %s geom.",
-      geom_name(geom)
-    )
-    stop(errmsg)
-  }
+valid_qual_list.sgl_geom_box <- function(geom) {
+  character(0)
 }

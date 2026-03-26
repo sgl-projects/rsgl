@@ -34,6 +34,8 @@ test_that("ggplot_geom returns geom_bar function", {
 
 valid_aesthetics_tests(new_sgl_geom_bar(), "color")
 
+valid_qualifier_tests(new_sgl_geom_bar(), "unstacked")
+
 test_that("valid_collections raises error if collect by clause specified", {
   rgs <- sgl_to_rgs("
     visualize
@@ -252,74 +254,3 @@ test_that("ggplot_aes has no group aes", {
   expect_false("group" %in% names(actual_aes))
 })
 
-test_that("valid_qualifier doesn't raise error for default qualifier", {
-  rgs <- sgl_to_rgs("
-    visualize
-      letter as x,
-      number as y
-    from synth
-    using bars
-  ")
-  dfs <- result_dfs(rgs, test_con)
-  df <- dfs[[1]]
-  layer <- rgs$layers[[1]]
-
-  expect_no_error(
-    valid_qualifier(layer$geom_expr$geom, layer, df),
-  )
-})
-
-test_that("valid_qualifier raises error for the jittered qualifier", {
-  rgs <- sgl_to_rgs("
-    visualize
-      letter as x,
-      number as y
-    from synth
-    using jittered bars
-  ")
-  dfs <- result_dfs(rgs, test_con)
-  df <- dfs[[1]]
-  layer <- rgs$layers[[1]]
-
-  expect_error(
-    valid_qualifier(layer$geom_expr$geom, layer, df),
-    "Error: the jittered qualifier is not supported for the bar geom",
-    fixed = TRUE
-  )
-})
-
-test_that("valid_qualifier raises error for the regression qualifier", {
-  rgs <- sgl_to_rgs("
-    visualize
-      letter as x,
-      number as y
-    from synth
-    using regression bars
-  ")
-  dfs <- result_dfs(rgs, test_con)
-  df <- dfs[[1]]
-  layer <- rgs$layers[[1]]
-
-  expect_error(
-    valid_qualifier(layer$geom_expr$geom, layer, df),
-    "Error: the regression qualifier is not supported for the bar geom",
-    fixed = TRUE
-  )
-})
-
-test_that("valid_qualifier doesn't raise error for the unstacked qualifier", {
-  rgs <- sgl_to_rgs("
-    visualize
-      letter as x,
-      number as y
-    from synth
-    using unstacked bars
-  ")
-  dfs <- result_dfs(rgs, test_con)
-  df <- dfs[[1]]
-  layer <- rgs$layers[[1]]
-
-  expect_no_error(
-    valid_qualifier(layer$geom_expr$geom, layer, df),
-  )
-})

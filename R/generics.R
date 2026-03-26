@@ -14,7 +14,11 @@ ggplot_aes <- function(geom, layer, df, scales) {
   UseMethod("ggplot_aes")
 }
 
-valid_qualifier <- function(geom, layer, df) {
+valid_qual_list <- function(geom) {
+  UseMethod("valid_qual_list")
+}
+
+valid_qualifier <- function(geom, layer) {
   UseMethod("valid_qualifier")
 }
 

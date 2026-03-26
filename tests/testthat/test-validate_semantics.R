@@ -78,20 +78,15 @@ test_that("raises error for invalid qualifier", {
   rgs <- sgl_to_rgs("
     visualize
       hp as x,
-      mpg as y,
-      cyl as color
+      mpg as y
     from cars
-    using regression line
+    using jittered bars
   ")
   dfs <- result_dfs(rgs, test_con)
 
-  expected_msg <- paste(
-    "Error: numerical and temporal color mappings are not",
-    "allowed with the regression qualifier"
-  )
   expect_error(
     validate_semantics(rgs, dfs),
-    expected_msg,
+    "Error: the jittered qualifier is not valid for the bar geom.",
     fixed = TRUE
   )
 })

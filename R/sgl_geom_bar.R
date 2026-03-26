@@ -27,15 +27,6 @@ ggplot_aes.sgl_geom_bar <- function(geom, layer, df, scales) {
 }
 
 #' @export
-valid_qualifier.sgl_geom_bar <- function(geom, layer, df) {
-  qualifier <- layer$geom_expr$qual
-  unformatted_errmsg <-
-    "Error: the %s qualifier is not supported for the %s geom"
-  valid_qualifiers <- c("default", "unstacked")
-  if (!(qualifier %in% valid_qualifiers)) {
-    errmsg <- sprintf(
-      unformatted_errmsg, qualifier, geom_name(layer$geom_expr$geom)
-    )
-    stop(errmsg)
-  }
+valid_qual_list.sgl_geom_bar <- function(geom) {
+  "unstacked"
 }
