@@ -375,7 +375,9 @@ correct repo.
 ### 6.2 Lint workflow
 
 Update `.github/workflows/lint.yaml`: - Same — should work as-is since
-it uses `lintr::lint_package()` generically.
+it uses
+[`lintr::lint_package()`](https://lintr.r-lib.org/reference/lint.html)
+generically.
 
 ### 6.3 Verify CI passes
 
