@@ -133,7 +133,6 @@ dbGetPlot(con, "
     regression line
   )
 ")
-#> `geom_smooth()` using formula = 'y ~ x'
 ```
 
 ![](rsgl_files/figure-html/layers-1.png)

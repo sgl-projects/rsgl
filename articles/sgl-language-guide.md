@@ -417,7 +417,6 @@ dbGetPlot(con, "
   from cars
   using regression line
 ")
-#> `geom_smooth()` using formula = 'y ~ x'
 ```
 
 ![](sgl-language-guide_files/figure-html/qual-regression-1.png)
@@ -463,7 +462,6 @@ dbGetPlot(con, "
   from cars
   using regression line
 ")
-#> `geom_smooth()` using formula = 'y ~ x'
 ```
 
 ![](sgl-language-guide_files/figure-html/layer-full-1.png)
@@ -486,7 +484,6 @@ dbGetPlot(con, "
     regression line
   )
 ")
-#> `geom_smooth()` using formula = 'y ~ x'
 ```
 
 ![](sgl-language-guide_files/figure-html/layer-shorthand-1.png)
@@ -517,7 +514,6 @@ dbGetPlot(con, "
     log(x),
     log(y)
 ")
-#> `geom_smooth()` using formula = 'y ~ x'
 ```
 
 ![](sgl-language-guide_files/figure-html/scale-log-1.png)
@@ -543,7 +539,6 @@ dbGetPlot(con, "
     regression line
   )
 ")
-#> `geom_smooth()` using formula = 'y ~ x'
 ```
 
 ![](sgl-language-guide_files/figure-html/scale-vs-transform-1.png)

@@ -83,6 +83,5 @@ dbGetPlot(con, "
     regression line
   )
 ")
-#> `geom_smooth()` using formula = 'y ~ x'
 
 ```

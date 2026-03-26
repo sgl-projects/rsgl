@@ -65,7 +65,6 @@ dbGetPlot(con, "
     regression line
   )
 ")
-#> `geom_smooth()` using formula = 'y ~ x'
 ```
 
 ![](example-gallery_files/figure-html/scatter-regression-1.png)
@@ -245,7 +244,6 @@ dbGetPlot(con, "
   )
   using regression lines
 ")
-#> `geom_smooth()` using formula = 'y ~ x'
 ```
 
 ![](example-gallery_files/figure-html/line-regression-grouped-1.png)
@@ -353,7 +351,6 @@ dbGetPlot(con, "
     log(x),
     log(y)
 ")
-#> `geom_smooth()` using formula = 'y ~ x'
 ```
 
 ![](example-gallery_files/figure-html/log-scale-1.png)
@@ -378,7 +375,6 @@ dbGetPlot(con, "
   from cars
   using regression line
 ")
-#> `geom_smooth()` using formula = 'y ~ x'
 ```
 
 ![](example-gallery_files/figure-html/multi-layer-basic-1.png)
