@@ -40,6 +40,8 @@ test_that("ggplot_geom returns geom_point function", {
 
 valid_aesthetics_tests(new_sgl_geom_point(), .non_pos_aes)
 
+valid_qualifier_tests(new_sgl_geom_point(), "jittered")
+
 test_that("valid_collections raises error if collect by clause specified", {
   rgs <- sgl_to_rgs("
     visualize
@@ -258,76 +260,4 @@ test_that("ggplot_aes has no group aes", {
   actual_aes <- ggplot_aes(layer$geom_expr$geom, layer, df, rgs$scales)
 
   expect_false("group" %in% names(actual_aes))
-})
-
-test_that("valid_qualifier doesn't raise error for the default qualifier", {
-  rgs <- sgl_to_rgs("
-    visualize
-      hp as x,
-      mpg as y
-    from cars
-    using points
-  ")
-  dfs <- result_dfs(rgs, test_con)
-  df <- dfs[[1]]
-  layer <- rgs$layers[[1]]
-
-  expect_no_error(
-    valid_qualifier(layer$geom_expr$geom, layer, df),
-  )
-})
-
-test_that("valid_qualifier doesn't raise error for the jittered qualifier", {
-  rgs <- sgl_to_rgs("
-    visualize
-      hp as x,
-      mpg as y
-    from cars
-    using jittered points
-  ")
-  dfs <- result_dfs(rgs, test_con)
-  df <- dfs[[1]]
-  layer <- rgs$layers[[1]]
-
-  expect_no_error(
-    valid_qualifier(layer$geom_expr$geom, layer, df),
-  )
-})
-
-test_that("valid_qualifier raises error for the regression qualifier", {
-  rgs <- sgl_to_rgs("
-    visualize
-      hp as x,
-      mpg as y
-    from cars
-    using regression points
-  ")
-  dfs <- result_dfs(rgs, test_con)
-  df <- dfs[[1]]
-  layer <- rgs$layers[[1]]
-
-  expect_error(
-    valid_qualifier(layer$geom_expr$geom, layer, df),
-    "Error: the regression qualifier is not supported for the point geom",
-    fixed = TRUE
-  )
-})
-
-test_that("valid_qualifier raises error for the unstacked qualifier", {
-  rgs <- sgl_to_rgs("
-    visualize
-      hp as x,
-      mpg as y
-    from cars
-    using unstacked points
-  ")
-  dfs <- result_dfs(rgs, test_con)
-  df <- dfs[[1]]
-  layer <- rgs$layers[[1]]
-
-  expect_error(
-    valid_qualifier(layer$geom_expr$geom, layer, df),
-    "Error: the unstacked qualifier is not supported for the point geom",
-    fixed = TRUE
-  )
 })

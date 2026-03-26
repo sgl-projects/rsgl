@@ -45,6 +45,8 @@ test_that("is_collective returns false", {
 
 valid_aesthetics_tests(new_sgl_geom(), .non_pos_aes)
 
+valid_qualifier_tests(new_sgl_geom(), .all_quals)
+
 test_that("valid_collections raises error if collect by clause specified", {
   rgs <- sgl_to_rgs("
     visualize

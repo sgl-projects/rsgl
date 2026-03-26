@@ -31,6 +31,8 @@ test_that("ggplot_geom returns geom_boxplot function", {
 
 valid_aesthetics_tests(test_box, "color")
 
+valid_qualifier_tests(test_box, character())
+
 test_that("valid_collections doesn't raise error for default collection", {
   rgs <- sgl_to_rgs("
     visualize
@@ -940,56 +942,4 @@ test_that(
       "interaction(rsgl.linear.bin.carat, rsgl.log.bin.carat)"
     )
   }
-)
-
-test_that("valid_qualifier doesn't raise error for default qualifier", {
-  rgs <- sgl_to_rgs("
-    visualize
-      letter as x,
-      number as y
-    from synth
-    using boxes
-  ")
-  dfs <- result_dfs(rgs, test_con)
-  df <- dfs[[1]]
-  layer <- rgs$layers[[1]]
-
-  expect_no_error(
-    valid_qualifier(layer$geom_expr$geom, layer, df),
-  )
-})
-
-invalid_qualifier_cases <- function() {
-  tibble::tribble(
-    ~.test_name, ~qualifier,
-    "jittered", "jittered",
-    "regression", "regression",
-    "unstacked", "unstacked"
-  )
-}
-patrick::with_parameters_test_that(
-  "valid_qualifier raises error for non-default qualifiers:",
-  {
-    sgl <- sprintf(
-      "
-				visualize
-					letter as x,
-					number as y
-				from synth
-				using %s boxes
-			",
-      qualifier
-    )
-    rgs <- sgl_to_rgs(sgl)
-    dfs <- result_dfs(rgs, test_con)
-    df <- dfs[[1]]
-    layer <- rgs$layers[[1]]
-
-    expect_error(
-      valid_qualifier(layer$geom_expr$geom, layer, df),
-      "Error: geom qualifiers are not allowed for the box geom.",
-      fixed = TRUE
-    )
-  },
-  .cases = invalid_qualifier_cases()
 )
