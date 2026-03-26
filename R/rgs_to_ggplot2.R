@@ -47,6 +47,7 @@ ggplot_layer <- function(rgs_layer, df, scales) {
   if (qual == "regression") {
     ggplot_layer_args$stat <- "smooth"
     ggplot_layer_args$method <- "lm"
+    ggplot_layer_args$formula <- y ~ x
   } else if (!identical(geom, new_sgl_geom_box())) {
     ggplot_layer_args$stat <- "identity"
   }
