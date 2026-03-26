@@ -66,7 +66,6 @@ dbGetPlot(con, "
     log(x),
     log(y)
 ")
-#> `geom_smooth()` using formula = 'y ~ x'
 ```
 
 ![](reference/figures/README-layered-1.png)
