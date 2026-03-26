@@ -271,7 +271,7 @@ test_that(
     expect_s3_class(p$layers[[1]]$stat, "StatSmooth")
     expect_equal(p$layers[[1]]$stat_params$method, "lm")
     expect_equal(p$layers[[1]]$stat_params$formula, y ~ x,
-      ignore_formula_env = TRUE)
+                 ignore_formula_env = TRUE)
   }
 )
 
