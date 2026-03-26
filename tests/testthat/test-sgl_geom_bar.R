@@ -253,4 +253,3 @@ test_that("ggplot_aes has no group aes", {
 
   expect_false("group" %in% names(actual_aes))
 })
-
