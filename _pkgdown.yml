@@ -2,4 +2,11 @@ url: https://sgl-projects.github.io/rsgl/
 template:
   bootstrap: 5
   light-switch: true
+  includes:
+    after_body: >
+      <script>
+        document.querySelectorAll('.template-home img[src*="figures/README"]').forEach(function(img) {
+          img.classList.add('r-plt');
+        });
+      </script>
 
