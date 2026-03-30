@@ -91,14 +91,11 @@ a bar chart — here combined with `count(*)` to count rows per group:
 ```{r bars}
 dbGetPlot(con, "
   visualize
-    cyl_cat as x,
+    cyl as x,
     count(*) as y
-  from (
-    select cast(cyl as varchar) as cyl_cat
-    from cars
-  )
+  from cars
   group by
-    cyl_cat
+    cyl
   using bars
 ")
 ```
