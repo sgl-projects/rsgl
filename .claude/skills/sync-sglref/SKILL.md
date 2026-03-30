@@ -1,3 +1,12 @@
+---
+name: sync-sglref
+description: Sync rsgl with the next unsynced commit from the sglref reference implementation. Use when the user wants to pull changes from sglref into rsgl.
+disable-model-invocation: true
+user-invocable: true
+effort: max
+context: fork
+---
+
 # Sync rsgl with sglref
 
 Sync the rsgl package with the next unsynced commit from the sglref reference implementation.
