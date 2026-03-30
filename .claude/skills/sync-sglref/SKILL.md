@@ -24,7 +24,7 @@ Sync **one commit at a time**. After opening the PR, stop and wait for the user 
 
 ## Instructions
 
-Use a **worktree agent** to perform all of the steps below.
+Use `EnterWorktree` to create a git worktree, then perform all of the steps below within it. When finished, use `ExitWorktree` to return.
 
 ### Step 1: Find the next commit to sync
 
