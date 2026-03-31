@@ -10,3 +10,8 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^makefile$
+^src/parser\.y$
+^src/scanner\.l$
+^src/test$
+^copy-sglref-sources-plan\.md$
