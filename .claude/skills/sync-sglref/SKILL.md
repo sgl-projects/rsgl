@@ -42,9 +42,8 @@ Classify each changed file:
 
 | Category | sglref files | Action |
 |---|---|---|
-| Direct-copy | `R/*.R`, `src/*.cpp`, `src/*.h`, `src/*.c` (non-generated), `tests/testthat/*` | Apply the change to the rsgl counterpart. Adjust any `sglref` → `rsgl` references that appear in package-level identifiers (e.g., `_sglref_` → `_rsgl_`, `useDynLib(sglref` → `useDynLib(rsgl`). |
-| Generated | `parser.tab.c`, `parser.tab.h`, `scanner.c` | Copy the file as-is from sglref into rsgl's `src/` directory. These are generated from `parser.y`/`scanner.l` which rsgl does not carry. |
-| sglref-only | `parser.y`, `scanner.l`, `src/test/*`, `makefile` | Skip — these files do not exist in rsgl. |
+| Direct-copy | `R/*.R`, `src/*.cpp`, `src/*.h`, `src/*.c` (non-generated), `tests/testthat/*`, `src/test/*`, `parser.y`, `scanner.l`, `makefile` | Apply the change to the rsgl counterpart. Adjust any `sglref` → `rsgl` references that appear in package-level identifiers (e.g., `_sglref_` → `_rsgl_`, `useDynLib(sglref` → `useDynLib(rsgl`). Note: `parser.y`, `scanner.l`, `src/test/*`, and `makefile` have no `sglref` references — copy as-is. |
+| Generated | `parser.tab.c`, `parser.tab.h`, `scanner.c` | Copy the file as-is from sglref into rsgl's `src/` directory. These are generated from `parser.y`/`scanner.l`. |
 | Package metadata | `DESCRIPTION`, `NAMESPACE` | Review case-by-case. Structural changes (new imports, new S3 method registrations, new exports, dependency changes) must be adapted to rsgl. Do NOT blindly overwrite — rsgl has its own package name, title, description, URLs, etc. |
 | Documentation | `man/*`, `README.Rmd` | Review case-by-case. Content changes should be ported; package name references must stay as `rsgl`. |
 | Snapshots | `tests/testthat/_snaps/*` | Copy as-is from sglref. |
