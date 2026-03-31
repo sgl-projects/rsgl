@@ -14,4 +14,3 @@
 ^src/parser\.y$
 ^src/scanner\.l$
 ^src/test$
-^copy-sglref-sources-plan\.md$
