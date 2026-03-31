@@ -28,11 +28,7 @@ con <- dbConnect(duckdb())
 dbWriteTable(con, "cars", mtcars)
 dbWriteTable(con, "trees", as.data.frame(Orange))
 
-diamonds <- ggplot2::diamonds
-diamonds$cut <- as.character(diamonds$cut)
-diamonds$color <- as.character(diamonds$color)
-diamonds$clarity <- as.character(diamonds$clarity)
-dbWriteTable(con, "diamonds", diamonds)
+dbWriteTable(con, "diamonds", ggplot2::diamonds)
 ```
 
 ## Scatterplots
