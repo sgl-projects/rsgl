@@ -137,7 +137,7 @@ dbGetPlot(con, "
 ## Next steps
 
 The [SGL Language Guide](sgl-language-guide.html) covers the full syntax
-including transformations (`bin`, `count`), grouping, collection, scaling,
+including transformations, grouping, collection, scaling,
 faceting, coordinate systems, and titles.
 
 ```{r cleanup, include = FALSE}
