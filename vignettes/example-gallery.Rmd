@@ -27,7 +27,6 @@ library(duckdb)
 con <- dbConnect(duckdb())
 dbWriteTable(con, "cars", mtcars)
 dbWriteTable(con, "trees", as.data.frame(Orange))
-
 dbWriteTable(con, "diamonds", ggplot2::diamonds)
 ```
 
