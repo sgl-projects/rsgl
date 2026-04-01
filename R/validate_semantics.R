@@ -3,7 +3,7 @@ validate_semantics <- function(rgs, dfs) {
     function(layer, df) {
       valid_column_refs(layer, df)
       valid_ctas(layer, df)
-      valid_aesthetics(layer$geom_expr$geom, layer)
+      valid_aesthetics(layer)
       valid_qualifier(layer$geom_expr$geom, layer)
       valid_groupings(layer)
       valid_collections(layer)

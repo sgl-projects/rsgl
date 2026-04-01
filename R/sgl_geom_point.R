@@ -13,6 +13,11 @@ ggplot_geom.sgl_geom_point <- function(geom) {
 }
 
 #' @export
+valid_non_pos_aes.sgl_geom_point <- function(geom) {
+  .non_pos_aes
+}
+
+#' @export
 valid_qual_list.sgl_geom_point <- function(geom) {
   "jittered"
 }

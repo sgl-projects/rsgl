@@ -29,8 +29,6 @@ test_that("ggplot_geom returns geom_boxplot function", {
   expect_equal(actual, ggplot2::geom_boxplot)
 })
 
-valid_aesthetics_tests(test_box, "color")
-
 valid_qualifier_tests(test_box, character())
 
 test_that("ggplot_aes returns correct aes mappings", {

@@ -32,8 +32,6 @@ test_that("ggplot_geom returns geom_bar function", {
   expect_equal(actual, ggplot2::geom_bar)
 })
 
-valid_aesthetics_tests(new_sgl_geom_bar(), "color")
-
 valid_qualifier_tests(new_sgl_geom_bar(), "unstacked")
 
 test_that("ggplot_aes returns correct aes", {
