@@ -38,8 +38,6 @@ test_that("ggplot_geom returns geom_point function", {
   expect_equal(actual, ggplot2::geom_point)
 })
 
-valid_aesthetics_tests(new_sgl_geom_point(), .non_pos_aes)
-
 valid_qualifier_tests(new_sgl_geom_point(), "jittered")
 
 test_that("ggplot_aes returns correct aes", {

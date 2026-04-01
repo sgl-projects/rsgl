@@ -1,7 +1,3 @@
-valid_aesthetics <- function(geom, layer) {
-  UseMethod("valid_aesthetics")
-}
-
 geom_name <- function(geom) {
   UseMethod("geom_name")
 }
