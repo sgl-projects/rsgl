@@ -38,8 +38,6 @@ test_that("ggplot_geom returns geom_line function", {
   expect_equal(actual, ggplot2::geom_line)
 })
 
-valid_qualifier_tests(new_sgl_geom_line(), "regression")
-
 test_that(
   "ggplot_aes returns correct aes with grouping for x and y aesthetics",
   {

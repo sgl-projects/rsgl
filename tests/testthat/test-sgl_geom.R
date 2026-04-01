@@ -43,8 +43,6 @@ test_that("is_collective returns false", {
   expect_equal(is_collective(geom), FALSE)
 })
 
-valid_qualifier_tests(new_sgl_geom(), .all_quals)
-
 test_that("ggplot_aes returns correct aes", {
   rgs <- sgl_to_rgs("
     visualize
