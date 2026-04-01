@@ -104,8 +104,9 @@ test_that("raises error for invalid groupings", {
   dfs <- result_dfs(rgs, test_con)
 
   expected_msg <- paste(
-    "Error: if group by clause is provided then aggregation(s)",
-    "must be present in the visualize clause."
+    "Error: unaggregated expressions in the visualize",
+    "and collect by clauses must also be present in the",
+    "group by clause."
   )
   expect_error(
     validate_semantics(rgs, dfs),
@@ -128,8 +129,8 @@ test_that("raises error for invalid collections", {
   dfs <- result_dfs(rgs, test_con)
 
   expected_msg <- paste(
-    "Error: For the box geom, color mappings must have corresponding",
-    "collections if an explicit collection is provided."
+    "Error: all expressions mapped to from non-positional",
+    "aesthetics must be included in the collect by clause."
   )
   expect_error(
     validate_semantics(rgs, dfs),

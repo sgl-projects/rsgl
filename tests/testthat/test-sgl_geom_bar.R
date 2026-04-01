@@ -36,31 +36,6 @@ valid_aesthetics_tests(new_sgl_geom_bar(), "color")
 
 valid_qualifier_tests(new_sgl_geom_bar(), "unstacked")
 
-test_that("valid_collections raises error if collect by clause specified", {
-  rgs <- sgl_to_rgs("
-    visualize
-      bin(mpg) as x,
-      count(*) as y
-    from cars
-    collect by
-      vs
-    using bars
-  ")
-  dfs <- result_dfs(rgs, test_con)
-  df <- dfs[[1]]
-  layer <- rgs$layers[[1]]
-
-  expected_msg <- paste(
-    "Error: the collect by clause cannot be",
-    "specified for non-collective geom bar."
-  )
-  expect_error(
-    valid_collections(layer$geom_expr$geom, layer, df),
-    expected_msg,
-    fixed = TRUE
-  )
-})
-
 test_that("ggplot_aes returns correct aes", {
   rgs <- sgl_to_rgs("
     visualize

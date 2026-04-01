@@ -40,69 +40,8 @@ valid_non_pos_aes.sgl_geom_line <- function(geom) {
 }
 
 #' @export
-valid_collections.sgl_geom_line <- function(geom, layer, df) {
-  if (!("collections" %in% names(layer))) {
-    return()
-  }
-  if (!("groupings" %in% names(layer))) {
-    collections <- layer$collections
-    identity_collections <- filter_col_exprs_by_cta(collections, "identity")
-    non_identity_collections <- collections[
-      !(collections %in% identity_collections)
-    ]
-    if (length(non_identity_collections) > 0) {
-      errmsg <- paste(
-        "Error: if no groupings are present then all collection",
-        "expressions must be untransformed columns."
-      )
-      stop(errmsg)
-    }
-  } else {
-    aes_mappings <- layer$aes_mappings
-    pos_mappings <- aes_mappings[
-      names(aes_mappings) %in% .pos_aes
-    ]
-    groupings <- layer$groupings
-    positional_groupings <- groupings[
-      groupings %in% pos_mappings
-    ]
-    collections <- layer$collections
-    pos_grps_in_collection <- positional_groupings[
-      positional_groupings %in% collections
-    ]
-    if (length(pos_grps_in_collection) > 0) {
-      errmsg <- "Error: cannot collect on positional groupings."
-      stop(errmsg)
-    }
-    non_positional_groupings <- groupings[
-      !(groupings %in% pos_mappings)
-    ]
-    missing_from_collections <- non_positional_groupings[
-      !(non_positional_groupings %in% collections)
-    ]
-    if (length(missing_from_collections) > 0) {
-      missing_from_collection <- missing_from_collections[[1]]
-      unformatted_msg <- paste(
-        "Error: all non-positional groupings must",
-        "be included in collect by clause. '%s' found",
-        "in grouping but not in collect by clause."
-      )
-      errmsg <- sprintf(unformatted_msg, missing_from_collection$column)
-      stop(errmsg)
-    }
-    collections_without_grouping <- collections[
-      !(collections %in% groupings)
-    ]
-    if (length(collections_without_grouping) > 0) {
-      collection_without_grouping <- collections_without_grouping[[1]]
-      unformatted_msg <- paste(
-        "Error: when grouping is present, cannot collect by column that",
-        "doesn't have corresponding grouping, found '%s'."
-      )
-      errmsg <- sprintf(unformatted_msg, collection_without_grouping$column)
-      stop(errmsg)
-    }
-  }
+extension.sgl_geom_line <- function(geom) {
+  2
 }
 
 #' @export

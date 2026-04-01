@@ -74,21 +74,6 @@ valid_qualifier.sgl_geom <- function(geom, layer) {
   }
 }
 
-#' @export
-valid_collections.sgl_geom <- function(geom, layer, df) {
-  if ("collections" %in% names(layer)) {
-    unformatted_msg <- paste(
-      "Error: the collect by clause cannot be",
-      "specified for non-collective geom %s."
-    )
-    errmsg <- sprintf(
-      unformatted_msg,
-      geom_name(geom)
-    )
-    stop(errmsg)
-  }
-}
-
 mapping_col_name <- function(aes, col_expr, scales) {
   if (col_expr_has_cta(col_expr, "identity")) {
     return(col_expr$column)

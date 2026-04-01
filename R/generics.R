@@ -26,8 +26,8 @@ is_collective <- function(geom) {
   UseMethod("is_collective")
 }
 
-valid_collections <- function(geom, layer, df) {
-  UseMethod("valid_collections")
+extension <- function(geom) {
+  UseMethod("extension")
 }
 
 valid_cta <- function(cta, col_name, df) {
