@@ -15,27 +15,6 @@ is_collective.sgl_geom <- function(geom) {
   FALSE
 }
 
-#' @export
-valid_qual_list.sgl_geom <- function(geom) {
-  .all_quals
-}
-
-#' @export
-valid_qualifier.sgl_geom <- function(geom, layer) {
-  qual <- layer$geom_expr$qual
-  if (qual == "default") {
-    return()
-  }
-  if (!(qual %in% valid_qual_list(geom))) {
-    errmsg <- sprintf(
-      "Error: the %s qualifier is not valid for the %s geom.",
-      qual,
-      geom_name(geom)
-    )
-    stop(errmsg)
-  }
-}
-
 mapping_col_name <- function(aes, col_expr, scales) {
   if (col_expr_has_cta(col_expr, "identity")) {
     return(col_expr$column)

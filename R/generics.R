@@ -14,10 +14,6 @@ valid_qual_list <- function(geom) {
   UseMethod("valid_qual_list")
 }
 
-valid_qualifier <- function(geom, layer) {
-  UseMethod("valid_qualifier")
-}
-
 is_collective <- function(geom) {
   UseMethod("is_collective")
 }
