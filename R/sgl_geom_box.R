@@ -18,86 +18,8 @@ valid_non_pos_aes.sgl_geom_box <- function(geom) {
 }
 
 #' @export
-valid_collections.sgl_geom_box <- function(geom, layer, df) {
-  if (!("collections" %in% names(layer))) {
-    return()
-  }
-  collections <- layer$collections
-  count_exprs <- filter_col_exprs_by_cta(collections, "count")
-  if (length(count_exprs) > 0) {
-    stop("Error: cannot collect by a count.")
-  }
-  aes_mappings <- layer$aes_mappings
-  all_aes_names <- names(aes_mappings)
-  pos_aes_names <- all_aes_names[
-    all_aes_names %in% .pos_aes
-  ]
-  is_cat_or_binned <- sapply(
-    pos_aes_names,
-    function(aes) is_cat_or_bin_mapping(layer, df, aes)
-  )
-  cat_or_binned_pos_names <- pos_aes_names[is_cat_or_binned]
-  cat_or_binned_pos_mappings <- aes_mappings[
-    names(aes_mappings) %in% cat_or_binned_pos_names
-  ]
-  if (
-    any(
-      !(cat_or_binned_pos_mappings %in% collections)
-    )
-  ) {
-    errmsg <- paste(
-      "Error: For the box geom, categorical or binned",
-      "columns mapped to positional aesthetics must be included",
-      "in an explicit collection if it is provided."
-    )
-    stop(errmsg)
-  }
-  non_cat_binned_pos_names <- pos_aes_names[!is_cat_or_binned]
-  non_cat_binned_pos_mappings <- aes_mappings[
-    names(aes_mappings) %in% non_cat_binned_pos_names
-  ]
-  if (
-    any(
-      non_cat_binned_pos_mappings %in% collections
-    )
-  ) {
-    errmsg <- paste(
-      "Error: For the box geom, unbinned numerical or temporal columns mapped",
-      "to positional aesthetics cannot be included in an explicit collection."
-    )
-    stop(errmsg)
-  }
-  if ("color" %in% names(aes_mappings)) {
-    color_mapping <- aes_mappings["color"]
-    if (!(color_mapping %in% collections)) {
-      unformatted_msg <- paste(
-        "Error: For the %s geom, color mappings must have corresponding",
-        "collections if an explicit collection is provided."
-      )
-      errmsg <- sprintf(
-        unformatted_msg,
-        geom_name(geom)
-      )
-      stop(errmsg)
-    }
-  }
-  if ("groupings" %in% names(layer)) {
-    if (
-      any(
-        !(collections %in% layer$groupings)
-      )
-    ) {
-      unformatted_msg <- paste(
-        "Error: For the %s geom with a group by clause, cannot collect",
-        "on an expression that doesn't have a corresponding grouping."
-      )
-      errmsg <- sprintf(
-        unformatted_msg,
-        geom_name(geom)
-      )
-      stop(errmsg)
-    }
-  }
+extension.sgl_geom_box <- function(geom) {
+  1
 }
 
 #' @export

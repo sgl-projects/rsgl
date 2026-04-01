@@ -1,53 +1,41 @@
-valid_groupings <- function(layer, df) {
-  groupings_found <- "groupings" %in% names(layer)
-
-  if (groupings_found) {
-    counted_groupings <- filter_col_exprs_by_cta(layer$groupings, "count")
-    if (length(counted_groupings) > 0) {
-      stop("Error: expressions in the group by clause cannot be aggregations.")
-    }
-  }
-
-  aes_mappings <- layer$aes_mappings
-  count_mappings <- filter_col_exprs_by_cta(aes_mappings, "count")
-  aggregations_found <- length(count_mappings) > 0
-
-  if (!aggregations_found && !groupings_found) {
-    return()
-  }
-
-  non_aggregated_mappings <- aes_mappings[
-    !(aes_mappings %in% count_mappings)
+valid_groupings <- function(layer) {
+  viz_collect_exprs <- c(layer$aes_mappings, layer$collections)
+  viz_collect_aggs <- filter_col_exprs_by_cta(viz_collect_exprs, "count")
+  viz_collect_unaggs <- viz_collect_exprs[
+    !(viz_collect_exprs %in% viz_collect_aggs)
   ]
 
-  if (aggregations_found && !groupings_found) {
-    if (length(non_aggregated_mappings) > 0) {
+  if ("groupings" %in% names(layer)) {
+    groupings <- layer$groupings
+
+    group_agg_exprs <- filter_col_exprs_by_cta(groupings, "count")
+    if (length(group_agg_exprs) > 0) {
+      stop("Error: group by clause cannot contain aggregation expressions.")
+    }
+
+    ungrouped_aggs <- viz_collect_unaggs[
+      !(viz_collect_unaggs %in% groupings)
+    ]
+    if (length(ungrouped_aggs) > 0) {
       errmsg <- paste(
-        "Error: if aggregations are present, then all unaggregated",
-        "expressions in the visualize clause must be included",
-        "in the group by clause."
+        "Error: unaggregated expressions in the visualize",
+        "and collect by clauses must also be present in the",
+        "group by clause."
       )
       stop(errmsg)
     }
-    return()
-  }
-
-  if (!aggregations_found && groupings_found) {
-    errmsg <- paste(
-      "Error: if group by clause is provided then aggregation(s)",
-      "must be present in the visualize clause."
-    )
-    stop(errmsg)
-    return()
-  }
-
-  non_agg_mapping_has_grouping <- non_aggregated_mappings %in% layer$groupings
-  if (!all(non_agg_mapping_has_grouping)) {
-    errmsg <- paste(
-      "Error: if aggregations are present, then all unaggregated",
-      "expressions in the visualize clause must be included",
-      "in the group by clause."
-    )
-    stop(errmsg)
+  } else {
+    if (length(viz_collect_aggs) > 0) {
+      if (length(viz_collect_unaggs) > 0) {
+        errmsg <- paste(
+          "Error: given that aggregations are present,",
+          "all unaggregated expressions in the visualize",
+          "and collect by clause must also be included",
+          "in the group by clause.",
+          "However, no group by clause was provided."
+        )
+        stop(errmsg)
+      }
+    }
   }
 }
