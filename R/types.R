@@ -73,7 +73,7 @@ is_binned_mapping <- function(layer, aes) {
 type_classifications <- function(con, table_name) {
   sql <- sprintf(
     "select * from %s limit 1",
-    table_name
+    DBI::dbQuoteIdentifier(con, table_name)
   )
   df <- DBI::dbGetQuery(con, sql)
 
