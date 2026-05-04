@@ -1,0 +1,50 @@
+url: https://sgl-projects.github.io/rsgl/
+
+template:
+  bootstrap: 5
+  bootswatch: cosmo
+
+home:
+  title: rsgl — An R Implementation of the SGL Graphics Language
+  description: >
+    Generate visualizations from any DBI connection using SGL,
+    a grammar of graphics language designed to look and feel like SQL.
+
+navbar:
+  structure:
+    left:  [intro, reference, articles, news]
+    right: [search, github]
+  components:
+    intro:
+      text: Get started
+      href: articles/rsgl.html
+    articles:
+      text: Articles
+      menu:
+        - text: Example gallery
+          href: articles/example-gallery.html
+        - text: SGL language guide
+          href: articles/sgl-language-guide.html
+
+reference:
+  - title: Plotting
+    desc: Generate plots from SGL statements.
+    contents:
+      - dbGetPlot
+  - title: Type metadata
+    desc: Inspect and configure type classifications.
+    contents:
+      - type_classifications
+
+articles:
+  - title: Articles
+    navbar: ~
+    contents:
+      - rsgl
+      - example-gallery
+      - sgl-language-guide
+
+news:
+  releases:
+    - text: "Development version"
+      href: news/index.html
