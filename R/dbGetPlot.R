@@ -1,9 +1,9 @@
 #' Generate a plot from a SGL statement
 #'
-#' `dbGetPlot` takes a DuckDB connection and a SGL statement
+#' `dbGetPlot` takes a DBI connection and a SGL statement
 #' and returns the corresponding plot.
 #'
-#' @param con A DuckDB connection
+#' @param con A DBI connection
 #' @param sgl_stmt A SGL statement (string)
 #'
 #' @return The plot defined by the SGL statement (ggplot2 plot object)

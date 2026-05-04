@@ -24,77 +24,6 @@ df_with_supported_r_classes <- function() {
   df
 }
 
-test_that("create_tbl_stmt_for_type_test gives correct statement", {
-  col_types <- c("VARCHAR", "INTEGER")
-
-  actual_stmt <- create_tbl_stmt_for_type_test(col_types)
-
-  expected_stmt <- "create table type_test (
-	\"COL_VARCHAR\" VARCHAR,
-	\"COL_INTEGER\" INTEGER
-)"
-  expect_equal(actual_stmt, expected_stmt)
-})
-
-test_that("valid_duckdb_type doesnt raise error for valid types", {
-  col_types <- c("VARCHAR", "INTEGER")
-
-  expect_no_error(
-    valid_duckdb_types(col_types)
-  )
-})
-
-test_that("valid_duckdb_type raises error for invalid type", {
-  col_types <- c("VARCHAR", "INVALID_TYPE")
-
-  expect_error(
-    valid_duckdb_types(col_types),
-    "Type with name INVALID_TYPE does not exist!",
-    fixed = FALSE
-  )
-})
-
-test_that("types_are_supported_by_duckdb doesnt raise an error", {
-  expect_no_error(types_are_supported_by_duckdb())
-})
-
-test_that("rsgl types map to R classes as expected", {
-  actual_map <- map_rsgl_types_to_r_classes()
-
-  expected_map <- list(
-    numeric = c(
-      "BIGINT", "INT8", "LONG",
-      "DECIMAL", "NUMERIC",
-      "DOUBLE", "FLOAT8",
-      "FLOAT", "FLOAT4", "REAL",
-      "HUGEINT",
-      "UBIGINT",
-      "UHUGEINT",
-      "UINTEGER"
-    ),
-    logical = c("BOOLEAN", "BOOL", "LOGICAL"),
-    Date = c("DATE"),
-    factor = c("TEST_ENUM"),
-    integer = c(
-      "INTEGER", "INT4", "INT", "SIGNED",
-      "SMALLINT", "INT2", "SHORT",
-      "TINYINT", "INT1",
-      "USMALLINT",
-      "UTINYINT"
-    ),
-    difftime = c("INTERVAL", "TIME"),
-    POSIXct = c(
-      "TIMESTAMP WITH TIME ZONE", "TIMESTAMPTZ",
-      "TIMESTAMP", "DATETIME"
-    ),
-    character = c(
-      "UUID",
-      "VARCHAR", "CHAR", "BPCHAR", "TEXT", "STRING"
-    )
-  )
-  expect_equal(actual_map, expected_map)
-})
-
 test_that("is_numerical_col determines whether column is numerical", {
   df <- df_with_supported_r_classes()
 
@@ -132,130 +61,6 @@ test_that("is_temporal_col determines whether column is temporal", {
   expect_equal(is_temporal_col(df$POSIXct_col), TRUE)
   expect_equal(is_temporal_col(df$character_col), FALSE)
   expect_equal(is_temporal_col(df$factor_col), FALSE)
-})
-
-test_that(
-  "rsgl_types returns all supported types when no class is provided",
-  {
-    actual_types <- rsgl_types()
-
-    expected_types <- c(
-      "BIGINT",
-      "INT8",
-      "LONG",
-      "BOOLEAN",
-      "BOOL",
-      "LOGICAL",
-      "DATE",
-      "DECIMAL",
-      "TEST_ENUM",
-      "NUMERIC",
-      "DOUBLE",
-      "FLOAT8",
-      "FLOAT",
-      "FLOAT4",
-      "REAL",
-      "HUGEINT",
-      "INTEGER",
-      "INT4",
-      "INT",
-      "SIGNED",
-      "INTERVAL",
-      "SMALLINT",
-      "INT2",
-      "SHORT",
-      "TIME",
-      "TIMESTAMP WITH TIME ZONE",
-      "TIMESTAMPTZ",
-      "TIMESTAMP",
-      "DATETIME",
-      "TINYINT",
-      "INT1",
-      "UBIGINT",
-      "UHUGEINT",
-      "UINTEGER",
-      "USMALLINT",
-      "UTINYINT",
-      "UUID",
-      "VARCHAR",
-      "CHAR",
-      "BPCHAR",
-      "TEXT",
-      "STRING"
-    )
-
-    expect_equal(actual_types, expected_types)
-  }
-)
-
-test_that("rsgl_types returns all numerical types", {
-  actual_types <- rsgl_types("numerical")
-
-  expected_types <- c(
-    "BIGINT",
-    "INT8",
-    "LONG",
-    "DECIMAL",
-    "NUMERIC",
-    "DOUBLE",
-    "FLOAT8",
-    "FLOAT",
-    "FLOAT4",
-    "REAL",
-    "HUGEINT",
-    "INTEGER",
-    "INT4",
-    "INT",
-    "SIGNED",
-    "INTERVAL",
-    "SMALLINT",
-    "INT2",
-    "SHORT",
-    "TIME",
-    "TINYINT",
-    "INT1",
-    "UBIGINT",
-    "UHUGEINT",
-    "UINTEGER",
-    "USMALLINT",
-    "UTINYINT"
-  )
-
-  expect_equal(actual_types, expected_types)
-})
-
-test_that("rsgl_types returns all categorical types", {
-  actual_types <- rsgl_types("categorical")
-
-  expected_types <- c(
-    "BOOLEAN",
-    "BOOL",
-    "LOGICAL",
-    "TEST_ENUM",
-    "UUID",
-    "VARCHAR",
-    "CHAR",
-    "BPCHAR",
-    "TEXT",
-    "STRING"
-  )
-
-  expect_equal(actual_types, expected_types)
-})
-
-
-test_that("rsgl_types returns all temporal types", {
-  actual_types <- rsgl_types("temporal")
-
-  expected_types <- c(
-    "DATE",
-    "TIMESTAMP WITH TIME ZONE",
-    "TIMESTAMPTZ",
-    "TIMESTAMP",
-    "DATETIME"
-  )
-
-  expect_equal(actual_types, expected_types)
 })
 
 test_that("is_numerical_mapping returns true for count star", {
@@ -377,4 +182,32 @@ test_that("is_binned_mapping determines whether mapping is binned", {
   expect_equal(is_binned_mapping(layer, "x"), TRUE)
   expect_equal(is_binned_mapping(layer, "y"), FALSE)
   expect_equal(is_binned_mapping(layer, "color"), FALSE)
+})
+
+test_that("type_classifications raises error if table doesn't exist", {
+  expect_error(
+    type_classifications(test_con, "not_a_table"),
+    "Error: Table with name not_a_table does not exist!"
+  )
+})
+
+test_that("type_classifications returns correct classes for table cols", {
+  DBI::dbBegin(test_con)
+  withr::defer(DBI::dbRollback(test_con))
+  DBI::dbExecute(test_con, "alter table synth add column blob_col BLOB")
+
+  actual <- type_classifications(test_con, "synth")
+
+  expected <- data.frame(
+    column_name = c(
+      "letter", "number", "day",
+      "day_and_time", "boolean", "blob_col"
+    ),
+    column_class = c(
+      "categorical", "numerical", "temporal",
+      "temporal", "categorical", "unknown"
+    )
+  )
+
+  expect_equal(actual, expected)
 })

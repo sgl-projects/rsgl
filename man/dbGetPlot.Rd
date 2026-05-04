@@ -7,7 +7,7 @@
 dbGetPlot(con, sgl_stmt)
 }
 \arguments{
-\item{con}{A DuckDB connection}
+\item{con}{A DBI connection}
 
 \item{sgl_stmt}{A SGL statement (string)}
 }
@@ -15,7 +15,7 @@ dbGetPlot(con, sgl_stmt)
 The plot defined by the SGL statement (ggplot2 plot object)
 }
 \description{
-\code{dbGetPlot} takes a DuckDB connection and a SGL statement
+\code{dbGetPlot} takes a DBI connection and a SGL statement
 and returns the corresponding plot.
 }
 \examples{
