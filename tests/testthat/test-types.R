@@ -211,3 +211,20 @@ test_that("type_classifications returns correct classes for table cols", {
 
   expect_equal(actual, expected)
 })
+
+test_that("type_classifications handles table names needing quoting", {
+  DBI::dbBegin(test_con)
+  withr::defer(DBI::dbRollback(test_con))
+  DBI::dbExecute(
+    test_con,
+    'create table "weird-name" (a INTEGER, b VARCHAR)'
+  )
+
+  actual <- type_classifications(test_con, "weird-name")
+
+  expected <- data.frame(
+    column_name = c("a", "b"),
+    column_class = c("numerical", "categorical")
+  )
+  expect_equal(actual, expected)
+})
