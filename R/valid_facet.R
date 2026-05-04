@@ -20,8 +20,9 @@ col_type <- function(col_name, df) {
     return("numerical")
   }
   if (is_temporal_col(col)) {
-    "temporal"
+    return("temporal")
   }
+  "unknown"
 }
 all_types <- function(col_name, dfs) {
   unique(unlist(sapply(dfs, function(df) col_type(col_name, df))))
@@ -62,6 +63,17 @@ valid_facet <- function(rgs, dfs) {
   }
   for (facet_col in facet_col_names) {
     facet_col_types <- all_types(facet_col, dfs)
+    if ("unknown" %in% facet_col_types) {
+      unformatted_msg <- paste(
+        "Error: unknown SGL type classification",
+        "(numerical, categorical, or temporal)",
+        "for column '%s'."
+      )
+      err_msg <- sprintf(
+        unformatted_msg, facet_col
+      )
+      stop(err_msg)
+    }
     if (length(facet_col_types) > 1) {
       unformatted_msg <- paste(
         "Error: facet column '%s' does not have a consistent type",

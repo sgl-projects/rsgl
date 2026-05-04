@@ -356,6 +356,35 @@ patrick::with_parameters_test_that(
   .cases = inconsistent_type_cases()
 )
 
+test_that("raises error if facet col has unknown type class", {
+  DBI::dbBegin(test_con)
+  withr::defer(DBI::dbRollback(test_con))
+  DBI::dbExecute(test_con, "alter table synth add column blob_col BLOB")
+
+  rgs <- sgl_to_rgs("
+    visualize
+      letter as x,
+      number as y
+    from synth
+    using line
+
+    facet by
+      blob_col
+  ")
+  dfs <- result_dfs(rgs, test_con)
+
+  expected_msg <- paste(
+    "Error: unknown SGL type classification",
+    "(numerical, categorical, or temporal)",
+    "for column 'blob_col'."
+  )
+  expect_error(
+    valid_facet(rgs, dfs),
+    expected_msg,
+    fixed = TRUE
+  )
+})
+
 test_that("raises error for invalid faceting with multiple layers", {
   rgs <- sgl_to_rgs("
     visualize
