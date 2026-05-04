@@ -7,7 +7,7 @@ template:
 home:
   title: rsgl — An R Implementation of the SGL Graphics Language
   description: >
-    Generate ggplot2 visualizations from any DBI connection using SGL,
+    Generate visualizations from any DBI connection using SGL,
     a grammar of graphics language designed to look and feel like SQL.
 
 navbar:
