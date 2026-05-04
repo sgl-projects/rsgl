@@ -2,6 +2,7 @@ validate_semantics <- function(rgs, dfs) {
   Map(
     function(layer, df) {
       valid_column_refs(layer, df)
+      valid_column_classes(layer, df)
       valid_ctas(layer, df)
       valid_aesthetics(layer)
       valid_groupings(layer)

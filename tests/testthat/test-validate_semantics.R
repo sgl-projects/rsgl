@@ -30,6 +30,32 @@ test_that("raises error if column name doesn't exist", {
   )
 })
 
+test_that("raises error if column class is invalid", {
+  DBI::dbBegin(test_con)
+  withr::defer(DBI::dbRollback(test_con))
+  DBI::dbExecute(test_con, "alter table synth add column blob_col BLOB")
+
+  rgs <- sgl_to_rgs("
+    visualize
+      blob_col as x,
+      number as y
+    from synth
+    using points
+  ")
+  dfs <- result_dfs(rgs, test_con)
+
+  expected_msg <- paste(
+    "Error: unknown SGL type classification",
+    "(numerical, categorical, or temporal)",
+    "for column 'blob_col.'"
+  )
+  expect_error(
+    validate_semantics(rgs, dfs),
+    expected_msg,
+    fixed = TRUE
+  )
+})
+
 test_that("raises error for invalid cta", {
   rgs <- sgl_to_rgs("
     visualize
