@@ -1,0 +1,36 @@
+Package: rsgl
+Title: An R Implementation of the SGL Graphics Language
+Version: 0.0.0.9000
+Authors@R:
+    person(
+			"Jon", "Chapman", , "jochapjo@icloud.com",
+			role = c("aut", "cre"),
+		)
+Description: rsgl is an R package that implements the SGL graphics language.
+License: MIT + file LICENSE
+URL: https://github.com/sgl-projects/rsgl, https://arxiv.org/pdf/2505.14690
+BugReports: https://github.com/sgl-projects/rsgl/issues
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Suggests: 
+    testthat (>= 3.0.0),
+    vdiffr,
+    lubridate,
+    knitr,
+    rmarkdown,
+    patrick,
+    tibble,
+		withr
+Config/testthat/edition: 3
+Imports: 
+    DBI,
+    dplyr,
+    duckdb,
+    ggplot2,
+    purrr,
+    Rcpp,
+		rlang
+LinkingTo: 
+    Rcpp
+VignetteBuilder: knitr

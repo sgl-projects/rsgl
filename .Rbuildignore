@@ -1,0 +1,10 @@
+^LICENSE\.md$
+^README\.Rmd$
+^\.github$
+^makefile$
+^src/test
+^src/scanner\.l$
+^src/parser\.y$
+^doc$
+^Meta$
+^\.claude$

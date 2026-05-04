@@ -1,0 +1,4 @@
+*.swp
+
+# Claude Code (local settings, skills, agents, commands, credentials)
+.claude/
