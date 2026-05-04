@@ -1,0 +1,42 @@
+# SGL language guide
+
+``` r
+
+library(rsgl)
+```
+
+A reference for the SGL grammar — designed to look and feel like SQL —
+as implemented by rsgl.
+
+## Statement shape
+
+*Placeholder.* The overall form:
+`visualize <aesthetics> from <source> using <geom> [<graphic clauses>]`.
+
+## Aesthetics
+
+*Placeholder.* Position aesthetics (`x`, `y`), non-position aesthetics
+(`color`, `fill`, `size`, …), and how column references map to them.
+
+## Sources
+
+*Placeholder.* Tables and subqueries.
+
+## Geoms
+
+*Placeholder.* `points`, `bars`, `lines`, `boxes` (and the `box` alias),
+and any representation modifiers.
+
+## Column transformations and aggregations (CTAs)
+
+*Placeholder.* `bin`, `count`, `avg`, and the implicit `identity` CTA.
+
+## Graphic clauses
+
+*Placeholder.* `scale`, `facet`, and `title` — order-independent after
+`using`.
+
+## Errors
+
+*Placeholder.* What parser and validation errors look like and how to
+read them.
