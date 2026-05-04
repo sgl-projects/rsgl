@@ -40,7 +40,7 @@ describe("valid_column_class", {
       expected_msg <- paste(
         "Error: unknown SGL type classification",
         "(numerical, categorical, or temporal)",
-        "for column 'blob_col.'"
+        "for column 'blob_col'."
       )
       expect_error(
         valid_column_class("blob_col", test_df_w_blob),
@@ -94,7 +94,7 @@ describe("valid_column_classes", {
       expected_msg <- paste(
         "Error: unknown SGL type classification",
         "(numerical, categorical, or temporal)",
-        "for column 'blob_col.'"
+        "for column 'blob_col'."
       )
       expect_error(
         valid_column_classes(layer, df),
@@ -124,7 +124,7 @@ describe("valid_column_classes", {
       expected_msg <- paste(
         "Error: unknown SGL type classification",
         "(numerical, categorical, or temporal)",
-        "for column 'blob_col.'"
+        "for column 'blob_col'."
       )
       expect_error(
         valid_column_classes(layer, df),
@@ -155,7 +155,7 @@ describe("valid_column_classes", {
       expected_msg <- paste(
         "Error: unknown SGL type classification",
         "(numerical, categorical, or temporal)",
-        "for column 'blob_col.'"
+        "for column 'blob_col'."
       )
       expect_error(
         valid_column_classes(layer, df),
