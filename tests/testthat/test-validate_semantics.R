@@ -47,7 +47,7 @@ test_that("raises error if column class is invalid", {
   expected_msg <- paste(
     "Error: unknown SGL type classification",
     "(numerical, categorical, or temporal)",
-    "for column 'blob_col.'"
+    "for column 'blob_col'."
   )
   expect_error(
     validate_semantics(rgs, dfs),

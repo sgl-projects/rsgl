@@ -13,7 +13,7 @@ valid_column_class <- function(column, df) {
   unformatted_msg <- paste(
     "Error: unknown SGL type classification",
     "(numerical, categorical, or temporal)",
-    "for column '%s.'"
+    "for column '%s'."
   )
   err_msg <- sprintf(unformatted_msg, column)
   stop(err_msg)
