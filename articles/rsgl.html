@@ -75,33 +75,244 @@
 
     
     
+<p>This tutorial introduces the SGL language as well as usage of the
+rsgl package.</p>
+<div class="section level2">
+<h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
+</h2>
+<p>For use with the examples in this tutorial, we will create an
+in-memory <a href="https://duckdb.org" class="external-link">DuckDB</a> database and load it
+with two tables, <code>cars</code> and <code>trees</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sgl-projects/rsgl" class="external-link">rsgl</a></span><span class="op">)</span></span></code></pre></div>
-<div class="section level2">
-<h2 id="what-is-sgl">What is SGL?<a class="anchor" aria-label="anchor" href="#what-is-sgl"></a>
-</h2>
-<p><em>Placeholder.</em> A short pitch for SGL — a grammar of graphics
-language designed to look and feel like SQL — and how rsgl translates
-SGL statements against any DBI connection into a <code>ggplot2</code>
-plot.</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sgl-projects/rsgl" class="external-link">rsgl</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'rsgl'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:datasets':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     cars, trees</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r.duckdb.org/" class="external-link">duckdb</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: DBI</span></span>
+<span></span>
+<span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu"><a href="https://r.duckdb.org/reference/duckdb.html" class="external-link">duckdb</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbWriteTable.html" class="external-link">dbWriteTable</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"cars"</span>, <span class="va">cars</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbWriteTable.html" class="external-link">dbWriteTable</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"trees"</span>, <span class="va">trees</span><span class="op">)</span></span></code></pre></div>
+<p>Let’s query each to view a sample of data:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbGetQuery.html" class="external-link">dbGetQuery</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span>
+<span><span class="st">  select *</span></span>
+<span><span class="st">  from cars</span></span>
+<span><span class="st">  limit 5</span></span>
+<span><span class="st">"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   car_id horsepower miles_per_gallon origin year</span></span>
+<span><span class="co">#&gt; 1      1        130               18    USA 1970</span></span>
+<span><span class="co">#&gt; 2      2        165               15    USA 1970</span></span>
+<span><span class="co">#&gt; 3      3        150               18    USA 1970</span></span>
+<span><span class="co">#&gt; 4      4        150               16    USA 1970</span></span>
+<span><span class="co">#&gt; 5      5        140               17    USA 1970</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbGetQuery.html" class="external-link">dbGetQuery</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span>
+<span><span class="st">  select *</span></span>
+<span><span class="st">  from trees</span></span>
+<span><span class="st">  limit 5</span></span>
+<span><span class="st">"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   tree_id  age circumference</span></span>
+<span><span class="co">#&gt; 1       1  118            30</span></span>
+<span><span class="co">#&gt; 2       1  484            58</span></span>
+<span><span class="co">#&gt; 3       1  664            87</span></span>
+<span><span class="co">#&gt; 4       1 1004           115</span></span>
+<span><span class="co">#&gt; 5       1 1231           120</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+<h2 id="dbgetplot">dbGetPlot<a class="anchor" aria-label="anchor" href="#dbgetplot"></a>
 </h2>
-<p><em>Placeholder.</em> Install instructions (CRAN once published, dev
-version from GitHub).</p>
+<p>The primary interface to rsgl is the <code>dbGetPlot</code> function,
+which takes a <a href="https://dbi.r-dbi.org" class="external-link">DBI</a> database
+connection and a SGL statement and returns a <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> plot. Although the
+examples in this tutorial use a connection to a DuckDB database,
+<code>dbGetPlot</code> will accept any DBI connection.</p>
 </div>
 <div class="section level2">
-<h2 id="your-first-plot">Your first plot<a class="anchor" aria-label="anchor" href="#your-first-plot"></a>
+<h2 id="the-sgl-language">The SGL Language<a class="anchor" aria-label="anchor" href="#the-sgl-language"></a>
 </h2>
-<p><em>Placeholder.</em> End-to-end example: open a DBI connection,
-write data, call <code><a href="../reference/dbGetPlot.html">dbGetPlot()</a></code> with an SGL statement.</p>
+<div class="section level3">
+<h3 id="the-from-clause">The From Clause<a class="anchor" aria-label="anchor" href="#the-from-clause"></a>
+</h3>
+<p>The <code>from</code> keyword precedes a data source specification,
+which is often the name of a table in the database. Here, we specify the
+<code>cars</code> table as the data source.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/dbGetPlot.html">dbGetPlot</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span>
+<span><span class="st">  visualize</span></span>
+<span><span class="st">    horsepower as x,</span></span>
+<span><span class="st">    miles_per_gallon as y</span></span>
+<span><span class="st">  from cars</span></span>
+<span><span class="st">  using points</span></span>
+<span><span class="st">"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 14 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<p><img src="rsgl_files/figure-html/from_cars-1.png" class="r-plt" alt="" width="700"></p>
+<p>This is similar in usage to the <code>from</code> keyword in SQL,
+except that only a single data source is allowed (i.e., a
+comma-separated list of table names is not valid). If data from multiple
+sources or pre-processing of data is necessary, then a SQL subquery can
+be provided:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/dbGetPlot.html">dbGetPlot</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span>
+<span><span class="st">  visualize</span></span>
+<span><span class="st">    horsepower as x,</span></span>
+<span><span class="st">    miles_per_gallon as y</span></span>
+<span><span class="st">  from (</span></span>
+<span><span class="st">    select *</span></span>
+<span><span class="st">    from cars</span></span>
+<span><span class="st">    where origin = 'Japan'</span></span>
+<span><span class="st">  )</span></span>
+<span><span class="st">  using points</span></span>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="rsgl_files/figure-html/from_subquery-1.png" class="r-plt" alt="" width="700"></p>
 </div>
-<div class="section level2">
-<h2 id="where-to-next">Where to next<a class="anchor" aria-label="anchor" href="#where-to-next"></a>
-</h2>
-<p><em>Placeholder.</em> Pointers to the example gallery and the SGL
-language guide.</p>
+<div class="section level3">
+<h3 id="the-using-clause">The Using Clause<a class="anchor" aria-label="anchor" href="#the-using-clause"></a>
+</h3>
+<p>The <code>using</code> keyword precedes the name of the geometric
+object(s) that will represent the data. Following ggplot2 terminology,
+these geometric objects are referred to as geoms. Our previous examples
+demonstrated representing data with point geoms.</p>
+</div>
+<div class="section level3">
+<h3 id="the-visualize-clause">The Visualize Clause<a class="anchor" aria-label="anchor" href="#the-visualize-clause"></a>
+</h3>
+<p>The <code>visualize</code> keyword precedes the aesthetic-to-column
+mapping, which maps perceivable traits of the geoms to data source
+columns. Our prior examples mapped the <code>x</code> and <code>y</code>
+positions of the point geoms to data source columns. However, aesthetics
+may be non-positional, as shown below. The <code>visualize</code>
+keyword most closely resembles the <code>select</code> keyword within
+SQL.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/dbGetPlot.html">dbGetPlot</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span>
+<span><span class="st">  visualize</span></span>
+<span><span class="st">    horsepower as x,</span></span>
+<span><span class="st">    miles_per_gallon as y,</span></span>
+<span><span class="st">    origin as color</span></span>
+<span><span class="st">  from cars</span></span>
+<span><span class="st">  using points</span></span>
+<span><span class="st">"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 14 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<p><img src="rsgl_files/figure-html/visualize-1.png" class="r-plt" alt="" width="700"></p>
+<p>In addition to mapping aesthetics to columns, aesthetics can be
+mapped to expressions that include transformations and aggregations.</p>
+</div>
+<div class="section level3">
+<h3 id="column-level-transformations-and-aggregations">Column-Level Transformations and Aggregations<a class="anchor" aria-label="anchor" href="#column-level-transformations-and-aggregations"></a>
+</h3>
+<p>SGL supports column-level transformations and aggregations, as shown
+below where a binning transformation is combined with a count
+aggregation to produce a histogram on <code>miles_per_gallon</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/dbGetPlot.html">dbGetPlot</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span>
+<span><span class="st">  visualize</span></span>
+<span><span class="st">    bin(miles_per_gallon) as x,</span></span>
+<span><span class="st">    count(*) as y</span></span>
+<span><span class="st">  from cars</span></span>
+<span><span class="st">  group by</span></span>
+<span><span class="st">    bin(miles_per_gallon)</span></span>
+<span><span class="st">  using bars</span></span>
+<span><span class="st">"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 1 row containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_bar()`).</span></span></code></pre></div>
+<p><img src="rsgl_files/figure-html/histogram-1.png" class="r-plt" alt="" width="700"></p>
+<p>Here we see that, similarly to SQL, SGL has a <code>group by</code>
+clause where aggregation groupings are specified.</p>
+<p>Although SQL itself supports column-level transformation, grouping,
+and aggregation, it is desirable for SGL to provide additional support
+for these operations. Statistical graphics often require operations such
+as binning that are not natively supported by SQL. Additionally, SGL’s
+column-level transformations and aggregations are performed after
+scaling, which cannot easily be replicated using SQL. Below is an
+example of this feature, where binning and counting are applied after
+log scaling, resulting in a log-scaled histogram.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/dbGetPlot.html">dbGetPlot</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span>
+<span><span class="st">  visualize</span></span>
+<span><span class="st">    bin(miles_per_gallon) as x,</span></span>
+<span><span class="st">    count(*) as y</span></span>
+<span><span class="st">  from cars</span></span>
+<span><span class="st">  group by</span></span>
+<span><span class="st">    bin(miles_per_gallon)</span></span>
+<span><span class="st">  using bars</span></span>
+<span><span class="st">  scale by</span></span>
+<span><span class="st">    log(x)</span></span>
+<span><span class="st">"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 1 row containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_bar()`).</span></span></code></pre></div>
+<p><img src="rsgl_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="700"></p>
+</div>
+<div class="section level3">
+<h3 id="the-collect-by-clause">The Collect By Clause<a class="anchor" aria-label="anchor" href="#the-collect-by-clause"></a>
+</h3>
+<p>In SGL, a geom is classified as individual if it represents each
+record (after transformation and aggregation) by a distinct geometric
+object. Alternatively, a geom is classified as collective if it
+represents multiple records by one geometric object. For example, points
+and lines are individual and collective geoms, respectively, as shown
+below where the same data is represented using each.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/dbGetPlot.html">dbGetPlot</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span>
+<span><span class="st">  visualize</span></span>
+<span><span class="st">    year as x,</span></span>
+<span><span class="st">    avg(miles_per_gallon) as y</span></span>
+<span><span class="st">  from cars</span></span>
+<span><span class="st">  group by</span></span>
+<span><span class="st">    year</span></span>
+<span><span class="st">  using points</span></span>
+<span><span class="st">"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 3 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<p><img src="rsgl_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/dbGetPlot.html">dbGetPlot</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span>
+<span><span class="st">  visualize</span></span>
+<span><span class="st">    year as x,</span></span>
+<span><span class="st">    avg(miles_per_gallon) as y</span></span>
+<span><span class="st">  from cars</span></span>
+<span><span class="st">  group by</span></span>
+<span><span class="st">    year</span></span>
+<span><span class="st">  using line</span></span>
+<span><span class="st">"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 3 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_line()`).</span></span></code></pre></div>
+<p><img src="rsgl_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="700"></p>
+<p>For collective geoms, the collection of records to represent by each
+object is determined automatically using reasonable defaults. This
+behavior can be overridden by providing explicit collections in the
+<code>collect by</code> clause. The <code>collect by</code> clause is
+similar to the <code>group by</code> clause, except that rather than
+defining groups to aggregate by, the <code>collect by</code> clause
+defines collections of records to be represented by one object. Below we
+see an example where the default collection is not ideal, followed by a
+preferrable explicit collection.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/dbGetPlot.html">dbGetPlot</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span>
+<span><span class="st">  visualize</span></span>
+<span><span class="st">    age as x,</span></span>
+<span><span class="st">    circumference as y</span></span>
+<span><span class="st">  from trees</span></span>
+<span><span class="st">  using line</span></span>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="rsgl_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/dbGetPlot.html">dbGetPlot</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span>
+<span><span class="st">  visualize</span></span>
+<span><span class="st">    age as x,</span></span>
+<span><span class="st">    circumference as y</span></span>
+<span><span class="st">  from trees</span></span>
+<span><span class="st">  collect by</span></span>
+<span><span class="st">    tree_id</span></span>
+<span><span class="st">  using lines</span></span>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="rsgl_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="700"></p>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

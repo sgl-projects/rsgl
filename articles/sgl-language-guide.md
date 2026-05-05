@@ -3,6 +3,11 @@
 ``` r
 
 library(rsgl)
+#> 
+#> Attaching package: 'rsgl'
+#> The following objects are masked from 'package:datasets':
+#> 
+#>     cars, trees
 ```
 
 A reference for the SGL grammar — designed to look and feel like SQL —

@@ -3,6 +3,11 @@
 ``` r
 
 library(rsgl)
+#> 
+#> Attaching package: 'rsgl'
+#> The following objects are masked from 'package:datasets':
+#> 
+#>     cars, trees
 ```
 
 A curated tour of plots produced by rsgl, organized by geom.
