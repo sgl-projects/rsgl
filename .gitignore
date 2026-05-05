@@ -2,3 +2,9 @@
 
 # Claude Code (local settings, skills, agents, commands, credentials)
 .claude/
+
+# pkgdown site (built and deployed by .github/workflows/pkgdown.yaml)
+docs/
+
+# Knit side-effect; GitHub renders README.md
+README.html
