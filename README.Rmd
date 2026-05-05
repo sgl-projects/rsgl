@@ -19,18 +19,34 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/sgl-projects/rsgl/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sgl-projects/rsgl/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-This project implements the [SGL graphics language](https://arxiv.org/pdf/2505.14690).
+rsgl implements the [SGL graphics language](https://arxiv.org/pdf/2505.14690) for use within R.
+SGL is a graphics language that is designed to look and feel like SQL,
+and is based on the grammar of graphics.
 
-## Usage 
+## Installation
 
-The interface to rsgl is the `dbGetPlot` function, which takes a DuckDB connection and a SGL statement and returns a plot. The example below demonstrates creating an in-memory DuckDB database, loading data, and generating a scatterplot.
+rsgl is not yet available on CRAN but can be installed from GitHub with:
+```{r, eval=FALSE}
+# install.packages("devtools")
+devtools::install_github("sgl-projects/rsgl")
+```
 
-```{r example_usage}
+## Usage
+`dbGetPlot` is the primary interface to rsgl.
+It takes a [DBI](https://dbi.r-dbi.org) database connection
+and a SGL statement and returns a [ggplot2](https://ggplot2.tidyverse.org) plot.
+
+The following example demonstrates creating a DBI connection to an in-memory
+[DuckDB](https://duckdb.org) database, loading it with data,
+and then generating a scatterplot from a SGL statement.
+
+```{r usage}
 library(duckdb)
 library(rsgl)
 
 con <- dbConnect(duckdb())
 dbWriteTable(con, "cars", mtcars)
+
 dbGetPlot(con, "
 	visualize
 		hp as x,
