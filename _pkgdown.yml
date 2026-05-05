@@ -35,6 +35,11 @@ reference:
     desc: Inspect and configure type classifications.
     contents:
       - type_classifications
+  - title: Datasets
+    desc: Sample data used in examples and vignettes.
+    contents:
+      - cars
+      - trees
 
 articles:
   - title: Articles
