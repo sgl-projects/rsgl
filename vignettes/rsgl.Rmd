@@ -226,3 +226,257 @@ dbGetPlot(con, "
   using lines
 ")
 ```
+
+### Geom Qualifiers
+
+Geom qualifiers modify how geoms positionally represent data, and are specified as keywords that precede geom names within the `using` clause.
+Geom qualifiers can largely be classified into two groups, statistical qualifiers and collision qualifiers.
+Statistical qualifiers modify the positional representation via statistical transformation, such as linear regression:
+
+```{r}
+dbGetPlot(con, "
+  visualize
+    age as x,
+    circumference as y
+  from trees
+  using regression line
+")
+```
+
+Collision qualifiers specify positional adjustments that are relevant to overlapping objects.
+Below we see an example of using the `jittered` qualifier to add a small amount of random variation
+so that overlapping points are discernible.
+
+Without the `jittered` qualifier:
+```{r}
+dbGetPlot(con, "
+  visualize
+    origin as x,
+    miles_per_gallon as y
+  from cars
+  using points
+")
+```
+
+With the `jittered` qualifier:
+```{r}
+dbGetPlot(con, "
+  visualize
+    origin as x,
+    miles_per_gallon as y
+  from cars
+  using jittered points
+")
+```
+
+### The Layer Operator
+
+The graphics in previous sections contain a single layer of geometric objects.
+However, it is common to use multiple layers of objects to represent data in a single graphic.
+In SGL, multiple layers can be combined using the `layer` operator.
+For example, we can layer a regression line on a scatterplot:
+
+```{r}
+dbGetPlot(con, "
+  visualize
+    horsepower as x,
+    miles_per_gallon as y
+  from cars
+  using points
+
+  layer
+
+  visualize
+    horsepower as x,
+    miles_per_gallon as y
+  from cars
+  using regression line
+")
+```
+
+Layers often share a data source and aesthetic mapping.
+To reduce verbosity in these cases, the `layer` operator can be applied directly to geom expressions:
+
+```{r}
+dbGetPlot(con, "
+  visualize
+    horsepower as x,
+    miles_per_gallon as y
+  from cars
+  using (
+    points
+    layer
+    regression line
+  )
+")
+```
+
+Layers may have different data sources and aesthetic mappings.
+However, a graphic has a single scale for each aesthetic, regardless of the number of layers.
+As a result, a given aesthetic must be mapped to consistent type across all layers where it is present,
+e.g. an aesthetic cannot be mapped to a numerical type in one layer and a categorical type in another.
+
+### The Scale By Clause
+
+Each mapped aesthetic has a scale that determines how data values are mapped to the corresponding visual property.
+Scales are determined implicitly by default,
+but can be explicitly specified within the `scale by` clause.
+Below we specify a `log` scale for the `x` and `y` aesthetics,
+overriding the default linear scaling for numerical mappings:
+
+```{r}
+dbGetPlot(con, "
+  visualize
+    horsepower as x,
+    miles_per_gallon as y
+  from cars
+  using (
+    points
+    layer
+    regression line
+  )
+  scale by
+    log(x), log(y)
+")
+```
+
+Scaling is performed prior to column-level transformations and aggregations.
+Additionally, scaling is performed prior to any positional modifications specified by geom qualifiers,
+e.g., the regression calculation above is performed after log-scaling the x and y aesthetics.
+
+Scaling functions such as `log` are applied to aesthetic names rather than column names as these are modifications to aesthetic scales rather than actual data values.
+This distinction is demonstrated below, where a `log` function is instead applied to actual data values in a SQL subquery:
+
+```{r}
+dbGetPlot(con, "
+  visualize
+    log_hp as x,
+    log_mpg as y
+  from (
+    select
+      log(horsepower) as log_hp,
+      log(miles_per_gallon) as log_mpg
+    from cars
+  )
+  using (
+    points
+    layer
+    regression line
+  )
+")
+```
+
+### Coordinate Systems
+
+The graphics in prior examples use Cartesian coordinates, but alternative coordinate systems are valid.
+In SGL, the coordinate system is inferred from the positional aesthetics in the `visualize` clause.
+For example, `x` and `y` aesthetics imply Cartesian coordinates, whereas `theta` and `r` imply polar coordinates.
+
+The examples below display the same information in Cartesian and polar coordinates.
+In the grammar of graphics (which SGL is based on),
+pie charts are stacked bar charts in a polar coordinate system.
+In SGL, the bar geom is stacked by default.
+
+```{r}
+dbGetPlot(con, "
+  visualize
+    count(*) as y,
+    origin as color
+  from cars
+  group by
+    origin
+  using bars
+")
+```
+
+```{r}
+dbGetPlot(con, "
+  visualize
+    count(*) as theta,
+    origin as color
+  from cars
+  group by
+    origin
+  using bars
+")
+```
+
+Since a SGL statement may have multiple layers,
+it may also have multiple `visualize` clauses, each with positional aesthetic mappings.
+Since a graphic has a single coordinate system, the positional aesthetics referenced across layers must be consistent,
+e.g. one layer cannot reference `x` and `y` aesthetics while another references `theta` and `r`.
+
+### The Facet By Clause
+
+Faceting generates small multiples where each panel represents a different partition of the source data.
+Partitioning is determined by the unique values for expressions specified in the `facet by` clause.
+Faceting by a single expression generates horizontal panels by default,
+but this can be modified with an orientation keyword:
+
+```{r}
+dbGetPlot(con, "
+  visualize
+    horsepower as x,
+    miles_per_gallon as y
+  from cars
+  using points
+  facet by
+    origin
+")
+```
+
+```{r}
+dbGetPlot(con, "
+  visualize
+    horsepower as x,
+    miles_per_gallon as y
+  from cars
+  using points
+  facet by
+    origin vertically
+")
+```
+
+Two facet expressions may be specified, in which case one expression is represented horizontally while the other is represented vertically:
+
+```{r}
+dbGetPlot(con, "
+  visualize
+    horsepower as x,
+    miles_per_gallon as y
+  from (
+    select
+      *,
+      case
+        when year < 1977
+        then '< 1977'
+        else '>= 1977'
+      end as 'era'
+    from cars
+  )
+  using points
+  facet by
+    era,
+    origin
+")
+```
+
+In SGL, facets are a graphic-level property, meaning that each SGL statement has at most one `facet by` clause, and that each layer is faceted accordingly.
+
+### The Title Clause
+
+Titles for aesthetic scales are automatically determined from aesthetic mappings.
+However, this can be overridden by providing explicit titles in the `title` clause:
+
+```{r}
+dbGetPlot(con, "
+  visualize
+    horsepower as x,
+    miles_per_gallon as y
+  from cars
+  using points
+  title
+    x as 'Horsepower',
+    y as 'Miles Per Gallon'
+")
+```
