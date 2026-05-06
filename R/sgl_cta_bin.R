@@ -58,3 +58,21 @@ is_aggregation.sgl_cta_bin <- function(cta) {
 is_transformation.sgl_cta_bin <- function(cta) {
   TRUE
 }
+
+#' @export
+default_title.sgl_cta_bin <- function(cta, col_expr) {
+  if ("arg" %in% names(col_expr)) {
+    title <- sprintf(
+      "%s(%s, %s)",
+      "bin",
+      col_expr$column,
+      col_expr$arg
+    )
+    return(title)
+  }
+  sprintf(
+    "%s(%s)",
+    "bin",
+    col_expr$column
+  )
+}

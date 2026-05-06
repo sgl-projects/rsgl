@@ -123,3 +123,12 @@ describe("agg_col_expr", {
     })
   })
 })
+
+describe("default_title", {
+  it("returns count(*)", {
+    expect_equal(
+      default_title(test_count, list()),
+      "count(*)"
+    )
+  })
+})

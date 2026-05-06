@@ -1,13 +1,3 @@
-default_title <- function(col_expr) {
-  if (col_expr_has_cta(col_expr, "identity")) {
-    return(col_expr$column)
-  }
-  if (col_expr_has_cta(col_expr, "count")) {
-    return("Count")
-  }
-  paste("Binned", col_expr$column)
-}
-
 title_for_aes <- function(aes, rgs) {
   titles <- rgs$titles
   if (aes %in% names(titles)) {
@@ -19,7 +9,8 @@ title_for_aes <- function(aes, rgs) {
   # where a color mapping is present
   for (layer in rgs$layers) {
     if (aes %in% names(layer$aes_mappings)) {
-      return(default_title(layer$aes_mappings[[aes]]))
+      col_expr <- layer$aes_mappings[[aes]]
+      return(default_title(col_expr$cta, col_expr))
     }
   }
 }

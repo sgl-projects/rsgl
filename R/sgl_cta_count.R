@@ -49,3 +49,8 @@ agg_col_name.sgl_cta_count <- function(cta, col_expr, scale) {
 agg_col_expr.sgl_cta_count <- function(cta, col_expr, scale) {
   rlang::expr(dplyr::n())
 }
+
+#' @export
+default_title.sgl_cta_count <- function(cta, col_expr) {
+  "count(*)"
+}

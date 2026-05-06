@@ -173,3 +173,17 @@ describe("agg_col_expr", {
     })
   })
 })
+
+describe("default_title", {
+  it("returns expr for avg called on column", {
+    col_expr <- list(
+      column = "col_1",
+      cta = test_avg
+    )
+
+    expect_equal(
+      default_title(test_avg, col_expr),
+      "avg(col_1)"
+    )
+  })
+})

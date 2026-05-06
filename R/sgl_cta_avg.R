@@ -71,3 +71,12 @@ agg_col_expr.sgl_cta_avg <- function(cta, col_expr, scale) {
   }
   rlang::parse_expr(expr_str)
 }
+
+#' @export
+default_title.sgl_cta_avg <- function(cta, col_expr) {
+  sprintf(
+    "%s(%s)",
+    cta_name(cta),
+    col_expr$column
+  )
+}

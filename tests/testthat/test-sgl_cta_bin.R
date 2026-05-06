@@ -247,3 +247,35 @@ test_that("is_transformation returns true", {
 
   expect_true(is_transformation(bin_cta))
 })
+
+describe("default_title", {
+  describe("no arg for number of bins", {
+    it("gives expr for bin call on column", {
+      bin_cta <- new_sgl_cta_bin()
+      col_expr <- list(
+        column = "col_1",
+        cta = bin_cta
+      )
+
+      expect_equal(
+        default_title(bin_cta, col_expr),
+        "bin(col_1)"
+      )
+    })
+  })
+  describe("arg for number of bins", {
+    it("gives expr for bin call on column with arg", {
+      bin_cta <- new_sgl_cta_bin()
+      col_expr <- list(
+        column = "col_1",
+        cta = bin_cta,
+        arg = 10
+      )
+
+      expect_equal(
+        default_title(bin_cta, col_expr),
+        "bin(col_1, 10)"
+      )
+    })
+  })
+})
