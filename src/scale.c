@@ -3,6 +3,7 @@
 
 static struct keyword_enum_row scale_keyword_enum_table[] = {
 	{"linear", LINEAR},
+	{"ln", LN},
   {"log", LOG}
 };
 

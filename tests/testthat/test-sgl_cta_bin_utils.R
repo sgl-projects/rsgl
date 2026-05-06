@@ -182,28 +182,28 @@ expected_bin_centers <- c(0.992, 2.996, 5, 7.004, 9.008)
 expected_bin_values <- 10^(
   c(0.992, 0.992, 2.996, 2.996, 5, 5, 5, 7.004, 7.004, 9.008, 9.008)
 )
-test_that("bin_limits creates correct bin limits with log scale", {
+test_that("bin_limits creates correct bin limits with non-linear scale", {
   expect_equal(
     bin_limits(expected_scaled_input_data, bin_num),
     expected_bin_limits
   )
 })
 
-test_that("bin_indices gives correct bin indices with log scale", {
+test_that("bin_indices gives correct bin indices with non-linear scale", {
   expect_equal(
     bin_indices(expected_scaled_input_data, expected_bin_limits),
     expected_bin_indices
   )
 })
 
-test_that("bin_centers gives correct bin centers with log scale", {
+test_that("bin_centers gives correct bin centers with non-linear scale", {
   expect_equal(
     bin_centers(expected_bin_limits),
     expected_bin_centers
   )
 })
 
-test_that("bin_values gives correct bin values with log scale", {
+test_that("bin_values gives correct bin values with non-linear scale", {
   expect_equal(
     bin_values(input_data, bin_num, scale),
     expected_bin_values

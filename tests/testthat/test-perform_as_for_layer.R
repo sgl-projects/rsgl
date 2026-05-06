@@ -82,63 +82,98 @@ describe("add_scaled_cols", {
         expect_equal(result_df, expected_df)
       })
     })
-    describe("multiple scaled aes with distinct avg mapping", {
-      it("adds scaled columns", {
-        rgs <- sgl_to_rgs("
-					visualize
-						bin(mpg) as x,
-						avg(hp) as y,
-						avg(cyl) as color
-					from cars
-					group by
-						bin(mpg)
-					using bars
+    describe("multiple scaled aes have avg mapping", {
+      describe("single scale type with distinct avg mapping", {
+        it("adds scaled columns", {
+          rgs <- sgl_to_rgs("
+						visualize
+							bin(mpg) as x,
+							avg(hp) as y,
+							avg(cyl) as color
+						from cars
+						group by
+							bin(mpg)
+						using bars
 
-					scale by
-						log(y),
-						log(color)
-				")
-        dfs <- result_dfs(rgs, test_con)
-        layer <- rgs$layers[[1]]
-        input_df <- dfs[[1]]
-        scales <- rgs$scales
+						scale by
+							log(y),
+							log(color)
+					")
+          dfs <- result_dfs(rgs, test_con)
+          layer <- rgs$layers[[1]]
+          input_df <- dfs[[1]]
+          scales <- rgs$scales
 
-        result_df <- add_scaled_cols(layer, scales, input_df)
+          result_df <- add_scaled_cols(layer, scales, input_df)
 
-        expected_df <- input_df |>
-          dplyr::mutate(
-            rsgl.log.hp = log10(hp),
-            rsgl.log.cyl = log10(cyl)
-          )
-        expect_equal_ignore_order(result_df, expected_df)
+          expected_df <- input_df |>
+            dplyr::mutate(
+              rsgl.log.hp = log10(hp),
+              rsgl.log.cyl = log10(cyl)
+            )
+          expect_equal_ignore_order(result_df, expected_df)
+        })
       })
-    })
-    describe("multiple scaled aes have same avg mapping", {
-      it("doesn't duplicate scaled column", {
-        rgs <- sgl_to_rgs("
-					visualize
-						bin(mpg) as x,
-						avg(hp) as y,
-						avg(hp) as color
-					from cars
-					group by
-						bin(mpg)
-					using bars
+      describe("single scale type with same avg mapping", {
+        it("doesn't duplicate scaled column", {
+          rgs <- sgl_to_rgs("
+						visualize
+							bin(mpg) as x,
+							avg(hp) as y,
+							avg(hp) as color
+						from cars
+						group by
+							bin(mpg)
+						using bars
 
-					scale by
-						log(y),
-						log(color)
-				")
-        dfs <- result_dfs(rgs, test_con)
-        layer <- rgs$layers[[1]]
-        input_df <- dfs[[1]]
-        scales <- rgs$scales
+						scale by
+							log(y),
+							log(color)
+					")
+          dfs <- result_dfs(rgs, test_con)
+          layer <- rgs$layers[[1]]
+          input_df <- dfs[[1]]
+          scales <- rgs$scales
 
-        result_df <- add_scaled_cols(layer, scales, input_df)
+          result_df <- add_scaled_cols(layer, scales, input_df)
 
-        expected_df <- input_df |>
-          dplyr::mutate(rsgl.log.hp = log10(hp))
-        expect_equal_ignore_order(result_df, expected_df)
+          expected_df <- input_df |>
+            dplyr::mutate(rsgl.log.hp = log10(hp))
+          expect_equal_ignore_order(result_df, expected_df)
+        })
+      })
+      describe("multiple scale types with avg mappings", {
+        it("adds scaled columns for each without duplication", {
+          rgs <- sgl_to_rgs("
+						visualize
+							bin(mpg) as x,
+							avg(hp) as y,
+							avg(hp) as color,
+							avg(hp) as size
+						from cars
+						group by
+							bin(mpg)
+						using points
+
+						scale by
+							log(y),
+							log(color),
+							ln(size)
+					")
+          dfs <- result_dfs(rgs, test_con)
+          layer <- rgs$layers[[1]]
+          input_df <- dfs[[1]]
+          scales <- rgs$scales
+
+          result_df <- add_scaled_cols(layer, scales, input_df)
+
+          expected_df <- input_df |>
+            dplyr::mutate(
+              rsgl.log.hp = log10(hp),
+              rsgl.ln.hp = log(hp)
+            )
+          expect_equal_ignore_order(result_df, expected_df)
+        })
       })
     })
   })
@@ -460,7 +495,7 @@ test_that("returns binned col with arg and aggs", {
   expect_equal_ignore_order(result_df, expected_df)
 })
 
-test_that("returns log scaled binned col and aggs", {
+test_that("returns non-linear scaled binned col and aggs", {
   rgs <- sgl_to_rgs("
 		visualize
 			bin(mpg) as x,
@@ -502,13 +537,14 @@ test_that("returns binned cols and aggs for multiple scales", {
 			bin(mpg) as x,
 			bin(mpg) as y,
 			count(*) as color,
-			avg(hp) as size
+			bin(mpg) as size
 		from cars
 		group by
 			bin(mpg)
 		using bars
 		scale by
-			log(y)
+			log(y),
+			ln(size)
 	")
   dfs <- result_dfs(rgs, test_con)
   layer <- rgs$layers[[1]]
@@ -517,6 +553,10 @@ test_that("returns binned cols and aggs for multiple scales", {
   int_df <- add_transformed_column(
     new_sgl_cta_bin(), "mpg", input_df,
     scale = new_sgl_scale_log()
+  )
+  int_df <- add_transformed_column(
+    new_sgl_cta_bin(), "mpg", int_df,
+    scale = new_sgl_scale_ln()
   )
   transformed_df <- add_transformed_column(
     new_sgl_cta_bin(), "mpg", int_df,
@@ -529,10 +569,13 @@ test_that("returns binned cols and aggs for multiple scales", {
   )
 
   expected_df <- transformed_df |>
-    dplyr::group_by(rsgl.log.bin.30.mpg, rsgl.linear.bin.30.mpg) |>
+    dplyr::group_by(
+      rsgl.log.bin.30.mpg,
+      rsgl.ln.bin.30.mpg,
+      rsgl.linear.bin.30.mpg
+    ) |>
     dplyr::summarize(
-      rsgl.count = dplyr::n(),
-      rsgl.linear.avg.hp = mean(hp)
+      rsgl.count = dplyr::n()
     )
 
   expect_equal_ignore_order(result_df, expected_df)

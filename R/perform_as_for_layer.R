@@ -2,25 +2,33 @@ add_scaled_cols <- function(layer, scales, df) {
   if (is.null(scales)) {
     return(df)
   }
-  log_scales <- scales[
-    purrr::map_lgl(scales, ~ (identical(., new_sgl_scale_log())))
+  non_lin_scales <- scales[
+    purrr::map_lgl(scales, ~ (!identical(., new_sgl_scale_linear())))
   ]
-  if (length(log_scales) == 0) {
+  if (length(non_lin_scales) == 0) {
     return(df)
   }
-  log_scaled_aes <- names(log_scales)
+  non_lin_scaled_aes <- names(non_lin_scales)
   aes_mappings <- layer$aes_mappings
-  log_mappings <- aes_mappings[
-    names(aes_mappings) %in% log_scaled_aes
+  non_lin_mappings <- aes_mappings[
+    names(aes_mappings) %in% non_lin_scaled_aes
   ]
-  avg_mappings <- filter_col_exprs_by_cta(log_mappings, "avg")
+  avg_mappings <- filter_col_exprs_by_cta(non_lin_mappings, "avg")
   if (length(avg_mappings) == 0) {
     return(df)
   }
-  scale_cols <- unique(purrr::map_chr(avg_mappings, ~ (.$column)))
-  for (col in scale_cols) {
-    df <- df |>
-      dplyr::mutate("rsgl.log.{col}" := log10(.data[[col]]))
+  for (aes in names(avg_mappings)) {
+    scale <- scales[[aes]]
+    existing_col <- avg_mappings[[aes]]$column
+    new_col <- sprintf(
+      "rsgl.%s.%s",
+      scale_name(scale),
+      existing_col
+    )
+    if (!(new_col %in% names(df))) {
+      df <- df |>
+        dplyr::mutate("{new_col}" := apply_scale(scale, .data[[existing_col]]))
+    }
   }
   df
 }
@@ -82,11 +90,13 @@ group_by_col_names <- function(col_expr, aes_mappings, scales) {
   ]
   transformed_col_names <- c()
   corresponding_aes <- names(corresponding_mappings)
-  corresponding_scales <- scales[corresponding_aes]
-  if (length(corresponding_scales) > 0) {
+  corresponding_scales <- scales[
+    names(scales) %in% corresponding_aes
+  ]
+  for (scale in corresponding_scales) {
     transformed_col_name <- sprintf(
       "rsgl.%s.bin.%s.%s",
-      scale_name(new_sgl_scale_log()),
+      scale_name(scale),
       num_bins,
       column
     )
@@ -111,26 +121,33 @@ backscale_cols <- function(layer, scales, df) {
   if (is.null(scales)) {
     return(df)
   }
-  log_scales <- scales[
-    purrr::map_lgl(scales, ~ (identical(., new_sgl_scale_log())))
+  non_lin_scales <- scales[
+    purrr::map_lgl(scales, ~ (!identical(., new_sgl_scale_linear())))
   ]
-  if (length(log_scales) == 0) {
+  if (length(non_lin_scales) == 0) {
     return(df)
   }
-  log_scaled_aes <- names(log_scales)
+  non_lin_scaled_aes <- names(non_lin_scales)
   aes_mappings <- layer$aes_mappings
-  log_mappings <- aes_mappings[
-    names(aes_mappings) %in% log_scaled_aes
+  non_lin_mappings <- aes_mappings[
+    names(aes_mappings) %in% non_lin_scaled_aes
   ]
-  avg_mappings <- filter_col_exprs_by_cta(log_mappings, "avg")
+  avg_mappings <- filter_col_exprs_by_cta(non_lin_mappings, "avg")
   if (length(avg_mappings) == 0) {
     return(df)
   }
-  scale_cols <- unique(purrr::map_chr(avg_mappings, ~ (.$column)))
-  for (col in scale_cols) {
-    agg_col_name <- sprintf("rsgl.log.avg.%s", col)
+  for (aes in names(avg_mappings)) {
+    scale <- scales[[aes]]
+    orig_col_name <- avg_mappings[[aes]]$column
+    agg_col_name <- sprintf(
+      "rsgl.%s.avg.%s",
+      scale_name(scale),
+      orig_col_name
+    )
     df <- df |>
-      dplyr::mutate(!!agg_col_name := 10^(.data[[agg_col_name]]))
+      dplyr::mutate(
+        !!agg_col_name := apply_scale_inverse(scale, .data[[agg_col_name]])
+      )
   }
   df
 }

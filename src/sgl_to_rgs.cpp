@@ -318,6 +318,9 @@ Rcpp::List sgl_to_rgs(std::string sgl_stmt) {
 						case LINEAR:
 								scale_obj.attr("class") = Rcpp::CharacterVector::create("sgl_scale_linear", "sgl_scale");
 								break;
+						case LN:
+								scale_obj.attr("class") = Rcpp::CharacterVector::create("sgl_scale_ln", "sgl_scale");
+								break;
 						case LOG:
 								scale_obj.attr("class") = Rcpp::CharacterVector::create("sgl_scale_log", "sgl_scale");
 								break;

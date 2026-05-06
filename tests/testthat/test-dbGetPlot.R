@@ -410,6 +410,27 @@ test_that("generates plot with log scales", {
   vdiffr::expect_doppelganger("plot with log scales", p)
 })
 
+test_that("generates plot with ln scales", {
+  sgl_stmt <- "
+		visualize
+			hp as x,
+			mpg as y
+		from cars
+		using (
+			points
+			layer
+			regression line
+		)
+		scale by
+			ln(x),
+			ln(y)
+	"
+
+  p <- dbGetPlot(test_con, sgl_stmt)
+
+  vdiffr::expect_doppelganger("plot with ln scales", p)
+})
+
 test_that("generates bar chart in polar coordinates", {
   sgl_stmt <- "
     visualize
