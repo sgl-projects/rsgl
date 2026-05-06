@@ -18,3 +18,8 @@ is_aggregation.sgl_cta_identity <- function(cta) {
 is_transformation.sgl_cta_identity <- function(cta) {
   FALSE
 }
+
+#' @export
+default_title.sgl_cta_identity <- function(cta, col_expr) {
+  col_expr$column
+}

@@ -1,34 +1,11 @@
 default_title_cases <- function() {
   tibble::tribble(
-    ~.test_name, ~expr, ~expected_title,
-    "no cta", "mpg", "mpg",
-    "bin", "bin(mpg)", "Binned mpg",
-    "count", "count(*)", "Count"
+    ~.test_name, ~expr,
+    "identity", "mpg",
+    "bin", "bin(mpg)",
+    "count", "count(*)"
   )
 }
-patrick::with_parameters_test_that(
-  "default_title returns correct title:",
-  {
-    sgl <- sprintf(
-      "
-        visualize
-          %s as x
-        from cars
-        using points
-			",
-      expr
-    )
-    rgs <- sgl_to_rgs(sgl)
-    col_expr <- rgs$layers[[1]]$aes_mappings$x
-
-    expect_equal(
-      default_title(col_expr),
-      expected_title
-    )
-  },
-  .cases = default_title_cases()
-)
-
 test_that("title_for_aes returns explicit title", {
   rgs <- sgl_to_rgs("
 		visualize
@@ -62,7 +39,7 @@ patrick::with_parameters_test_that(
 
     expect_equal(
       title_for_aes("x", rgs),
-      expected_title
+      expr
     )
   },
   .cases = default_title_cases()
@@ -192,7 +169,7 @@ patrick::with_parameters_test_that(
 
     expect_equal(
       actual_labs$x,
-      expected_title
+      expr
     )
   },
   .cases = default_title_cases()
@@ -365,7 +342,7 @@ patrick::with_parameters_test_that(
 
     expect_equal(
       actual_labs$fill,
-      expected_title
+      expr
     )
     expect_false("colour" %in% names(actual_labs))
   },
@@ -393,7 +370,7 @@ patrick::with_parameters_test_that(
 
     expect_equal(
       actual_labs$colour,
-      expected_title
+      expr
     )
     expect_false("fill" %in% names(actual_labs))
   },

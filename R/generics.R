@@ -81,3 +81,7 @@ agg_col_name <- function(cta, col_expr, scale) {
 agg_col_expr <- function(cta, col_expr, scale) {
   UseMethod("agg_col_expr")
 }
+
+default_title <- function(cta, col_expr) {
+  UseMethod("default_title")
+}

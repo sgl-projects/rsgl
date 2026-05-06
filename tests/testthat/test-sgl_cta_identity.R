@@ -59,3 +59,17 @@ describe("is_transformation", {
     expect_false(is_transformation(test_identity))
   })
 })
+
+describe("default_title", {
+  it("returns the column name", {
+    col_expr <- list(
+      column = "col_1",
+      cta = test_identity
+    )
+
+    expect_equal(
+      default_title(test_identity, col_expr),
+      "col_1"
+    )
+  })
+})
