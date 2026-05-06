@@ -10,6 +10,7 @@ Test(valid_scale_str, treats_null_ptr_as_invalid) {
 Test(valid_scale_str, treats_scale_keywords_as_valid) {
   char *keywords[] = {
     "linear",
+		"ln",
     "log"
   };
   size_t keyword_count = sizeof(keywords)/sizeof(keywords[0]);
@@ -36,6 +37,7 @@ Test(scale_enum, return_correct_enums_for_keywords) {
 
   struct keyword_and_expected_enum keywords_and_expected_enums[] = {
     {"linear", LINEAR},
+		{"ln", LN},
     {"log", LOG}
   };
 

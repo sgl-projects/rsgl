@@ -1,8 +1,9 @@
 #ifndef SCALE_H
 #define SCALE_H
 
-enum scale { 
+enum scale {
 	LINEAR,
+	LN,
 	LOG
 };
 

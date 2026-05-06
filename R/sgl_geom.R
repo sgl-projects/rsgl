@@ -25,7 +25,8 @@ mapping_col_name <- function(aes, col_expr, scales) {
   if (col_expr_has_cta(col_expr, "avg")) {
     if (aes %in% names(scales)) {
       col_name <- sprintf(
-        "rsgl.log.avg.%s",
+        "rsgl.%s.avg.%s",
+        scale_name(scales[[aes]]),
         col_expr$column
       )
     } else {
@@ -44,7 +45,8 @@ mapping_col_name <- function(aes, col_expr, scales) {
     }
     if (aes %in% names(scales)) {
       col_name <- sprintf(
-        "rsgl.log.bin.%s.%s",
+        "rsgl.%s.bin.%s.%s",
+        scale_name(scales[[aes]]),
         num_bins,
         col_expr$column
       )
