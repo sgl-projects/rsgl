@@ -3,10 +3,11 @@
 #' `dbGetPlot` takes a database connection and a SGL statement
 #' and returns the corresponding plot.
 #'
-#' @param con A database connection (as returned by DBI::dbConnect())
+#' @param con A database connection (as returned by [DBI::dbConnect()])
 #' @param sgl_stmt A SGL statement (string)
 #'
-#' @return The plot defined by the SGL statement (ggplot2 plot object)
+#' @return The plot defined by the SGL statement
+#'   (a [ggplot2 plot][ggplot2::ggplot])
 #'
 #' @examples
 #' library(duckdb)
