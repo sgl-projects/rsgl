@@ -13,7 +13,8 @@ dbGetPlot(con, sgl_stmt)
 
 - con:
 
-  A database connection (as returned by DBI::dbConnect())
+  A database connection (as returned by
+  [`DBI::dbConnect()`](https://dbi.r-dbi.org/reference/dbConnect.html))
 
 - sgl_stmt:
 
@@ -21,7 +22,8 @@ dbGetPlot(con, sgl_stmt)
 
 ## Value
 
-The plot defined by the SGL statement (ggplot2 plot object)
+The plot defined by the SGL statement (a [ggplot2
+plot](https://ggplot2.tidyverse.org/reference/ggplot.html))
 
 ## Examples
 
