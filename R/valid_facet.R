@@ -25,7 +25,7 @@ col_type <- function(col_name, df) {
   "unknown"
 }
 all_types <- function(col_name, dfs) {
-  unique(unlist(sapply(dfs, function(df) col_type(col_name, df))))
+  unique(unlist(purrr::map(dfs, ~ col_type(col_name, .))))
 }
 
 valid_facet <- function(rgs, dfs) {
@@ -49,17 +49,17 @@ valid_facet <- function(rgs, dfs) {
     }
   }
   facet_col_names <- purrr::map_chr(facets, "column")
-  cols_exist <- sapply(
+  cols_exist <- purrr::map_lgl(
     facet_col_names,
-    function(col_name) in_at_least_one_data_source(col_name, dfs)
+    ~ in_at_least_one_data_source(., dfs)
   )
   missing_cols <- facet_col_names[!cols_exist]
   if (length(missing_cols) > 0) {
-    errmsg <- sprintf(
+    err_msg <- sprintf(
       "Error: facet column '%s' does not exist in any layer data sources.",
       missing_cols[1]
     )
-    stop(errmsg)
+    stop(err_msg)
   }
   for (facet_col in facet_col_names) {
     facet_col_types <- all_types(facet_col, dfs)
@@ -80,8 +80,8 @@ valid_facet <- function(rgs, dfs) {
         "(categorical, numerical, or temporal) across",
         "all layers where it is present."
       )
-      errmsg <- sprintf(unformatted_msg, facet_col)
-      stop(errmsg)
+      err_msg <- sprintf(unformatted_msg, facet_col)
+      stop(err_msg)
     }
   }
 }
