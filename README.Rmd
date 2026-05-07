@@ -45,12 +45,12 @@ library(duckdb)
 library(rsgl)
 
 con <- dbConnect(duckdb())
-dbWriteTable(con, "cars", mtcars)
+dbWriteTable(con, "cars", cars)
 
 dbGetPlot(con, "
 	visualize
-		hp as x,
-		mpg as y
+		horsepower as x,
+		miles_per_gallon as y
 	from cars
 	using points
 ")
