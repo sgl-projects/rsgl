@@ -7,7 +7,7 @@
 dbGetPlot(con, sgl_stmt)
 }
 \arguments{
-\item{con}{A DBI connection}
+\item{con}{A database connection (as returned by DBI::dbConnect())}
 
 \item{sgl_stmt}{A SGL statement (string)}
 }
@@ -15,17 +15,17 @@ dbGetPlot(con, sgl_stmt)
 The plot defined by the SGL statement (ggplot2 plot object)
 }
 \description{
-\code{dbGetPlot} takes a DBI connection and a SGL statement
+\code{dbGetPlot} takes a database connection and a SGL statement
 and returns the corresponding plot.
 }
 \examples{
 library(duckdb)
 con <- dbConnect(duckdb())
-dbWriteTable(con, "cars", mtcars)
+dbWriteTable(con, "cars", cars)
 p <- dbGetPlot(con, "
   visualize
-    hp as x,
-    mpg as y
+    horsepower as x,
+    miles_per_gallon as y
   from cars
   using points
 ")

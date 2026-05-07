@@ -1,9 +1,9 @@
 #' Generate a plot from a SGL statement
 #'
-#' `dbGetPlot` takes a DBI connection and a SGL statement
+#' `dbGetPlot` takes a database connection and a SGL statement
 #' and returns the corresponding plot.
 #'
-#' @param con A DBI connection
+#' @param con A database connection (as returned by DBI::dbConnect())
 #' @param sgl_stmt A SGL statement (string)
 #'
 #' @return The plot defined by the SGL statement (ggplot2 plot object)
@@ -11,11 +11,11 @@
 #' @examples
 #' library(duckdb)
 #' con <- dbConnect(duckdb())
-#' dbWriteTable(con, "cars", mtcars)
+#' dbWriteTable(con, "cars", cars)
 #' p <- dbGetPlot(con, "
 #'   visualize
-#'     hp as x,
-#'     mpg as y
+#'     horsepower as x,
+#'     miles_per_gallon as y
 #'   from cars
 #'   using points
 #' ")
