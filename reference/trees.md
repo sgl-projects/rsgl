@@ -23,7 +23,7 @@ A data frame with 35 rows and 3 variables:
 
 - age:
 
-  Age of the tree (in days) at the time of measurement.
+  Age of the tree at the time of measurement.
 
 - circumference:
 
