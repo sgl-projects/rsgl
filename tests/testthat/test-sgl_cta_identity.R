@@ -60,7 +60,7 @@ describe("is_transformation", {
   })
 })
 
-describe("default_title", {
+describe("expr_text", {
   it("returns the column name", {
     col_expr <- list(
       column = "col_1",
@@ -68,7 +68,7 @@ describe("default_title", {
     )
 
     expect_equal(
-      default_title(test_identity, col_expr),
+      expr_text(test_identity, col_expr),
       "col_1"
     )
   })

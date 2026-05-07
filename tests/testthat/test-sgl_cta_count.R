@@ -21,8 +21,8 @@ test_that("new_sgl_cta_count sets empty list as base object", {
   expect_equal(base_object, list())
 })
 
-test_that("cta_name returns count", {
-  expect_equal(cta_name(test_count), "count")
+test_that("cta_fn_name returns count", {
+  expect_equal(cta_fn_name(test_count), "count")
 })
 
 test_that("valid_cta doesn't raise error for count(*)", {
@@ -124,10 +124,10 @@ describe("agg_col_expr", {
   })
 })
 
-describe("default_title", {
+describe("expr_text", {
   it("returns count(*)", {
     expect_equal(
-      default_title(test_count, list()),
+      expr_text(test_count, list()),
       "count(*)"
     )
   })

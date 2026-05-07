@@ -21,8 +21,8 @@ test_that("new_sgl_cta_avg sets empty list as base object", {
   expect_equal(base_object, list())
 })
 
-test_that("cta_name returns avg", {
-  expect_equal(cta_name(test_avg), "avg")
+test_that("cta_fn_name returns avg", {
+  expect_equal(cta_fn_name(test_avg), "avg")
 })
 
 test_that("valid_cta raises error for *", {
@@ -174,7 +174,7 @@ describe("agg_col_expr", {
   })
 })
 
-describe("default_title", {
+describe("expr_text", {
   it("returns expr for avg called on column", {
     col_expr <- list(
       column = "col_1",
@@ -182,7 +182,7 @@ describe("default_title", {
     )
 
     expect_equal(
-      default_title(test_avg, col_expr),
+      expr_text(test_avg, col_expr),
       "avg(col_1)"
     )
   })

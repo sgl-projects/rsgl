@@ -20,6 +20,6 @@ is_transformation.sgl_cta_identity <- function(cta) {
 }
 
 #' @export
-default_title.sgl_cta_identity <- function(cta, col_expr) {
+expr_text.sgl_cta_identity <- function(cta, col_expr) {
   col_expr$column
 }

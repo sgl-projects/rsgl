@@ -26,8 +26,8 @@ valid_cta <- function(cta, col_expr, df) {
   UseMethod("valid_cta")
 }
 
-cta_name <- function(cta) {
-  UseMethod("cta_name")
+cta_fn_name <- function(cta) {
+  UseMethod("cta_fn_name")
 }
 
 add_transformed_column <- function(cta, input_col_name, df, ...) {
@@ -82,6 +82,6 @@ agg_col_expr <- function(cta, col_expr, scale) {
   UseMethod("agg_col_expr")
 }
 
-default_title <- function(cta, col_expr) {
-  UseMethod("default_title")
+expr_text <- function(cta, col_expr) {
+  UseMethod("expr_text")
 }

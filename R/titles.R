@@ -1,3 +1,7 @@
+default_title <- function(cta, col_expr) {
+  expr_text(cta, col_expr)
+}
+
 title_for_aes <- function(aes, rgs) {
   titles <- rgs$titles
   if (aes %in% names(titles)) {
