@@ -7,12 +7,13 @@
 dbGetPlot(con, sgl_stmt)
 }
 \arguments{
-\item{con}{A database connection (as returned by DBI::dbConnect())}
+\item{con}{A database connection (as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}})}
 
 \item{sgl_stmt}{A SGL statement (string)}
 }
 \value{
-The plot defined by the SGL statement (ggplot2 plot object)
+The plot defined by the SGL statement
+(a \link[ggplot2:ggplot]{ggplot2 plot})
 }
 \description{
 \code{dbGetPlot} takes a database connection and a SGL statement
