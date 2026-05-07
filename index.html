@@ -89,17 +89,24 @@
 <span><span class="co">#&gt; Loading required package: DBI</span></span>
 <span><span class="co">#&gt; Warning: package 'DBI' was built under R version 4.5.2</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sgl-projects/rsgl" class="external-link">rsgl</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'rsgl'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:datasets':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     cars, trees</span></span>
 <span></span>
 <span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu"><a href="https://r.duckdb.org/reference/duckdb.html" class="external-link">duckdb</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbWriteTable.html" class="external-link">dbWriteTable</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"cars"</span>, <span class="va">mtcars</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbWriteTable.html" class="external-link">dbWriteTable</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"cars"</span>, <span class="va">cars</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/dbGetPlot.html">dbGetPlot</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span>
 <span><span class="st">    visualize</span></span>
-<span><span class="st">        hp as x,</span></span>
-<span><span class="st">        mpg as y</span></span>
+<span><span class="st">        horsepower as x,</span></span>
+<span><span class="st">        miles_per_gallon as y</span></span>
 <span><span class="st">    from cars</span></span>
 <span><span class="st">    using points</span></span>
-<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="st">"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 14 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
 <p><img src="reference/figures/README-usage-1.png" alt="" width="70%"></p>
 </div>
 </div>

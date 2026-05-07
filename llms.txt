@@ -32,17 +32,24 @@ library(duckdb)
 #> Loading required package: DBI
 #> Warning: package 'DBI' was built under R version 4.5.2
 library(rsgl)
+#> 
+#> Attaching package: 'rsgl'
+#> The following objects are masked from 'package:datasets':
+#> 
+#>     cars, trees
 
 con <- dbConnect(duckdb())
-dbWriteTable(con, "cars", mtcars)
+dbWriteTable(con, "cars", cars)
 
 dbGetPlot(con, "
     visualize
-        hp as x,
-        mpg as y
+        horsepower as x,
+        miles_per_gallon as y
     from cars
     using points
 ")
+#> Warning: Removed 14 rows containing missing values or values outside the scale range
+#> (`geom_point()`).
 ```
 
 ![](reference/figures/README-usage-1.png)
