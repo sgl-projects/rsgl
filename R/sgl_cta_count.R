@@ -3,19 +3,19 @@ new_sgl_cta_count <- function() {
 }
 
 #' @export
-cta_name.sgl_cta_count <- function(cta) {
+cta_fn_name.sgl_cta_count <- function(cta) {
   "count"
 }
 
 #' @export
 valid_cta.sgl_cta_count <- function(cta, col_expr, df) {
   col_name <- col_expr$column
-  count_cta_name <- cta_name(cta)
+  count_fn_name <- cta_fn_name(cta)
   if (col_name != "*") {
     err_msg <- sprintf(
       "Error: %s can only be applied to *, found %s(%s).",
-      count_cta_name,
-      count_cta_name,
+      count_fn_name,
+      count_fn_name,
       col_name
     )
     stop(err_msg)
@@ -24,7 +24,7 @@ valid_cta.sgl_cta_count <- function(cta, col_expr, df) {
   if ("arg" %in% names(col_expr)) {
     err_msg <- sprintf(
       "Error: %s function received unexpected argument.",
-      count_cta_name
+      count_fn_name
     )
     stop(err_msg)
   }
@@ -51,6 +51,9 @@ agg_col_expr.sgl_cta_count <- function(cta, col_expr, scale) {
 }
 
 #' @export
-default_title.sgl_cta_count <- function(cta, col_expr) {
-  "count(*)"
+expr_text.sgl_cta_count <- function(cta, col_expr) {
+  sprintf(
+    "%s(*)",
+    cta_fn_name(cta)
+  )
 }

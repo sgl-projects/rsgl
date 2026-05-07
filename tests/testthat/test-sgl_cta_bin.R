@@ -15,6 +15,11 @@ test_that("new_sgl_cta_bin sets empty list as base object", {
   expect_equal(base_object, list())
 })
 
+test_that("cta_fn_name returns bin", {
+  bin <- new_sgl_cta_bin()
+  expect_equal(cta_fn_name(bin), "bin")
+})
+
 test_that("valid_cta raises error for *", {
   bin_cta <- new_sgl_cta_bin()
   col_expr <- list(
@@ -248,7 +253,7 @@ test_that("is_transformation returns true", {
   expect_true(is_transformation(bin_cta))
 })
 
-describe("default_title", {
+describe("expr_text", {
   describe("no arg for number of bins", {
     it("gives expr for bin call on column", {
       bin_cta <- new_sgl_cta_bin()
@@ -258,7 +263,7 @@ describe("default_title", {
       )
 
       expect_equal(
-        default_title(bin_cta, col_expr),
+        expr_text(bin_cta, col_expr),
         "bin(col_1)"
       )
     })
@@ -273,7 +278,7 @@ describe("default_title", {
       )
 
       expect_equal(
-        default_title(bin_cta, col_expr),
+        expr_text(bin_cta, col_expr),
         "bin(col_1, 10)"
       )
     })
