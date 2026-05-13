@@ -7,7 +7,7 @@
 type_classifications(con, table_name)
 }
 \arguments{
-\item{con}{A DBI connection}
+\item{con}{A database connection (as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}})}
 
 \item{table_name}{The name of a table}
 }
@@ -15,7 +15,7 @@ type_classifications(con, table_name)
 A dataframe listing the SGL type classification of each column.
 }
 \description{
-\code{type_classifications} takes a DBI connection and a table name
+\code{type_classifications} takes a database connection and a table name
 and returns the SGL type classifications (numerical, categorical,
 or temporal) of the table's columns.
 }

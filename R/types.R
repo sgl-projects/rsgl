@@ -54,11 +54,11 @@ is_binned_mapping <- function(layer, aes) {
 
 #' Get SGL type classificatons for columns in a table
 #'
-#' `type_classifications` takes a DBI connection and a table name
+#' `type_classifications` takes a database connection and a table name
 #' and returns the SGL type classifications (numerical, categorical,
 #' or temporal) of the table's columns.
 #'
-#' @param con A DBI connection
+#' @param con A database connection (as returned by [DBI::dbConnect()])
 #' @param table_name The name of a table
 #'
 #' @return A dataframe listing the SGL type classification of each column.
