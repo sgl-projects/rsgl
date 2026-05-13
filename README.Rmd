@@ -55,3 +55,7 @@ dbGetPlot(con, "
 	using points
 ")
 ```
+
+## Next steps
+
+- [Get started](vignettes/rsgl.Rmd) — a tutorial of rsgl usage and the SGL language.

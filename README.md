@@ -59,3 +59,8 @@ dbGetPlot(con, "
 ```
 
 <img src="man/figures/README-usage-1.png" alt="" width="70%" />
+
+## Next steps
+
+- [Get started](vignettes/rsgl.Rmd) — a tutorial of rsgl usage and the
+  SGL language.
