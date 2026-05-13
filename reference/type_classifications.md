@@ -1,6 +1,6 @@
 # Get SGL type classificatons for columns in a table
 
-`type_classifications` takes a DBI connection and a table name and
+`type_classifications` takes a database connection and a table name and
 returns the SGL type classifications (numerical, categorical, or
 temporal) of the table's columns.
 
@@ -14,7 +14,8 @@ type_classifications(con, table_name)
 
 - con:
 
-  A DBI connection
+  A database connection (as returned by
+  [`DBI::dbConnect()`](https://dbi.r-dbi.org/reference/dbConnect.html))
 
 - table_name:
 
