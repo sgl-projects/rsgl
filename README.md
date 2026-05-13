@@ -63,4 +63,4 @@ dbGetPlot(con, "
 ## Next steps
 
 - [Get started](https://sgl-projects.github.io/rsgl/articles/rsgl.html)
-  — a tutorial of rsgl usage and the SGL language.
+  — a tutorial of rsgl and the SGL language.
