@@ -213,3 +213,68 @@ describe("filter_agg_exprs", {
     })
   })
 })
+
+describe("all_aesthetics", {
+  describe("single layer", {
+    it("returns all aesthetics from mapping", {
+      rgs <- sgl_to_rgs("
+				visualize
+					hp as x,
+					mpg as y,
+					cyl as color
+				from cars
+				using points
+			")
+
+      expect_setequal(
+        all_aesthetics(rgs),
+        c("x", "y", "color")
+      )
+    })
+  })
+  describe("multiple layers", {
+    it("returns all aesthetics from all mappings", {
+      rgs <- sgl_to_rgs("
+				visualize
+					hp as x,
+					mpg as y,
+					cyl as color
+				from cars
+				using points
+
+				layer
+
+				visualize
+					hp as x,
+					mpg as y,
+					cyl as size
+				from cars
+				using points
+			")
+
+      expect_setequal(
+        all_aesthetics(rgs),
+        c("x", "y", "color", "size")
+      )
+    })
+  })
+  it("ignores aesthetics from non-visualize clauses", {
+    rgs <- sgl_to_rgs("
+			visualize
+				hp as x,
+				mpg as y
+			from cars
+			using points
+
+			scale by
+				log(color)
+			title
+				size as 'Size'
+		")
+
+    expect_setequal(
+      all_aesthetics(rgs),
+      c("x", "y")
+    )
+  })
+})

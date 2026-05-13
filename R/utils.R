@@ -27,3 +27,11 @@ filter_agg_exprs <- function(col_exprs) {
     purrr::map_lgl(col_exprs, ~ (is_aggregation(.$cta)))
   ]
 }
+
+all_aesthetics <- function(rgs) {
+  layer_aesthetics <- purrr::map(
+    rgs$layers,
+    ~ names(.$aes_mappings)
+  )
+  unique(unlist(layer_aesthetics))
+}
