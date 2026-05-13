@@ -9,8 +9,8 @@ cta_fn_name.sgl_cta_count <- function(cta) {
 
 #' @export
 valid_cta.sgl_cta_count <- function(cta, col_expr, df) {
-  col_name <- col_expr$column
   count_fn_name <- cta_fn_name(cta)
+  col_name <- col_expr$column
   if (col_name != "*") {
     err_msg <- sprintf(
       "Error: %s can only be applied to *, found %s(%s).",
@@ -21,13 +21,7 @@ valid_cta.sgl_cta_count <- function(cta, col_expr, df) {
     stop(err_msg)
   }
 
-  if ("arg" %in% names(col_expr)) {
-    err_msg <- sprintf(
-      "Error: %s function received unexpected argument.",
-      count_fn_name
-    )
-    stop(err_msg)
-  }
+  raise_if_arg_present(col_expr)
 }
 
 #' @export

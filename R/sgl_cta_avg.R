@@ -24,13 +24,7 @@ valid_cta.sgl_cta_avg <- function(cta, col_expr, df) {
     stop(err_msg)
   }
 
-  if ("arg" %in% names(col_expr)) {
-    err_msg <- sprintf(
-      "Error: %s function received unexpected argument.",
-      avg_fn_name
-    )
-    stop(err_msg)
-  }
+  raise_if_arg_present(col_expr)
 }
 
 #' @export
