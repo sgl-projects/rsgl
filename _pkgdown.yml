@@ -28,11 +28,9 @@ navbar:
 
 reference:
   - title: Plotting
-    desc: Generate plots from SGL statements.
     contents:
       - dbGetPlot
   - title: Type metadata
-    desc: Inspect and configure type classifications.
     contents:
       - type_classifications
   - title: Datasets
