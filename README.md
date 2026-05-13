@@ -62,5 +62,5 @@ dbGetPlot(con, "
 
 ## Next steps
 
-- [Get started](vignettes/rsgl.Rmd) — a tutorial of rsgl usage and the
-  SGL language.
+- [Get started](https://sgl-projects.github.io/rsgl/articles/rsgl.html)
+  — a tutorial of rsgl usage and the SGL language.
