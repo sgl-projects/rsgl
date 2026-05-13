@@ -1,11 +1,3 @@
-all_aesthetics <- function(rgs) {
-  layer_aesthetics <- lapply(
-    rgs$layers,
-    function(layer) names(layer$aes_mappings)
-  )
-  unique(unlist(layer_aesthetics))
-}
-
 valid_layering_for_aes <- function(rgs, dfs, aes) {
   if (aes %in% .pos_aes) {
     aes_in_layer <- sapply(
