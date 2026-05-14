@@ -2,7 +2,11 @@
 % Please edit documentation in R/topic-geoms.R
 \name{geoms}
 \alias{geoms}
-\title{Geoms}
+\title{Geometric objects for representing data}
 \description{
-The geoms supported by rsgl.
+This page outlines the geoms that are available in rsgl.
 }
+\section{Points}{
+Here is info about points
+}
+
