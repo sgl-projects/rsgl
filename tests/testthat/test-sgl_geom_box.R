@@ -29,6 +29,335 @@ test_that("ggplot_geom returns geom_boxplot function", {
   expect_equal(actual, ggplot2::geom_boxplot)
 })
 
+describe("group_aes_cols", {
+  describe("single pos aes", {
+    it("doesn't include pos aes mapping", {
+      rgs <- sgl_to_rgs("
+				visualize
+					price as y
+				from diamonds
+				using boxes
+			")
+      dfs <- result_dfs(rgs, test_con)
+      df <- dfs[[1]]
+      layer <- rgs$layers[[1]]
+
+      expect_setequal(
+        group_aes_cols(
+          layer$geom_expr$geom,
+          layer,
+          df,
+          rgs$scales
+        ),
+        character(0)
+      )
+    })
+  })
+  describe("two pos aes", {
+    describe("direction qualifier is present", {
+      describe("qualifier is vertical", {
+        describe("cart coords", {
+          it("returns x mapping", {
+            rgs <- sgl_to_rgs("
+							visualize
+								cut as x,
+								price as y
+							from diamonds
+							using vertical boxes
+						")
+            dfs <- result_dfs(rgs, test_con)
+            df <- dfs[[1]]
+            layer <- rgs$layers[[1]]
+
+            actual <- group_aes_cols(
+              layer$geom_expr$geom,
+              layer,
+              df,
+              rgs$scales
+            )
+
+            expect_setequal(
+              actual,
+              "cut"
+            )
+          })
+        })
+        describe("polar coords", {
+          it("returns theta mapping", {
+            rgs <- sgl_to_rgs("
+							visualize
+								cut as theta,
+								price as r
+							from diamonds
+							using vertical boxes
+						")
+            dfs <- result_dfs(rgs, test_con)
+            df <- dfs[[1]]
+            layer <- rgs$layers[[1]]
+
+            actual <- group_aes_cols(
+              layer$geom_expr$geom,
+              layer,
+              df,
+              rgs$scales
+            )
+
+            expect_setequal(
+              actual,
+              "cut"
+            )
+          })
+        })
+      })
+      describe("qualifier is horizontal", {
+        describe("cart coords", {
+          it("returns y mapping", {
+            rgs <- sgl_to_rgs("
+							visualize
+								cut as x,
+								price as y
+							from diamonds
+							using horizontal boxes
+						")
+            dfs <- result_dfs(rgs, test_con)
+            df <- dfs[[1]]
+            layer <- rgs$layers[[1]]
+
+            actual <- group_aes_cols(
+              layer$geom_expr$geom,
+              layer,
+              df,
+              rgs$scales
+            )
+
+            expect_setequal(
+              actual,
+              "price"
+            )
+          })
+        })
+        describe("polar coords", {
+          it("returns r mapping", {
+            rgs <- sgl_to_rgs("
+							visualize
+								cut as theta,
+								price as r
+							from diamonds
+							using horizontal boxes
+						")
+            dfs <- result_dfs(rgs, test_con)
+            df <- dfs[[1]]
+            layer <- rgs$layers[[1]]
+
+            actual <- group_aes_cols(
+              layer$geom_expr$geom,
+              layer,
+              df,
+              rgs$scales
+            )
+
+            expect_setequal(
+              actual,
+              "price"
+            )
+          })
+        })
+      })
+    })
+    describe("direction qualifier is not present", {
+      describe("cart coords", {
+        describe("x has direction priority", {
+          it("returns x mapping", {
+            rgs <- sgl_to_rgs("
+							visualize
+								cut as x,
+								price as y
+							from diamonds
+							using boxes
+						")
+            dfs <- result_dfs(rgs, test_con)
+            df <- dfs[[1]]
+            layer <- rgs$layers[[1]]
+
+            actual <- group_aes_cols(
+              layer$geom_expr$geom,
+              layer,
+              df,
+              rgs$scales
+            )
+
+            expect_setequal(
+              actual,
+              "cut"
+            )
+          })
+        })
+        describe("y has direction priority", {
+          it("returns y mapping", {
+            rgs <- sgl_to_rgs("
+							visualize
+								price as x,
+								cut as y
+							from diamonds
+							using boxes
+						")
+            dfs <- result_dfs(rgs, test_con)
+            df <- dfs[[1]]
+            layer <- rgs$layers[[1]]
+
+            actual <- group_aes_cols(
+              layer$geom_expr$geom,
+              layer,
+              df,
+              rgs$scales
+            )
+
+            expect_setequal(
+              actual,
+              "cut"
+            )
+          })
+        })
+      })
+      describe("polar coords", {
+        describe("theta has direction priority", {
+          it("returns theta mapping", {
+            rgs <- sgl_to_rgs("
+							visualize
+								cut as theta,
+								price as r
+							from diamonds
+							using boxes
+						")
+            dfs <- result_dfs(rgs, test_con)
+            df <- dfs[[1]]
+            layer <- rgs$layers[[1]]
+
+            actual <- group_aes_cols(
+              layer$geom_expr$geom,
+              layer,
+              df,
+              rgs$scales
+            )
+
+            expect_setequal(
+              actual,
+              "cut"
+            )
+          })
+        })
+        describe("r has direction priority", {
+          it("returns r mapping", {
+            rgs <- sgl_to_rgs("
+							visualize
+								price as theta,
+								cut as r
+							from diamonds
+							using boxes
+						")
+            dfs <- result_dfs(rgs, test_con)
+            df <- dfs[[1]]
+            layer <- rgs$layers[[1]]
+
+            actual <- group_aes_cols(
+              layer$geom_expr$geom,
+              layer,
+              df,
+              rgs$scales
+            )
+
+            expect_setequal(
+              actual,
+              "cut"
+            )
+          })
+        })
+      })
+    })
+  })
+  it("includes non-pos mapping", {
+    rgs <- sgl_to_rgs("
+			visualize
+				cut as x,
+				price as y,
+				clarity as color
+			from diamonds
+			using boxes
+		")
+    dfs <- result_dfs(rgs, test_con)
+    df <- dfs[[1]]
+    layer <- rgs$layers[[1]]
+
+    actual <- group_aes_cols(
+      layer$geom_expr$geom,
+      layer,
+      df,
+      rgs$scales
+    )
+
+    expect_setequal(
+      actual,
+      c("cut", "clarity")
+    )
+  })
+  it("uses post-cta columns", {
+    rgs <- sgl_to_rgs("
+			visualize
+				bin(carat) as x,
+				price as y,
+				bin(clarity,5) as color
+			from diamonds
+			using boxes
+
+			scale by
+				log(x)
+		")
+    dfs <- result_dfs(rgs, test_con)
+    df <- dfs[[1]]
+    layer <- rgs$layers[[1]]
+
+    actual <- group_aes_cols(
+      layer$geom_expr$geom,
+      layer,
+      df,
+      rgs$scales
+    )
+
+    expect_setequal(
+      actual,
+      c("rsgl.log.bin.30.carat", "rsgl.linear.bin.5.clarity")
+    )
+  })
+  it("doesn't add duplicates", {
+    rgs <- sgl_to_rgs("
+			visualize
+				cut as x,
+				price as y,
+				cut as color
+			from diamonds
+			using boxes
+
+			scale by
+				log(x)
+		")
+    dfs <- result_dfs(rgs, test_con)
+    df <- dfs[[1]]
+    layer <- rgs$layers[[1]]
+
+    actual <- group_aes_cols(
+      layer$geom_expr$geom,
+      layer,
+      df,
+      rgs$scales
+    )
+
+    expect_setequal(
+      actual,
+      "cut"
+    )
+  })
+})
+
 test_that("ggplot_aes returns correct aes mappings", {
   rgs <- sgl_to_rgs("
     visualize
@@ -332,16 +661,16 @@ test_that(
   }
 )
 
-patrick::with_parameters_test_that(
+test_that(
   paste(
-    "ggplot_aes has no group aes by default for single",
-    "pos aes with no additional aesthetics:"
+    "ggplot_aes doesn't include group aes",
+    "if no default group cols"
   ),
   {
     rgs <- sgl_to_rgs("
 			visualize
-				mpg as x
-			from cars
+				price as y
+			from diamonds
 			using boxes
 		")
     dfs <- result_dfs(rgs, test_con)
@@ -351,234 +680,22 @@ patrick::with_parameters_test_that(
     actual_aes <- ggplot_aes(layer$geom_expr$geom, layer, df, rgs$scales)
 
     expect_false("group" %in% names(actual_aes))
-  },
-  aes = .pos_aes,
-  .test_name = aes
-)
-
-patrick::with_parameters_test_that(
-  paste(
-    "ggplot_aes has only cat pos mapping in group aes by default",
-    "for two pos aes with no additional aesthetics:"
-  ),
-  {
-    if (aes %in% .cart_aes) {
-      other_aes <- setdiff(.cart_aes, aes)
-    } else {
-      other_aes <- setdiff(.polar_aes, aes)
-    }
-    sgl <- sprintf(
-      "
-				visualize
-					cut as %s,
-					price as %s
-				from diamonds
-				using boxes
-			",
-      aes,
-      other_aes
-    )
-    rgs <- sgl_to_rgs(sgl)
-    dfs <- result_dfs(rgs, test_con)
-    df <- dfs[[1]]
-    layer <- rgs$layers[[1]]
-
-    actual_aes <- ggplot_aes(layer$geom_expr$geom, layer, df, rgs$scales)
-
-    expect_true("group" %in% names(actual_aes))
-    expect_equal(ggplot2::as_label(actual_aes$group), "cut")
-  },
-  aes = .pos_aes,
-  .test_name = paste("cat", aes)
-)
-
-patrick::with_parameters_test_that(
-  paste(
-    "ggplot_aes has only binned pos mapping in group aes by default",
-    "for two pos aes with no additional aesthetics:"
-  ),
-  {
-    if (aes %in% .cart_aes) {
-      other_aes <- setdiff(.cart_aes, aes)
-    } else {
-      other_aes <- setdiff(.polar_aes, aes)
-    }
-    sgl <- sprintf(
-      "
-				visualize
-					bin(carat) as %s,
-					price as %s
-				from diamonds
-				using boxes
-			",
-      aes,
-      other_aes
-    )
-    rgs <- sgl_to_rgs(sgl)
-    dfs <- result_dfs(rgs, test_con)
-    df <- dfs[[1]]
-    layer <- rgs$layers[[1]]
-
-    actual_aes <- ggplot_aes(layer$geom_expr$geom, layer, df, rgs$scales)
-
-    expect_true("group" %in% names(actual_aes))
-    expect_equal(
-      ggplot2::as_label(actual_aes$group),
-      "rsgl.linear.bin.30.carat"
-    )
-  },
-  aes = .pos_aes,
-  .test_name = paste("binned", aes)
-)
-
-patrick::with_parameters_test_that(
-  paste(
-    "ggplot_aes has only scaled binned pos mapping in group aes",
-    "by default for two pos aes with no additional aesthetics:"
-  ),
-  {
-    if (aes %in% .cart_aes) {
-      other_aes <- setdiff(.cart_aes, aes)
-    } else {
-      other_aes <- setdiff(.polar_aes, aes)
-    }
-    sgl <- sprintf(
-      "
-				visualize
-					bin(carat) as %s,
-					price as %s
-				from diamonds
-				using boxes
-				scale by
-					log(%s)
-			",
-      aes,
-      other_aes,
-      aes
-    )
-    rgs <- sgl_to_rgs(sgl)
-    dfs <- result_dfs(rgs, test_con)
-    df <- dfs[[1]]
-    layer <- rgs$layers[[1]]
-
-    actual_aes <- ggplot_aes(layer$geom_expr$geom, layer, df, rgs$scales)
-
-    expect_true("group" %in% names(actual_aes))
-    expect_equal(ggplot2::as_label(actual_aes$group), "rsgl.log.bin.30.carat")
-  },
-  aes = .pos_aes,
-  .test_name = paste("binned", aes)
-)
-
-color_cases <- function() {
-  tibble::tribble(
-    ~.test_name, ~mapping_expr, ~scale_expr, ~expected_group_cmpnt,
-    "cat", "clarity", "", "clarity",
-    "binned", "bin(carat)", "", "rsgl.linear.bin.30.carat",
-    "log-bin", "bin(carat)", "scale by log(color)", "rsgl.log.bin.30.carat"
-  )
-}
-patrick::with_parameters_test_that(
-  "ggplot_aes has color mapping in group aes by default for one pos aes:",
-  {
-    sgl <- sprintf(
-      "
-				visualize
-					price as x,
-					%s as color
-				from diamonds
-				using boxes
-				%s
-			",
-      mapping_expr,
-      scale_expr
-    )
-    rgs <- sgl_to_rgs(sgl)
-    dfs <- result_dfs(rgs, test_con)
-    df <- dfs[[1]]
-    layer <- rgs$layers[[1]]
-
-    actual_aes <- ggplot_aes(layer$geom_expr$geom, layer, df, rgs$scales)
-
-    expect_true("group" %in% names(actual_aes))
-    expect_equal(ggplot2::as_label(actual_aes$group), expected_group_cmpnt)
-  },
-  .cases = color_cases()
-)
-
-patrick::with_parameters_test_that(
-  "ggplot_aes has color mapping in group aes by default for two pos aes:",
-  {
-    sgl <- sprintf(
-      "
-				visualize
-					cut as x,
-					price as y,
-					%s as color
-				from diamonds
-				using boxes
-				%s
-			",
-      mapping_expr,
-      scale_expr
-    )
-    rgs <- sgl_to_rgs(sgl)
-    dfs <- result_dfs(rgs, test_con)
-    df <- dfs[[1]]
-    layer <- rgs$layers[[1]]
-
-    actual_aes <- ggplot_aes(layer$geom_expr$geom, layer, df, rgs$scales)
-
-    expected_group_mapping <- sprintf(
-      "interaction(cut, %s)",
-      expected_group_cmpnt
-    )
-    expect_true("group" %in% names(actual_aes))
-    expect_equal(ggplot2::as_label(actual_aes$group), expected_group_mapping)
-  },
-  .cases = color_cases()
+  }
 )
 
 test_that(
   paste(
-    "ggplot_aes doesn't duplicate default grouping",
-    "if pos and color mapping are same"
+    "ggplot_aes includes group aes with",
+    "expr for default group cols"
   ),
   {
     rgs <- sgl_to_rgs("
 			visualize
 				cut as x,
 				price as y,
-				cut as color
+				clarity as color
 			from diamonds
 			using boxes
-		")
-    dfs <- result_dfs(rgs, test_con)
-    df <- dfs[[1]]
-    layer <- rgs$layers[[1]]
-
-    actual_aes <- ggplot_aes(layer$geom_expr$geom, layer, df, rgs$scales)
-
-    expect_true("group" %in% names(actual_aes))
-    expect_equal(ggplot2::as_label(actual_aes$group), "cut")
-  }
-)
-
-test_that(
-  paste(
-    "ggplot_aes includes both scales in default",
-    "grouping if pos and color are scaled differently"
-  ),
-  {
-    rgs <- sgl_to_rgs("
-			visualize
-				bin(carat) as x,
-				price as y,
-				bin(carat) as color
-			from diamonds
-			using boxes
-			scale by
-				log(color)
 		")
     dfs <- result_dfs(rgs, test_con)
     df <- dfs[[1]]
@@ -589,7 +706,7 @@ test_that(
     expect_true("group" %in% names(actual_aes))
     expect_equal(
       ggplot2::as_label(actual_aes$group),
-      "interaction(rsgl.linear.bin.30.carat, rsgl.log.bin.30.carat)"
+      "interaction(cut, clarity)"
     )
   }
 )
