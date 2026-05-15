@@ -29,7 +29,6 @@ plot](https://ggplot2.tidyverse.org/reference/ggplot.html))
 
 ``` r
 library(duckdb)
-#> Loading required package: DBI
 con <- dbConnect(duckdb())
 dbWriteTable(con, "cars", cars)
 p <- dbGetPlot(con, "
