@@ -23,8 +23,6 @@ navbar:
       menu:
         - text: Example gallery
           href: articles/example-gallery.html
-        - text: SGL language guide
-          href: articles/sgl-language-guide.html
 
 reference:
   - title: Plotting
@@ -45,7 +43,6 @@ articles:
     contents:
       - rsgl
       - example-gallery
-      - sgl-language-guide
 
 news:
   releases:
