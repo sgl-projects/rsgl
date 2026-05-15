@@ -28,6 +28,12 @@ reference:
   - title: Plotting
     contents:
       - dbGetPlot
+  - title: Geoms
+    contents:
+      - points
+      - lines
+      - bars
+      - boxes
   - title: Type metadata
     contents:
       - type_classifications
