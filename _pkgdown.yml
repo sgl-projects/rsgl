@@ -30,12 +30,15 @@ reference:
   - title: Plotting
     contents:
       - dbGetPlot
+  - title: Geoms
+    contents:
+      - points
+      - lines
+      - bars
+      - boxes
   - title: Type metadata
     contents:
       - type_classifications
-  - title: Supported SGL constructs
-    contents:
-      - geoms
   - title: Datasets
     desc: Sample data used in examples and vignettes.
     contents:
