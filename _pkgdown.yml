@@ -37,6 +37,10 @@ reference:
   - title: Column-level transformations
     contents:
       - bin
+  - title: Aggregations
+    contents:
+      - count
+      - avg
   - title: Type metadata
     contents:
       - type_classifications
