@@ -1,17 +1,14 @@
 #' Bin
 #'
-#' The `bin` function creates equal-width bins for a numerical
-#' column. Original values are transformed into binned values.
-#' By default 30 bins are created, but the number of bins
-#' can be explicitly set via an optional argument.
+#' The `bin` function creates equal-width bins for a
+#' column; original values are transformed into bin-center values.
 #'
 #' @section Function Name:
 #' - `bin`
 #'
 #' @section Arguments:
-#' - A numerical column to bin (required).
-#' - An positive integer specifying the number of bins
-#'   (optional, default `30`).
+#' - The name of a numerical column to bin (required).
+#' - The number of bins (optional, default `30`).
 #'
 #' @examples
 #' library(duckdb)
