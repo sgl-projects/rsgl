@@ -278,3 +278,23 @@ describe("all_aesthetics", {
     )
   })
 })
+
+describe("column_from_aes", {
+  it("returns correct column", {
+    rgs <- sgl_to_rgs("
+			visualize
+				hp as x,
+				mpg as y
+			from cars
+			using points
+		")
+    dfs <- result_dfs(rgs, test_con)
+
+    df <- dfs[[1]]
+    layer <- rgs$layers[[1]]
+
+    actual_col <- column_from_aes(layer, df, "x")
+    expected_col <- df$hp
+    expect_equal(actual_col, expected_col)
+  })
+})
