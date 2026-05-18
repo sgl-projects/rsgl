@@ -15,6 +15,10 @@
 - [`boxes`](https://sgl-projects.github.io/rsgl/reference/boxes.md) :
   Boxes
 
+## Column-level transformations
+
+- [`bin`](https://sgl-projects.github.io/rsgl/reference/bin.md) : Bin
+
 ## Type metadata
 
 - [`type_classifications()`](https://sgl-projects.github.io/rsgl/reference/type_classifications.md)
