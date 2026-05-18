@@ -24,7 +24,6 @@ The bar geom lets you represent data using rectangular bar objects.
 
 ``` r
 library(duckdb)
-#> Loading required package: DBI
 con <- dbConnect(duckdb())
 dbWriteTable(con, "cars", cars)
 dbGetPlot(con, "

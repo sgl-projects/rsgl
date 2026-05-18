@@ -80,6 +80,13 @@ dbGetPlot(con, "
 
 - [`bin`](https://sgl-projects.github.io/rsgl/reference/bin.md) : Bin
 
+## Aggregations
+
+- [`count`](https://sgl-projects.github.io/rsgl/reference/count.md) :
+  Count
+- [`avg`](https://sgl-projects.github.io/rsgl/reference/avg.md) :
+  Average
+
 ## Type metadata
 
 - [`type_classifications()`](https://sgl-projects.github.io/rsgl/reference/type_classifications.md)
