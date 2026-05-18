@@ -34,6 +34,9 @@ reference:
       - lines
       - bars
       - boxes
+  - title: Column-level transformations
+    contents:
+      - bin
   - title: Type metadata
     contents:
       - type_classifications
