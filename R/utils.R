@@ -35,3 +35,8 @@ all_aesthetics <- function(rgs) {
   )
   unique(unlist(layer_aesthetics))
 }
+
+column_from_aes <- function(layer, df, aes) {
+  col_name_from_aes <- layer$aes_mappings[[aes]]$column
+  df[[col_name_from_aes]]
+}
