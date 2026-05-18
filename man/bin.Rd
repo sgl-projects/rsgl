@@ -4,10 +4,8 @@
 \alias{bin}
 \title{Bin}
 \description{
-The \code{bin} function creates equal-width bins for a numerical
-column. Original values are transformed into binned values.
-By default 30 bins are created, but the number of bins
-can be explicitly set via an optional argument.
+The \code{bin} function creates equal-width bins for a
+column; original values are transformed into bin-center values.
 }
 \section{Function Name}{
 
@@ -19,9 +17,8 @@ can be explicitly set via an optional argument.
 \section{Arguments}{
 
 \itemize{
-\item A numerical column to bin (required).
-\item An positive integer specifying the number of bins
-(optional, default \code{30}).
+\item The name of a numerical column to bin (required).
+\item The number of bins (optional, default \code{30}).
 }
 }
 
