@@ -404,15 +404,11 @@ test_that("generates plot with log scales", {
 			hp as x,
 			mpg as y
 		from cars
-		using points
-
-		layer
-
-		visualize
-			hp as x,
-			mpg as y
-		from cars
-		using regression line
+		using (
+			points
+			layer
+			regression line
+		)
 
 		scale by
 			log(x),
