@@ -1,6 +1,7 @@
 %option noyywrap
 %option nodefault
 %option noinput
+%option nounput
 %option case-insensitive
 
 %x FROM_CONTENT
