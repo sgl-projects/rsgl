@@ -20,6 +20,16 @@ The line geom lets you represent data using lines.
 
 - `color`
 
+## Supported qualifiers
+
+- `horizontal`: orients the line horizontally; points are connected in
+  order of increasing `x`/`theta` values.
+
+- `regression`: fits a linear regression line to the data.
+
+- `vertical`: orients the line vertically; points are connected in order
+  of increasing `y`/`r` values.
+
 ## Examples
 
 ``` r
@@ -35,5 +45,27 @@ dbGetPlot(con, "
     tree_id
   using lines
 ")
+
+
+dbWriteTable(con, "cars", cars)
+dbGetPlot(con, "
+  visualize
+    horsepower as x,
+    miles_per_gallon as y
+  from cars
+  using (
+     points
+     layer
+     regression line
+  )
+   scale by
+     log(x),
+     log(y)
+")
+#> `geom_smooth()` using formula = 'y ~ x'
+#> Warning: Removed 14 rows containing non-finite outside the scale range
+#> (`stat_smooth()`).
+#> Warning: Removed 14 rows containing missing values or values outside the scale range
+#> (`geom_point()`).
 
 ```

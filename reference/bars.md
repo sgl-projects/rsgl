@@ -20,6 +20,14 @@ The bar geom lets you represent data using rectangular bar objects.
 
 - `color`
 
+## Supported qualifiers
+
+- `horizontal`: orients the bars horizontally.
+
+- `unstacked`: doesn't stack overlapping bars.
+
+- `vertical`: orients the bars vertically.
+
 ## Examples
 
 ``` r
@@ -34,6 +42,19 @@ dbGetPlot(con, "
   group by
     bin(miles_per_gallon)
   using bars
+")
+#> Warning: Removed 1 row containing missing values or values outside the scale range
+#> (`geom_bar()`).
+
+
+dbGetPlot(con, "
+  visualize
+    bin(miles_per_gallon) as y,
+    count(*) as x
+  from cars
+  group by
+    bin(miles_per_gallon)
+  using horizontal bars
 ")
 #> Warning: Removed 1 row containing missing values or values outside the scale range
 #> (`geom_bar()`).

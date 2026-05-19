@@ -66,6 +66,14 @@
 <li><p><code>r</code></p></li>
 <li><p><code>color</code></p></li>
 </ul></div>
+    <div class="section level2">
+    <h2 id="supported-qualifiers">Supported qualifiers<a class="anchor" aria-label="anchor" href="#supported-qualifiers"></a></h2>
+
+
+<ul><li><p><code>horizontal</code>: orients the bars horizontally.</p></li>
+<li><p><code>unstacked</code>: doesn't stack overlapping bars.</p></li>
+<li><p><code>vertical</code>: orients the bars vertically.</p></li>
+</ul></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
@@ -84,6 +92,19 @@
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 1 row containing missing values or values outside the scale range</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_bar()`).</span>
 <span class="r-plt img"><img src="bars-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="dbGetPlot.html">dbGetPlot</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span></span>
+<span class="r-in"><span><span class="st">  visualize</span></span></span>
+<span class="r-in"><span><span class="st">    bin(miles_per_gallon) as y,</span></span></span>
+<span class="r-in"><span><span class="st">    count(*) as x</span></span></span>
+<span class="r-in"><span><span class="st">  from cars</span></span></span>
+<span class="r-in"><span><span class="st">  group by</span></span></span>
+<span class="r-in"><span><span class="st">    bin(miles_per_gallon)</span></span></span>
+<span class="r-in"><span><span class="st">  using horizontal bars</span></span></span>
+<span class="r-in"><span><span class="st">"</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 1 row containing missing values or values outside the scale range</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_bar()`).</span>
+<span class="r-plt img"><img src="bars-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
