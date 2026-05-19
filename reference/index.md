@@ -26,6 +26,14 @@
 - [`avg`](https://sgl-projects.github.io/rsgl/reference/avg.md) :
   Average
 
+## Scales
+
+- [`linear`](https://sgl-projects.github.io/rsgl/reference/linear.md) :
+  Linear
+- [`log`](https://sgl-projects.github.io/rsgl/reference/log.md) : Log
+- [`ln`](https://sgl-projects.github.io/rsgl/reference/ln.md) : Natural
+  Log
+
 ## Type metadata
 
 - [`type_classifications()`](https://sgl-projects.github.io/rsgl/reference/type_classifications.md)
