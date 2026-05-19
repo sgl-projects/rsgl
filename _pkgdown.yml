@@ -41,6 +41,11 @@ reference:
     contents:
       - count
       - avg
+  - title: Scales
+    contents:
+      - linear
+      - log
+      - ln
   - title: Type metadata
     contents:
       - type_classifications
