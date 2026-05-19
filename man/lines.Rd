@@ -25,6 +25,17 @@ The line geom lets you represent data using lines.
 }
 }
 
+\section{Supported qualifiers}{
+
+\itemize{
+\item \code{horizontal}: orients the line horizontally;
+points are connected in order of increasing \code{x}/\code{theta} values.
+\item \code{regression}: fits a linear regression line to the data.
+\item \code{vertical}: orients the line vertically;
+points are connected in order of increasing \code{y}/\code{r} values.
+}
+}
+
 \examples{
 library(duckdb)
 con <- dbConnect(duckdb())
@@ -37,6 +48,22 @@ dbGetPlot(con, "
   collect by
     tree_id
   using lines
+")
+
+dbWriteTable(con, "cars", cars)
+dbGetPlot(con, "
+  visualize
+    horsepower as x,
+    miles_per_gallon as y
+  from cars
+  using (
+     points
+     layer
+     regression line
+  )
+   scale by
+     log(x),
+     log(y)
 ")
 
 }

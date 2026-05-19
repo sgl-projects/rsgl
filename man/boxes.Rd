@@ -25,6 +25,14 @@ The box geom lets you represent data using boxplot box objects.
 }
 }
 
+\section{Supported qualifiers}{
+
+\itemize{
+\item \code{horizontal}: orients the boxes horizontally.
+\item \code{vertical}: orients the boxes vertically.
+}
+}
+
 \examples{
 library(duckdb)
 con <- dbConnect(duckdb())
@@ -35,6 +43,14 @@ dbGetPlot(con, "
     miles_per_gallon as y
   from cars
   using boxes
+")
+
+dbGetPlot(con, "
+  visualize
+    origin as y,
+    miles_per_gallon as x
+  from cars
+  using horizontal boxes
 ")
 
 }
