@@ -14,6 +14,9 @@
 #' - `color`
 #' - `size`
 #'
+#' @section Supported qualifiers:
+#' - `jittered`: adds a small amount of random noise to each point's position.
+#'
 #' @examples
 #' library(duckdb)
 #' con <- dbConnect(duckdb())
@@ -24,6 +27,15 @@
 #'     miles_per_gallon as y
 #'   from cars
 #'   using points
+#' ")
+#'
+#' set.seed(0)
+#' dbGetPlot(con, "
+#'   visualize
+#'     origin as x,
+#'     miles_per_gallon as y
+#'   from cars
+#'   using jittered points
 #' ")
 #'
 #' @name points

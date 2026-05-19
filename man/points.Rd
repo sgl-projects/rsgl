@@ -26,6 +26,13 @@ The point geom lets you represent data using point objects.
 }
 }
 
+\section{Supported qualifiers}{
+
+\itemize{
+\item \code{jittered}: adds a small amount of random noise to each point's position.
+}
+}
+
 \examples{
 library(duckdb)
 con <- dbConnect(duckdb())
@@ -36,6 +43,15 @@ dbGetPlot(con, "
     miles_per_gallon as y
   from cars
   using points
+")
+
+set.seed(0)
+dbGetPlot(con, "
+  visualize
+    origin as x,
+    miles_per_gallon as y
+  from cars
+  using jittered points
 ")
 
 }

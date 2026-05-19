@@ -13,6 +13,11 @@
 #' - `r`
 #' - `color`
 #'
+#' @section Supported qualifiers:
+#' - `horizontal`: orients the bars horizontally.
+#' - `unstacked`: doesn't stack overlapping bars.
+#' - `vertical`: orients the bars vertically.
+#'
 #' @examples
 #' library(duckdb)
 #' con <- dbConnect(duckdb())
@@ -25,6 +30,16 @@
 #'   group by
 #'     bin(miles_per_gallon)
 #'   using bars
+#' ")
+#'
+#' dbGetPlot(con, "
+#'   visualize
+#'     bin(miles_per_gallon) as y,
+#'     count(*) as x
+#'   from cars
+#'   group by
+#'     bin(miles_per_gallon)
+#'   using horizontal bars
 #' ")
 #'
 #' @name bars

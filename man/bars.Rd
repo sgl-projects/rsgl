@@ -25,6 +25,15 @@ The bar geom lets you represent data using rectangular bar objects.
 }
 }
 
+\section{Supported qualifiers}{
+
+\itemize{
+\item \code{horizontal}: orients the bars horizontally.
+\item \code{unstacked}: doesn't stack overlapping bars.
+\item \code{vertical}: orients the bars vertically.
+}
+}
+
 \examples{
 library(duckdb)
 con <- dbConnect(duckdb())
@@ -37,6 +46,16 @@ dbGetPlot(con, "
   group by
     bin(miles_per_gallon)
   using bars
+")
+
+dbGetPlot(con, "
+  visualize
+    bin(miles_per_gallon) as y,
+    count(*) as x
+  from cars
+  group by
+    bin(miles_per_gallon)
+  using horizontal bars
 ")
 
 }

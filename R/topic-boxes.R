@@ -13,6 +13,10 @@
 #' - `r`
 #' - `color`
 #'
+#' @section Supported qualifiers:
+#' - `horizontal`: orients the boxes horizontally.
+#' - `vertical`: orients the boxes vertically.
+#'
 #' @examples
 #' library(duckdb)
 #' con <- dbConnect(duckdb())
@@ -23,6 +27,14 @@
 #'     miles_per_gallon as y
 #'   from cars
 #'   using boxes
+#' ")
+#'
+#' dbGetPlot(con, "
+#'   visualize
+#'     origin as y,
+#'     miles_per_gallon as x
+#'   from cars
+#'   using horizontal boxes
 #' ")
 #'
 #' @name boxes
