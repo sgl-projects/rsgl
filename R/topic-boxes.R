@@ -1,19 +1,19 @@
 #' Boxes
 #'
-#' The box geom lets you represent data using boxplot box objects.
+#' Documents the aliases, aesthetics, and qualifiers for the box geom.
 #'
-#' @section Keywords:
+#' @section Aliases:
 #' - `box`
 #' - `boxes`
 #'
-#' @section Supported aesthetics:
+#' @section Aesthetics:
 #' - `x`
 #' - `y`
 #' - `theta`
 #' - `r`
 #' - `color`
 #'
-#' @section Supported qualifiers:
+#' @section Qualifiers:
 #' - `horizontal`: orients the boxes horizontally.
 #' - `vertical`: orients the boxes vertically.
 #'

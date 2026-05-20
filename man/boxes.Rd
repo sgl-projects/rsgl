@@ -4,9 +4,9 @@
 \alias{boxes}
 \title{Boxes}
 \description{
-The box geom lets you represent data using boxplot box objects.
+Documents the aliases, aesthetics, and qualifiers for the box geom.
 }
-\section{Keywords}{
+\section{Aliases}{
 
 \itemize{
 \item \code{box}
@@ -14,7 +14,7 @@ The box geom lets you represent data using boxplot box objects.
 }
 }
 
-\section{Supported aesthetics}{
+\section{Aesthetics}{
 
 \itemize{
 \item \code{x}
@@ -25,7 +25,7 @@ The box geom lets you represent data using boxplot box objects.
 }
 }
 
-\section{Supported qualifiers}{
+\section{Qualifiers}{
 
 \itemize{
 \item \code{horizontal}: orients the boxes horizontally.

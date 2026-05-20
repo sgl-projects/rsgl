@@ -1,12 +1,12 @@
 #' Points
 #'
-#' The point geom lets you represent data using point objects.
+#' Documents the aliases, aesthetics, and qualifiers for the point geom.
 #'
-#' @section Keywords:
+#' @section Aliases:
 #' - `point`
 #' - `points`
 #'
-#' @section Supported aesthetics:
+#' @section Aesthetics:
 #' - `x`
 #' - `y`
 #' - `theta`
@@ -14,7 +14,7 @@
 #' - `color`
 #' - `size`
 #'
-#' @section Supported qualifiers:
+#' @section Qualifiers:
 #' - `jittered`: adds a small amount of random noise to each point's position.
 #'
 #' @examples

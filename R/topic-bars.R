@@ -1,19 +1,19 @@
 #' Bars
 #'
-#' The bar geom lets you represent data using rectangular bar objects.
+#' Documents the aliases, aesthetics, and qualifiers for the bar geom.
 #'
-#' @section Keywords:
+#' @section Aliases:
 #' - `bar`
 #' - `bars`
 #'
-#' @section Supported aesthetics:
+#' @section Aesthetics:
 #' - `x`
 #' - `y`
 #' - `theta`
 #' - `r`
 #' - `color`
 #'
-#' @section Supported qualifiers:
+#' @section Qualifiers:
 #' - `horizontal`: orients the bars horizontally.
 #' - `unstacked`: doesn't stack overlapping bars.
 #' - `vertical`: orients the bars vertically.

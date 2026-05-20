@@ -4,9 +4,9 @@
 \alias{bars}
 \title{Bars}
 \description{
-The bar geom lets you represent data using rectangular bar objects.
+Documents the aliases, aesthetics, and qualifiers for the bar geom.
 }
-\section{Keywords}{
+\section{Aliases}{
 
 \itemize{
 \item \code{bar}
@@ -14,7 +14,7 @@ The bar geom lets you represent data using rectangular bar objects.
 }
 }
 
-\section{Supported aesthetics}{
+\section{Aesthetics}{
 
 \itemize{
 \item \code{x}
@@ -25,7 +25,7 @@ The bar geom lets you represent data using rectangular bar objects.
 }
 }
 
-\section{Supported qualifiers}{
+\section{Qualifiers}{
 
 \itemize{
 \item \code{horizontal}: orients the bars horizontally.

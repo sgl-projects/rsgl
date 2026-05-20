@@ -4,9 +4,9 @@
 \alias{lines}
 \title{Lines}
 \description{
-The line geom lets you represent data using lines.
+Documents the aliases, aesthetics, and qualifiers for the line geom.
 }
-\section{Keywords}{
+\section{Aliases}{
 
 \itemize{
 \item \code{line}
@@ -14,7 +14,7 @@ The line geom lets you represent data using lines.
 }
 }
 
-\section{Supported aesthetics}{
+\section{Aesthetics}{
 
 \itemize{
 \item \code{x}
@@ -25,7 +25,7 @@ The line geom lets you represent data using lines.
 }
 }
 
-\section{Supported qualifiers}{
+\section{Qualifiers}{
 
 \itemize{
 \item \code{horizontal}: orients the line horizontally;
