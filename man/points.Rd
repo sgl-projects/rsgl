@@ -4,9 +4,9 @@
 \alias{points}
 \title{Points}
 \description{
-The point geom lets you represent data using point objects.
+Documents the aliases, aesthetics, and qualifiers for the point geom.
 }
-\section{Keywords}{
+\section{Aliases}{
 
 \itemize{
 \item \code{point}
@@ -14,7 +14,7 @@ The point geom lets you represent data using point objects.
 }
 }
 
-\section{Supported aesthetics}{
+\section{Aesthetics}{
 
 \itemize{
 \item \code{x}
@@ -26,7 +26,7 @@ The point geom lets you represent data using point objects.
 }
 }
 
-\section{Supported qualifiers}{
+\section{Qualifiers}{
 
 \itemize{
 \item \code{jittered}: adds a small amount of random noise to each point's position.

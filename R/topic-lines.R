@@ -1,19 +1,19 @@
 #' Lines
 #'
-#' The line geom lets you represent data using lines.
+#' Documents the aliases, aesthetics, and qualifiers for the line geom.
 #'
-#' @section Keywords:
+#' @section Aliases:
 #' - `line`
 #' - `lines`
 #'
-#' @section Supported aesthetics:
+#' @section Aesthetics:
 #' - `x`
 #' - `y`
 #' - `theta`
 #' - `r`
 #' - `color`
 #'
-#' @section Supported qualifiers:
+#' @section Qualifiers:
 #' - `horizontal`: orients the line horizontally;
 #'  points are connected in order of increasing `x`/`theta` values.
 #' - `regression`: fits a linear regression line to the data.
