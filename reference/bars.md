@@ -1,14 +1,14 @@
 # Bars
 
-The bar geom lets you represent data using rectangular bar objects.
+Documents the aliases, aesthetics, and qualifiers for the bar geom.
 
-## Keywords
+## Aliases
 
 - `bar`
 
 - `bars`
 
-## Supported aesthetics
+## Aesthetics
 
 - `x`
 
@@ -20,7 +20,7 @@ The bar geom lets you represent data using rectangular bar objects.
 
 - `color`
 
-## Supported qualifiers
+## Qualifiers
 
 - `horizontal`: orients the bars horizontally.
 

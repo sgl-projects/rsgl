@@ -1,14 +1,14 @@
 # Points
 
-The point geom lets you represent data using point objects.
+Documents the aliases, aesthetics, and qualifiers for the point geom.
 
-## Keywords
+## Aliases
 
 - `point`
 
 - `points`
 
-## Supported aesthetics
+## Aesthetics
 
 - `x`
 
@@ -22,7 +22,7 @@ The point geom lets you represent data using point objects.
 
 - `size`
 
-## Supported qualifiers
+## Qualifiers
 
 - `jittered`: adds a small amount of random noise to each point's
   position.

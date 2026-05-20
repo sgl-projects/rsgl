@@ -1,14 +1,14 @@
 # Lines
 
-The line geom lets you represent data using lines.
+Documents the aliases, aesthetics, and qualifiers for the line geom.
 
-## Keywords
+## Aliases
 
 - `line`
 
 - `lines`
 
-## Supported aesthetics
+## Aesthetics
 
 - `x`
 
@@ -20,7 +20,7 @@ The line geom lets you represent data using lines.
 
 - `color`
 
-## Supported qualifiers
+## Qualifiers
 
 - `horizontal`: orients the line horizontally; points are connected in
   order of increasing `x`/`theta` values.

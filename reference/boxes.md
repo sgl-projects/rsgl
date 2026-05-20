@@ -1,14 +1,14 @@
 # Boxes
 
-The box geom lets you represent data using boxplot box objects.
+Documents the aliases, aesthetics, and qualifiers for the box geom.
 
-## Keywords
+## Aliases
 
 - `box`
 
 - `boxes`
 
-## Supported aesthetics
+## Aesthetics
 
 - `x`
 
@@ -20,7 +20,7 @@ The box geom lets you represent data using boxplot box objects.
 
 - `color`
 
-## Supported qualifiers
+## Qualifiers
 
 - `horizontal`: orients the boxes horizontally.
 
