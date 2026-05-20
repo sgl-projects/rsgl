@@ -1,134 +1,3 @@
-test_that("calls sgl_to_rgs with SGL statement", {
-  mock_con <- "mock_con"
-  mock_sgl_stmt <- "mock_sgl_stmt"
-  actual_sgl_stmt_arg <- NULL
-  local_mocked_bindings(
-    sgl_to_rgs = function(sgl_stmt) {
-      actual_sgl_stmt_arg <<- sgl_stmt
-    },
-    result_dfs = function(rgs, test_con) {},
-    validate_semantics = function(rgs, dfs) {},
-    perform_ctas = function(rgs, dfs) {},
-    rgs_to_ggplot2 = function(rgs, dfs) {}
-  )
-
-  dbGetPlot(mock_con, mock_sgl_stmt)
-
-  expect_equal(actual_sgl_stmt_arg, mock_sgl_stmt)
-})
-
-test_that("calls result_dfs with correct args", {
-  mock_con <- "mock_con"
-  mock_sgl_stmt <- "mock_sgl_stmt"
-  mock_rgs <- "mock_rgs"
-  actual_rgs_arg <- NULL
-  actual_con_arg <- NULL
-  local_mocked_bindings(
-    sgl_to_rgs = function(sgl_stmt) {
-      mock_rgs
-    },
-    result_dfs = function(rgs, test_con) {
-      actual_rgs_arg <<- rgs
-      actual_con_arg <<- test_con
-    },
-    validate_semantics = function(rgs, dfs) {},
-    perform_ctas = function(rgs, dfs) {},
-    rgs_to_ggplot2 = function(rgs, dfs) {}
-  )
-
-  dbGetPlot(mock_con, mock_sgl_stmt)
-
-  expect_equal(actual_rgs_arg, mock_rgs)
-  expect_equal(actual_con_arg, mock_con)
-})
-
-test_that("calls validate_semantics with correct args", {
-  mock_con <- "mock_con"
-  mock_sgl_stmt <- "mock_sgl_stmt"
-  mock_rgs <- "mock_rgs"
-  mock_dfs <- "mock_dfs"
-  actual_rgs_arg <- NULL
-  actual_dfs_arg <- NULL
-  local_mocked_bindings(
-    sgl_to_rgs = function(sgl_stmt) {
-      mock_rgs
-    },
-    result_dfs = function(rgs, test_con) {
-      mock_dfs
-    },
-    validate_semantics = function(rgs, dfs) {
-      actual_rgs_arg <<- rgs
-      actual_dfs_arg <<- dfs
-    },
-    perform_ctas = function(rgs, dfs) {},
-    rgs_to_ggplot2 = function(rgs, dfs) {}
-  )
-
-  dbGetPlot(mock_con, mock_sgl_stmt)
-
-  expect_equal(actual_rgs_arg, mock_rgs)
-  expect_equal(actual_dfs_arg, mock_dfs)
-})
-
-test_that("calls perform_ctas with correct args", {
-  mock_con <- "mock_con"
-  mock_sgl_stmt <- "mock_sgl_stmt"
-  mock_rgs <- "mock_rgs"
-  mock_dfs <- "mock_dfs"
-  actual_rgs_arg <- NULL
-  actual_dfs_arg <- NULL
-  local_mocked_bindings(
-    sgl_to_rgs = function(sgl_stmt) {
-      mock_rgs
-    },
-    result_dfs = function(rgs, test_con) {
-      mock_dfs
-    },
-    validate_semantics = function(rgs, dfs) {},
-    perform_ctas = function(rgs, dfs) {
-      actual_rgs_arg <<- rgs
-      actual_dfs_arg <<- dfs
-    },
-    rgs_to_ggplot2 = function(rgs, dfs) {}
-  )
-
-  dbGetPlot(mock_con, mock_sgl_stmt)
-
-  expect_equal(actual_rgs_arg, mock_rgs)
-  expect_equal(actual_dfs_arg, mock_dfs)
-})
-
-test_that("calls rgs_to_ggplot2 with correct args", {
-  mock_con <- "mock_con"
-  mock_sgl_stmt <- "mock_sgl_stmt"
-  mock_rgs <- "mock_rgs"
-  mock_dfs <- "mock_dfs"
-  mock_post_cta_dfs <- "mock_post_cta_dfs"
-  actual_rgs_arg <- NULL
-  actual_dfs_arg <- NULL
-  local_mocked_bindings(
-    sgl_to_rgs = function(sgl_stmt) {
-      mock_rgs
-    },
-    result_dfs = function(rgs, test_con) {
-      mock_dfs
-    },
-    validate_semantics = function(rgs, dfs) {},
-    perform_ctas = function(rgs, dfs) {
-      mock_post_cta_dfs
-    },
-    rgs_to_ggplot2 = function(rgs, dfs) {
-      actual_rgs_arg <<- rgs
-      actual_dfs_arg <<- dfs
-    }
-  )
-
-  dbGetPlot(mock_con, mock_sgl_stmt)
-
-  expect_equal(actual_rgs_arg, mock_rgs)
-  expect_equal(actual_dfs_arg, mock_post_cta_dfs)
-})
-
 test_that("generates scatterplot", {
   sgl_stmt <- "
 		visualize
@@ -396,6 +265,33 @@ test_that("generates plot from layered geom expressions", {
   p <- dbGetPlot(test_con, sgl_stmt)
 
   vdiffr::expect_doppelganger("plot from layered geom expressions", p)
+})
+
+test_that("generates plot with date and timestamp layered", {
+  sgl_stmt <- "
+		visualize
+			day as x,
+			number as y
+		from synth
+		using line
+
+		layer
+
+		visualize
+			ts_col as x,
+			number as y
+		from (
+			select
+				cast(day + interval '10 years' as timestamp) as ts_col,
+				number
+			from synth
+		)
+		using line
+	"
+
+  p <- dbGetPlot(test_con, sgl_stmt)
+
+  vdiffr::expect_doppelganger("plot with date and timestamp layered", p)
 })
 
 test_that("generates plot with log scales", {

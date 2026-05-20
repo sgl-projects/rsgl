@@ -16,8 +16,6 @@ valid_layering_for_aes <- function(rgs, dfs, aes) {
   numerical_found <- 0
   categorical_found <- 0
   temporal_found <- 0
-  date_found <- 0
-  datetime_found <- 0
   type_found_in_layer <- function(layer, df) {
     aes_mappings <- layer$aes_mappings
     if (aes %in% names(aes_mappings)) {
@@ -27,12 +25,6 @@ valid_layering_for_aes <- function(rgs, dfs, aes) {
         categorical_found <<- 1
       } else if (is_temporal_mapping(layer, df, aes)) {
         temporal_found <<- 1
-        col <- column_from_aes(layer, df, aes)
-        if (class(col)[1] == "Date") {
-          date_found <<- 1
-        } else if (class(col)[1] == "POSIXct") {
-          datetime_found <<- 1
-        }
       }
     }
   }
@@ -55,16 +47,6 @@ valid_layering_for_aes <- function(rgs, dfs, aes) {
       paste0(types_found, collapse = ", ")
     )
     stop(errmsg)
-  }
-  if (temporal_found == 1) {
-    if (date_found == 1 && datetime_found == 1) {
-      unformatted_msg <- paste(
-        "Error: an aesthetic cannot be mapped to both date and datetime",
-        "types across layers. Found both for the %s aesthetic."
-      )
-      errmsg <- sprintf(unformatted_msg, aes)
-      stop(errmsg)
-    }
   }
 }
 
