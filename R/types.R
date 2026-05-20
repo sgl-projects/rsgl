@@ -8,9 +8,16 @@ is_categorical_col <- function(col) {
   class(col)[1] %in% categorical_classes
 }
 
+is_date_col <- function(col) {
+  class(col)[1] == "Date"
+}
+
+is_timestamp_col <- function(col) {
+  class(col)[1] == "POSIXct"
+}
+
 is_temporal_col <- function(col) {
-  temporal_classes <- c("Date", "POSIXct")
-  class(col)[1] %in% temporal_classes
+  is_date_col(col) || is_timestamp_col(col)
 }
 
 is_numerical_mapping <- function(layer, df, aes) {
@@ -33,13 +40,32 @@ is_categorical_mapping <- function(layer, df, aes) {
   }
 }
 
-is_temporal_mapping <- function(layer, df, aes) {
+is_date_mapping <- function(layer, df, aes) {
   aes_mapping <- layer$aes_mappings[[aes]]
   if (col_expr_has_cta(aes_mapping, "count")) {
     FALSE
   } else {
     col <- column_from_aes(layer, df, aes)
-    is_temporal_col(col)
+    is_date_col(col)
+  }
+}
+
+is_timestamp_mapping <- function(layer, df, aes) {
+  aes_mapping <- layer$aes_mappings[[aes]]
+  if (col_expr_has_cta(aes_mapping, "count")) {
+    FALSE
+  } else {
+    col <- column_from_aes(layer, df, aes)
+    is_timestamp_col(col)
+  }
+}
+
+is_temporal_mapping <- function(layer, df, aes) {
+  aes_mapping <- layer$aes_mappings[[aes]]
+  if (col_expr_has_cta(aes_mapping, "count")) {
+    FALSE
+  } else {
+    is_date_mapping(layer, df, aes) || is_timestamp_mapping(layer, df, aes)
   }
 }
 

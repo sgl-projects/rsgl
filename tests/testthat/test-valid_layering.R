@@ -19,7 +19,7 @@ compatible_type_cases <- function() {
     "both numerical", "cars", "hp", "synth", "number",
     "numerical and count", "cars", "hp", "synth", "count(*)",
     "both categorical", "diamonds", "color", "synth", "letter",
-    "both dates", "synth", "day", "economics", "date",
+    "both temporal", "synth", "day_and_time", "economics", "date",
     "bin of same type", "cars", "hp", "cars", "bin(mpg)"
   )
 }
@@ -55,44 +55,12 @@ patrick::with_parameters_test_that(
   .cases = compatible_type_cases()
 )
 
-test_that("layering of compatible types is valid: both datetimes", {
-  DBI::dbBegin(test_con)
-  withr::defer(DBI::dbRollback(test_con))
-  DBI::dbExecute(
-    test_con,
-    "alter table economics add column day_and_time timestamp"
-  )
-  DBI::dbExecute(
-    test_con,
-    "update economics set day_and_time = date + interval '1 day'"
-  )
-  rgs <- sgl_to_rgs("
-		visualize
-			day_and_time as x
-		from synth
-		using points
-
-		layer
-
-		visualize
-			day_and_time as x
-		from economics
-		using points
-	")
-  dfs <- result_dfs(rgs, test_con)
-
-  expect_no_error(
-    valid_layering(rgs, dfs)
-  )
-})
-
 incompatible_type_cases <- function() {
   tibble::tribble(
     ~.test_name, ~layer_1_source, ~layer_1_expr, ~layer_2_source, ~layer_2_expr,
     "num and cat", "cars", "hp", "synth", "letter",
     "num and temp", "cars", "hp", "synth", "day",
-    "cat and temp", "synth", "letter", "synth", "day_and_time",
-    "date and datetime", "synth", "day", "synth", "day_and_time"
+    "cat and temp", "synth", "letter", "synth", "day_and_time"
   )
 }
 patrick::with_parameters_test_that(

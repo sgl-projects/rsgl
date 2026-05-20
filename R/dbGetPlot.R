@@ -27,6 +27,7 @@ dbGetPlot <- function(con, sgl_stmt) { # nolint: object_name_linter
   rgs <- sgl_to_rgs(sgl_stmt)
   dfs <- result_dfs(rgs, con)
   validate_semantics(rgs, dfs)
-  post_cta_dfs <- perform_ctas(rgs, dfs)
+  casted_dfs <- cast_columns(rgs, dfs)
+  post_cta_dfs <- perform_ctas(rgs, casted_dfs)
   rgs_to_ggplot2(rgs, post_cta_dfs)
 }
