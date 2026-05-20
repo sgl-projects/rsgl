@@ -6,7 +6,10 @@ Authors@R:
 			"Jon", "Chapman", , "jochapjo@icloud.com",
 			role = c("aut", "cre"),
 		)
-Description: rsgl is an R package that implements the SGL graphics language.
+Description: An implementation of the SGL graphics language,
+    allowing you to generate plots from a database connection 
+    using SGL.
+rsgl is an R package that implements the SGL graphics language.
 License: MIT + file LICENSE
 URL: https://github.com/sgl-projects/rsgl, https://sgl-projects.github.io/rsgl/, https://arxiv.org/pdf/2505.14690
 BugReports: https://github.com/sgl-projects/rsgl/issues
