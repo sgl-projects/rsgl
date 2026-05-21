@@ -7,16 +7,29 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/sgl-projects/rsgl/blob/main/DESCRIPTION)
+[`inst/CITATION`](https://github.com/sgl-projects/rsgl/blob/main/inst/CITATION)
 
 Chapman J (2026). *rsgl: An R Implementation of the SGL Graphics
 Language*. R package version 0.0.0.9000,
-<https://github.com/sgl-projects/rsgl>.
+<https://sgl-projects.github.io/rsgl/>.
 
     @Manual{,
-      title = {rsgl: An R Implementation of the SGL Graphics Language},
+      title = {rsgl: An {R} Implementation of the {SGL} Graphics Language},
       author = {Jon Chapman},
       year = {2026},
       note = {R package version 0.0.0.9000},
-      url = {https://github.com/sgl-projects/rsgl},
+      url = {https://sgl-projects.github.io/rsgl/},
+    }
+
+Jon Chapman (2025) SGL: A Structured Graphics Language. arXiv:2505.14690
+\[cs.PL\]. https://arxiv.org/abs/2505.14690
+
+    @Misc{,
+      title = {{SGL}: A Structured Graphics Language},
+      author = {Jon Chapman},
+      year = {2025},
+      eprint = {2505.14690},
+      archiveprefix = {arXiv},
+      primaryclass = {cs.PL},
+      url = {https://arxiv.org/abs/2505.14690},
     }

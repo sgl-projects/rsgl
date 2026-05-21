@@ -637,3 +637,5 @@ dbGetPlot(con, "
 - [Example
   gallery](https://sgl-projects.github.io/rsgl/articles/example-gallery.html)
   — a collection of plots generated with rsgl.
+- [SGL Paper](https://arxiv.org/pdf/2505.14690) — covers the language in
+  greater depth, including SGL’s underlying grammar of graphics.
