@@ -3,7 +3,6 @@
 
 %{
 #define _GNU_SOURCE
-#include<ctype.h>
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -15,6 +14,7 @@
 #include "qual.h"
 #include "scale.h"
 #include "direction.h"
+#include "case.h"
 
 void set_scanner_input(const char *input_string);
 void delete_scanner_buffer(void);
@@ -23,8 +23,6 @@ void reset_scanner_state(void);
 int yylex(void);
 void yyerror(struct cgs *cgs, char **errmsg, char const *s);
 extern void yyrestart(FILE *input_file);
-
-void str_tolower(char *s);
 
 %}
 
@@ -356,12 +354,6 @@ title_expr: UNQUOTED_STRING AS SINGLE_QUOTED_STRING {
 }
 
 %%
-
-void str_tolower(char *s) {
-	for (; *s; ++s) {
-		*s = tolower((unsigned char)*s);
-	}
-}
 
 void reverse_layers(struct cgs *cgs) {
 	struct layer *previous_layer = NULL;

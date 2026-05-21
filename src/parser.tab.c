@@ -70,7 +70,6 @@
 #line 4 "src/parser.y"
 
 #define _GNU_SOURCE
-#include<ctype.h>
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -82,6 +81,7 @@
 #include "qual.h"
 #include "scale.h"
 #include "direction.h"
+#include "case.h"
 
 void set_scanner_input(const char *input_string);
 void delete_scanner_buffer(void);
@@ -91,10 +91,8 @@ int yylex(void);
 void yyerror(struct cgs *cgs, char **errmsg, char const *s);
 extern void yyrestart(FILE *input_file);
 
-void str_tolower(char *s);
 
-
-#line 98 "src/parser.tab.c"
+#line 96 "src/parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -564,12 +562,12 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    51,    51,    53,    54,    56,    57,    58,    60,    61,
-      63,    63,    73,   104,   127,   128,   130,   131,   133,   141,
-     147,   148,   150,   172,   193,   214,   226,   236,   237,   239,
-     240,   242,   251,   252,   254,   255,   257,   266,   268,   269,
-     271,   305,   307,   308,   310,   324,   325,   326,   328,   330,
-     331,   333
+       0,    49,    49,    51,    52,    54,    55,    56,    58,    59,
+      61,    61,    71,   102,   125,   126,   128,   129,   131,   139,
+     145,   146,   148,   170,   191,   212,   224,   234,   235,   237,
+     238,   240,   249,   250,   252,   253,   255,   264,   266,   267,
+     269,   303,   305,   306,   308,   322,   323,   324,   326,   328,
+     329,   331
 };
 #endif
 
@@ -1192,7 +1190,7 @@ yyreduce:
   switch (yyn)
     {
   case 10: /* $@1: %empty  */
-#line 63 "src/parser.y"
+#line 61 "src/parser.y"
                             {
 	struct layer *new_layer = malloc(sizeof(struct layer));
 	new_layer->aes_mappings=NULL;
@@ -1202,17 +1200,17 @@ yyreduce:
 	new_layer->next=cgs->layers;
 	cgs->layers=new_layer;
 }
-#line 1206 "src/parser.tab.c"
+#line 1204 "src/parser.tab.c"
     break;
 
   case 11: /* layer_expression: VISUALIZE $@1 aes_mappings from_clause grouping_clause collection_clause using_clause  */
-#line 71 "src/parser.y"
+#line 69 "src/parser.y"
                                                                           {}
-#line 1212 "src/parser.tab.c"
+#line 1210 "src/parser.tab.c"
     break;
 
   case 12: /* geom_expr: UNQUOTED_STRING UNQUOTED_STRING  */
-#line 73 "src/parser.y"
+#line 71 "src/parser.y"
                                            {
 	char *qual_str=(yyvsp[-1].str);
 	str_tolower(qual_str);	
@@ -1245,11 +1243,11 @@ yyreduce:
 	new_geom->next = cgs->layers->geoms;
 	cgs->layers->geoms = new_geom;
 }
-#line 1249 "src/parser.tab.c"
+#line 1247 "src/parser.tab.c"
     break;
 
   case 13: /* geom_expr: UNQUOTED_STRING  */
-#line 104 "src/parser.y"
+#line 102 "src/parser.y"
                     {
 	enum qual qual=DEFAULT;
 	int print_result;
@@ -1272,11 +1270,11 @@ yyreduce:
 	new_geom->next = cgs->layers->geoms;
 	cgs->layers->geoms = new_geom;
 }
-#line 1276 "src/parser.tab.c"
+#line 1274 "src/parser.tab.c"
     break;
 
   case 18: /* from_clause: FROM TABLE_NAME  */
-#line 133 "src/parser.y"
+#line 131 "src/parser.y"
                              {
 	char *table_name = (yyvsp[0].str);
 	int print_result;
@@ -1286,21 +1284,21 @@ yyreduce:
 	}
 	free(table_name);
 }
-#line 1290 "src/parser.tab.c"
+#line 1288 "src/parser.tab.c"
     break;
 
   case 19: /* from_clause: FROM SQL_SUBQUERY  */
-#line 141 "src/parser.y"
+#line 139 "src/parser.y"
                       {
 	char *sql_subquery=(yyvsp[0].str);
 	cgs->layers->source_sql_query=strdup(sql_subquery);
 	free(sql_subquery);
 }
-#line 1300 "src/parser.tab.c"
+#line 1298 "src/parser.tab.c"
     break;
 
   case 22: /* aes_mapping: col_expr AS UNQUOTED_STRING  */
-#line 150 "src/parser.y"
+#line 148 "src/parser.y"
                                          {
 	char *aes_str=(yyvsp[0].str);
 	str_tolower(aes_str);
@@ -1322,11 +1320,11 @@ yyreduce:
 
 	cgs->layers->aes_mappings=new_mapping;
 }
-#line 1326 "src/parser.tab.c"
+#line 1324 "src/parser.tab.c"
     break;
 
   case 23: /* col_expr: UNQUOTED_STRING '(' UNQUOTED_STRING ')'  */
-#line 172 "src/parser.y"
+#line 170 "src/parser.y"
                                                   {
 	char *cta_str=(yyvsp[-3].str);
 	str_tolower(cta_str);	
@@ -1349,11 +1347,11 @@ yyreduce:
 	free(column_name);
 
 }
-#line 1353 "src/parser.tab.c"
+#line 1351 "src/parser.tab.c"
     break;
 
   case 24: /* col_expr: UNQUOTED_STRING '(' UNQUOTED_STRING COMMA fn_arg ')'  */
-#line 193 "src/parser.y"
+#line 191 "src/parser.y"
                                                          {
 	char *cta_str=(yyvsp[-5].str);
 	str_tolower(cta_str);	
@@ -1376,11 +1374,11 @@ yyreduce:
 	free(column_name);
 
 }
-#line 1380 "src/parser.tab.c"
+#line 1378 "src/parser.tab.c"
     break;
 
   case 25: /* col_expr: UNQUOTED_STRING  */
-#line 214 "src/parser.y"
+#line 212 "src/parser.y"
                           {
 	enum cta cta=IDENTITY;
 	char *column_name=(yyvsp[0].str);
@@ -1392,11 +1390,11 @@ yyreduce:
 	free(column_name);
 
 }
-#line 1396 "src/parser.tab.c"
+#line 1394 "src/parser.tab.c"
     break;
 
   case 26: /* fn_arg: INTEGER  */
-#line 226 "src/parser.y"
+#line 224 "src/parser.y"
                 {
 	int value=(yyvsp[0].int_val);
 
@@ -1406,11 +1404,11 @@ yyreduce:
 
 	(yyval.fa)=new_arg;
 }
-#line 1410 "src/parser.tab.c"
+#line 1408 "src/parser.tab.c"
     break;
 
   case 31: /* grouping_expr: col_expr  */
-#line 242 "src/parser.y"
+#line 240 "src/parser.y"
                         {
 	struct grouping_expr *new_grouping_expr = malloc(sizeof(struct grouping_expr));
 
@@ -1419,11 +1417,11 @@ yyreduce:
 
 	cgs->layers->groupings=new_grouping_expr;
 }
-#line 1423 "src/parser.tab.c"
+#line 1421 "src/parser.tab.c"
     break;
 
   case 36: /* collection_expr: col_expr  */
-#line 257 "src/parser.y"
+#line 255 "src/parser.y"
                           {
 	struct collection_expr *new_collection_expr = malloc(sizeof(struct collection_expr));
 
@@ -1432,17 +1430,17 @@ yyreduce:
 
 	cgs->layers->collections=new_collection_expr;
 }
-#line 1436 "src/parser.tab.c"
+#line 1434 "src/parser.tab.c"
     break;
 
   case 37: /* scale_clause: SCALE BY scale_list  */
-#line 266 "src/parser.y"
+#line 264 "src/parser.y"
                                   {}
-#line 1442 "src/parser.tab.c"
+#line 1440 "src/parser.tab.c"
     break;
 
   case 40: /* scale_expr: UNQUOTED_STRING '(' UNQUOTED_STRING ')'  */
-#line 271 "src/parser.y"
+#line 269 "src/parser.y"
                                                     {
 	char *scale_str=(yyvsp[-3].str);
 	str_tolower(scale_str);
@@ -1476,17 +1474,17 @@ yyreduce:
 	new_scale->next=cgs->scales;	
 	cgs->scales=new_scale;
 }
-#line 1480 "src/parser.tab.c"
+#line 1478 "src/parser.tab.c"
     break;
 
   case 41: /* facet_clause: FACET BY facet_list  */
-#line 305 "src/parser.y"
+#line 303 "src/parser.y"
                                   {}
-#line 1486 "src/parser.tab.c"
+#line 1484 "src/parser.tab.c"
     break;
 
   case 44: /* facet_expr: UNQUOTED_STRING direction  */
-#line 310 "src/parser.y"
+#line 308 "src/parser.y"
                                       {
 	char *column = (yyvsp[-1].str);
 	enum direction facet_direction = (yyvsp[0].direction_enum);
@@ -1500,35 +1498,35 @@ yyreduce:
 	new_facet->next=cgs->facets;
 	cgs->facets=new_facet;	
 }
-#line 1504 "src/parser.tab.c"
+#line 1502 "src/parser.tab.c"
     break;
 
   case 45: /* direction: %empty  */
-#line 324 "src/parser.y"
+#line 322 "src/parser.y"
            { (yyval.direction_enum) = DEFAULT_DIRECTION; }
-#line 1510 "src/parser.tab.c"
+#line 1508 "src/parser.tab.c"
     break;
 
   case 46: /* direction: HORIZONTALLY  */
-#line 325 "src/parser.y"
+#line 323 "src/parser.y"
                { (yyval.direction_enum) = HORIZONTAL_DIRECTION; }
-#line 1516 "src/parser.tab.c"
+#line 1514 "src/parser.tab.c"
     break;
 
   case 47: /* direction: VERTICALLY  */
-#line 326 "src/parser.y"
+#line 324 "src/parser.y"
              { (yyval.direction_enum) = VERTICAL_DIRECTION; }
-#line 1522 "src/parser.tab.c"
+#line 1520 "src/parser.tab.c"
     break;
 
   case 48: /* title_clause: TITLE title_list  */
-#line 328 "src/parser.y"
+#line 326 "src/parser.y"
                                {}
-#line 1528 "src/parser.tab.c"
+#line 1526 "src/parser.tab.c"
     break;
 
   case 51: /* title_expr: UNQUOTED_STRING AS SINGLE_QUOTED_STRING  */
-#line 333 "src/parser.y"
+#line 331 "src/parser.y"
                                                     {
 	char *aes_str=(yyvsp[-2].str);
 	str_tolower(aes_str);	
@@ -1553,11 +1551,11 @@ yyreduce:
 	new_title->next=cgs->titles;	
 	cgs->titles=new_title;
 }
-#line 1557 "src/parser.tab.c"
+#line 1555 "src/parser.tab.c"
     break;
 
 
-#line 1561 "src/parser.tab.c"
+#line 1559 "src/parser.tab.c"
 
       default: break;
     }
@@ -1750,14 +1748,8 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 358 "src/parser.y"
+#line 356 "src/parser.y"
 
-
-void str_tolower(char *s) {
-	for (; *s; ++s) {
-		*s = tolower((unsigned char)*s);
-	}
-}
 
 void reverse_layers(struct cgs *cgs) {
 	struct layer *previous_layer = NULL;
