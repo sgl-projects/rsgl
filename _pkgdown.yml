@@ -23,6 +23,9 @@ navbar:
       menu:
         - text: Example gallery
           href: articles/example-gallery.html
+        - text: ---
+        - text: "SGL Paper (arXiv)"
+          href: https://arxiv.org/pdf/2505.14690
 
 reference:
   - title: Plotting

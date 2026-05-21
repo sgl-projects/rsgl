@@ -1,0 +1,27 @@
+year = sub('.*(2[[:digit:]]{3})-.*', '\\1', meta[['Date/Publication']], perl = TRUE)
+vers = paste('R package version', meta$Version)
+if (length(year) == 0) year = format(Sys.Date(), '%Y')
+
+bibentry(
+  'manual',
+  title = paste('rsgl:', gsub('\\b(R|SGL)\\b', '{\\1}', meta$Title)),
+  author = Filter(function(p) 'aut' %in% p$role, eval(parse(text = meta[['Authors@R']]))),
+  year = year,
+  note = vers,
+  url = 'https://sgl-projects.github.io/rsgl/'
+)
+
+bibentry(
+  'misc',
+  title = '{SGL}: A Structured Graphics Language',
+  author = 'Jon Chapman',
+  year = '2025',
+  eprint = '2505.14690',
+  archivePrefix = 'arXiv',
+  primaryClass = 'cs.PL',
+  url = 'https://arxiv.org/abs/2505.14690',
+  textVersion = paste('Jon Chapman (2025)',
+                      'SGL: A Structured Graphics Language.',
+                      'arXiv:2505.14690 [cs.PL].',
+                      'https://arxiv.org/abs/2505.14690')
+)
