@@ -16,33 +16,54 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Database Setup
+
+The examples on this page will use an in-memory [DuckDB](https://duckdb.org)
+database loaded with data.
+Multiple datasets are used and the page is organized by the dataset being analyzed.
 ```{r setup}
 library(rsgl)
+library(duckdb)
+
+con <- dbConnect(duckdb())
 ```
 
-A curated tour of plots produced by rsgl, organized by geom.
+## Cars
 
-## Points
+### Setup
+```{r}
+dbWriteTable(con, "cars", cars)
+dbGetQuery(con, "select * from cars limit 5")
+```
 
-*Placeholder.* Scatter examples — basic, with a categorical color aesthetic,
-and faceted.
+### Example Plots
+```{r}
+dbGetPlot(con, "
+  visualize
+    horsepower as x,
+    miles_per_gallon as y
+  from cars
+  using points
+")
+```
 
-## Bars
+## Trees
 
-*Placeholder.* Counts, sums, grouped, stacked, and reordered bars.
+### Setup
+```{r}
+dbWriteTable(con, "trees", trees)
+dbGetQuery(con, "select * from trees limit 5")
+```
 
-## Lines
-
-*Placeholder.* Time-series lines, multi-series, and smoothing.
-
-## Boxes
-
-*Placeholder.* Distribution comparisons across categories.
-
-## Scales and transforms
-
-*Placeholder.* Linear and log scales applied to continuous aesthetics.
-
-## Faceting and titles
-
-*Placeholder.* Small multiples and titled plots.
+### Example Plots
+```{r}
+dbGetPlot(con, "
+  visualize
+    age as x,
+    circumference as y
+  from trees
+  collect by
+    tree_id
+  using lines
+")
+```
