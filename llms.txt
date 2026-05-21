@@ -58,6 +58,9 @@ dbGetPlot(con, "
 
 - [Get started](https://sgl-projects.github.io/rsgl/articles/rsgl.html)
   — a tutorial of rsgl and the SGL language.
+- [Example
+  gallery](https://sgl-projects.github.io/rsgl/articles/example-gallery.html)
+  — a collection of plots generated with rsgl.
 
 # Package index
 

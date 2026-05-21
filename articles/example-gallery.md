@@ -1,5 +1,12 @@
 # Example gallery
 
+## Database Setup
+
+The examples on this page will use an in-memory
+[DuckDB](https://duckdb.org) database loaded with data. Multiple
+datasets are used and the page is organized by the dataset being
+analyzed.
+
 ``` r
 
 library(rsgl)
@@ -8,31 +15,74 @@ library(rsgl)
 #> The following objects are masked from 'package:datasets':
 #> 
 #>     cars, trees
+library(duckdb)
+#> Loading required package: DBI
+
+con <- dbConnect(duckdb())
 ```
 
-A curated tour of plots produced by rsgl, organized by geom.
+## Cars
 
-## Points
+### Setup
 
-*Placeholder.* Scatter examples — basic, with a categorical color
-aesthetic, and faceted.
+``` r
 
-## Bars
+dbWriteTable(con, "cars", cars)
+dbGetQuery(con, "select * from cars limit 5")
+#>   car_id horsepower miles_per_gallon origin year
+#> 1      1        130               18    USA 1970
+#> 2      2        165               15    USA 1970
+#> 3      3        150               18    USA 1970
+#> 4      4        150               16    USA 1970
+#> 5      5        140               17    USA 1970
+```
 
-*Placeholder.* Counts, sums, grouped, stacked, and reordered bars.
+### Example Plots
 
-## Lines
+``` r
 
-*Placeholder.* Time-series lines, multi-series, and smoothing.
+dbGetPlot(con, "
+  visualize
+    horsepower as x,
+    miles_per_gallon as y
+  from cars
+  using points
+")
+#> Warning: Removed 14 rows containing missing values or values outside the scale range
+#> (`geom_point()`).
+```
 
-## Boxes
+![](example-gallery_files/figure-html/unnamed-chunk-3-1.png)
 
-*Placeholder.* Distribution comparisons across categories.
+## Trees
 
-## Scales and transforms
+### Setup
 
-*Placeholder.* Linear and log scales applied to continuous aesthetics.
+``` r
 
-## Faceting and titles
+dbWriteTable(con, "trees", trees)
+dbGetQuery(con, "select * from trees limit 5")
+#>   tree_id  age circumference
+#> 1       1  118            30
+#> 2       1  484            58
+#> 3       1  664            87
+#> 4       1 1004           115
+#> 5       1 1231           120
+```
 
-*Placeholder.* Small multiples and titled plots.
+### Example Plots
+
+``` r
+
+dbGetPlot(con, "
+  visualize
+    age as x,
+    circumference as y
+  from trees
+  collect by
+    tree_id
+  using lines
+")
+```
+
+![](example-gallery_files/figure-html/unnamed-chunk-5-1.png)

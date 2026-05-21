@@ -628,3 +628,12 @@ dbGetPlot(con, "
 ```
 
 ![](rsgl_files/figure-html/unnamed-chunk-19-1.png)
+
+## Next steps
+
+- [Reference](https://sgl-projects.github.io/rsgl/reference/index.html)
+  — details on the specific geoms, aesthetics, qualifiers,
+  transformations, aggregations, and scales available in rsgl.
+- [Example
+  gallery](https://sgl-projects.github.io/rsgl/articles/example-gallery.html)
+  — a collection of plots generated with rsgl.
