@@ -64,8 +64,3 @@ articles:
     contents:
       - rsgl
       - example-gallery
-
-news:
-  releases:
-    - text: "Development version"
-      href: news/index.html
