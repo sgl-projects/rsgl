@@ -33,7 +33,11 @@ con <- dbConnect(duckdb())
 ### Setup
 ```{r}
 dbWriteTable(con, "cars", cars)
-dbGetQuery(con, "select * from cars limit 5")
+dbGetQuery(con, "
+  select *
+  from cars
+  limit 5
+")
 ```
 
 ### Example Plots
@@ -52,7 +56,11 @@ dbGetPlot(con, "
 ### Setup
 ```{r}
 dbWriteTable(con, "trees", trees)
-dbGetQuery(con, "select * from trees limit 5")
+dbGetQuery(con, "
+  select *
+  from trees
+  limit 5
+")
 ```
 
 ### Example Plots
