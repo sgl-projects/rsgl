@@ -1,6 +1,6 @@
-#line 2 "src/scanner.c"
+#line 1 "src/scanner.c"
 
-#line 4 "src/scanner.c"
+#line 3 "src/scanner.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -552,8 +552,8 @@ char *yytext;
 #define MAX_SUBQUERY_LEN 10000
 
 int unclosed_paren_count;
+#line 555 "src/scanner.c"
 #line 556 "src/scanner.c"
-#line 557 "src/scanner.c"
 
 #define INITIAL 0
 #define FROM_CONTENT 1
@@ -773,7 +773,7 @@ YY_DECL
 #line 20 "src/scanner.l"
 
 
-#line 777 "src/scanner.c"
+#line 776 "src/scanner.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1019,7 +1019,7 @@ YY_RULE_SETUP
 #line 103 "src/scanner.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 1023 "src/scanner.c"
+#line 1022 "src/scanner.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(FROM_CONTENT):
 case YY_STATE_EOF(SUBQUERY_CONTENT):
