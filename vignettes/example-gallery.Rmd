@@ -51,6 +51,20 @@ dbGetPlot(con, "
 ")
 ```
 
+---
+
+```{r}
+dbGetPlot(con, "
+  visualize
+    bin(miles_per_gallon) as x,
+    count(*) as y
+  from cars
+  group by
+    bin(miles_per_gallon)
+  using bars
+")
+```
+
 ## Trees
 
 ### Setup
