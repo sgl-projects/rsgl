@@ -5,8 +5,6 @@
 ^src/test
 ^src/scanner\.l$
 ^src/parser\.y$
-^doc$
-^Meta$
 ^\.claude$
 ^data-raw$
 ^_pkgdown\.yml$
