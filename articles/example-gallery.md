@@ -28,7 +28,11 @@ con <- dbConnect(duckdb())
 ``` r
 
 dbWriteTable(con, "cars", cars)
-dbGetQuery(con, "select * from cars limit 5")
+dbGetQuery(con, "
+  select *
+  from cars
+  limit 5
+")
 #>   car_id horsepower miles_per_gallon origin year
 #> 1      1        130               18    USA 1970
 #> 2      2        165               15    USA 1970
@@ -61,7 +65,11 @@ dbGetPlot(con, "
 ``` r
 
 dbWriteTable(con, "trees", trees)
-dbGetQuery(con, "select * from trees limit 5")
+dbGetQuery(con, "
+  select *
+  from trees
+  limit 5
+")
 #>   tree_id  age circumference
 #> 1       1  118            30
 #> 2       1  484            58
