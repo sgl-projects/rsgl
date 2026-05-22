@@ -128,6 +128,20 @@ analyzed.</p>
 <span><span class="co">#&gt; Warning: Removed 14 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
 <p><img src="example-gallery_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="672"></p>
+<hr>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/dbGetPlot.html">dbGetPlot</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span>
+<span><span class="st">  visualize</span></span>
+<span><span class="st">    bin(miles_per_gallon) as x,</span></span>
+<span><span class="st">    count(*) as y</span></span>
+<span><span class="st">  from cars</span></span>
+<span><span class="st">  group by</span></span>
+<span><span class="st">    bin(miles_per_gallon)</span></span>
+<span><span class="st">  using bars</span></span>
+<span><span class="st">"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 1 row containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_bar()`).</span></span></code></pre></div>
+<p><img src="example-gallery_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 </div>
 <div class="section level2">
@@ -136,7 +150,7 @@ analyzed.</p>
 <div class="section level3">
 <h3 id="setup-1">Setup<a class="anchor" aria-label="anchor" href="#setup-1"></a>
 </h3>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbWriteTable.html" class="external-link">dbWriteTable</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"trees"</span>, <span class="va">trees</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbGetQuery.html" class="external-link">dbGetQuery</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span>
 <span><span class="st">  select *</span></span>
@@ -153,7 +167,7 @@ analyzed.</p>
 <div class="section level3">
 <h3 id="example-plots-1">Example Plots<a class="anchor" aria-label="anchor" href="#example-plots-1"></a>
 </h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/dbGetPlot.html">dbGetPlot</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span>
 <span><span class="st">  visualize</span></span>
 <span><span class="st">    age as x,</span></span>
@@ -163,7 +177,7 @@ analyzed.</p>
 <span><span class="st">    tree_id</span></span>
 <span><span class="st">  using lines</span></span>
 <span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="example-gallery_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="672"></p>
+<p><img src="example-gallery_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

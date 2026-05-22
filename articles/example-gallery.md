@@ -58,6 +58,25 @@ dbGetPlot(con, "
 
 ![](example-gallery_files/figure-html/unnamed-chunk-3-1.png)
 
+------------------------------------------------------------------------
+
+``` r
+
+dbGetPlot(con, "
+  visualize
+    bin(miles_per_gallon) as x,
+    count(*) as y
+  from cars
+  group by
+    bin(miles_per_gallon)
+  using bars
+")
+#> Warning: Removed 1 row containing missing values or values outside the scale range
+#> (`geom_bar()`).
+```
+
+![](example-gallery_files/figure-html/unnamed-chunk-4-1.png)
+
 ## Trees
 
 ### Setup
@@ -93,4 +112,4 @@ dbGetPlot(con, "
 ")
 ```
 
-![](example-gallery_files/figure-html/unnamed-chunk-5-1.png)
+![](example-gallery_files/figure-html/unnamed-chunk-6-1.png)
