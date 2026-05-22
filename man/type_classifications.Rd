@@ -2,7 +2,7 @@
 % Please edit documentation in R/types.R
 \name{type_classifications}
 \alias{type_classifications}
-\title{Get SGL type classificatons for columns in a table}
+\title{Get SGL type classifications for columns in a table}
 \usage{
 type_classifications(con, table_name)
 }

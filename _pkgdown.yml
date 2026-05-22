@@ -28,7 +28,7 @@ navbar:
           href: https://arxiv.org/pdf/2505.14690
 
 reference:
-  - title: Plotting
+  - title: Generating plots
     contents:
       - dbGetPlot
   - title: Geoms
@@ -49,7 +49,7 @@ reference:
       - linear
       - log
       - ln
-  - title: Type metadata
+  - title: SGL type classifications
     contents:
       - type_classifications
   - title: Datasets
