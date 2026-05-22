@@ -1,4 +1,4 @@
-# Get SGL type classificatons for columns in a table
+# Get SGL type classifications for columns in a table
 
 `type_classifications` takes a database connection and a table name and
 returns the SGL type classifications (numerical, categorical, or

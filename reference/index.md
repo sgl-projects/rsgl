@@ -1,6 +1,6 @@
 # Package index
 
-## Plotting
+## Generating plots
 
 - [`dbGetPlot()`](https://sgl-projects.github.io/rsgl/reference/dbGetPlot.md)
   : Generate a plot from a SGL statement
@@ -34,10 +34,10 @@
 - [`ln`](https://sgl-projects.github.io/rsgl/reference/ln.md) : Natural
   Log
 
-## Type metadata
+## SGL type classifications
 
 - [`type_classifications()`](https://sgl-projects.github.io/rsgl/reference/type_classifications.md)
-  : Get SGL type classificatons for columns in a table
+  : Get SGL type classifications for columns in a table
 
 ## Datasets
 
