@@ -34,7 +34,7 @@ devtools::install_github("sgl-projects/rsgl")
 ## Usage
 `dbGetPlot` is the primary interface to rsgl.
 It takes a [DBI](https://dbi.r-dbi.org) database connection
-and a SGL statement and returns a [ggplot2](https://ggplot2.tidyverse.org) plot.
+and a SGL statement and returns the corresponding plot.
 
 The following example demonstrates creating a DBI connection to an in-memory
 [DuckDB](https://duckdb.org) database, loading it with data,

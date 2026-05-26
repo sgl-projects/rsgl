@@ -53,7 +53,7 @@ dbGetQuery(con, "
 
 The primary interface to rsgl is the `dbGetPlot` function,
 which takes a [DBI](https://dbi.r-dbi.org) database connection
-and a SGL statement and returns a [ggplot2](https://ggplot2.tidyverse.org) plot.
+and a SGL statement and returns the corresponding plot.
 Although the examples in this tutorial use a connection to
 a DuckDB database, `dbGetPlot` will accept any DBI connection.
 
