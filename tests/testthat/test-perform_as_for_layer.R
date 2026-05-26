@@ -220,7 +220,7 @@ describe("summarize_args", {
       result <- summarize_args(layer, scales)
 
       expected <- list(
-        rsgl.linear.avg.hp = rlang::expr(mean(hp))
+        rsgl.linear.avg.hp = rlang::expr(mean(hp, na.rm = TRUE))
       )
       expect_equal(result, expected)
     })
@@ -243,7 +243,7 @@ describe("summarize_args", {
       result <- summarize_args(layer, scales)
 
       expected <- list(
-        rsgl.log.avg.hp = rlang::expr(mean(rsgl.log.hp))
+        rsgl.log.avg.hp = rlang::expr(mean(rsgl.log.hp, na.rm = TRUE))
       )
       expect_equal(result, expected)
     })
@@ -269,8 +269,8 @@ describe("summarize_args", {
       sorted_result <- result[sort(names(result))]
 
       expected <- list(
-        rsgl.log.avg.hp = rlang::expr(mean(rsgl.log.hp)),
-        rsgl.linear.avg.cyl = rlang::expr(mean(cyl)),
+        rsgl.log.avg.hp = rlang::expr(mean(rsgl.log.hp, na.rm = TRUE)),
+        rsgl.linear.avg.cyl = rlang::expr(mean(cyl, na.rm = TRUE)),
         rsgl.count = rlang::expr(dplyr::n())
       )
       sorted_expected <- expected[sort(names(expected))]
@@ -300,8 +300,8 @@ describe("summarize_args", {
       sorted_result <- result[sort(names(result))]
 
       expected <- list(
-        rsgl.linear.avg.hp = rlang::expr(mean(hp)),
-        rsgl.linear.avg.mpg = rlang::expr(mean(mpg)),
+        rsgl.linear.avg.hp = rlang::expr(mean(hp, na.rm = TRUE)),
+        rsgl.linear.avg.mpg = rlang::expr(mean(mpg, na.rm = TRUE)),
         rsgl.count = rlang::expr(dplyr::n())
       )
       sorted_expected <- expected[sort(names(expected))]
@@ -335,8 +335,8 @@ describe("summarize_args", {
       sorted_result <- result[sort(names(result))]
 
       expected <- list(
-        rsgl.log.avg.hp = rlang::expr(mean(rsgl.log.hp)),
-        rsgl.linear.avg.mpg = rlang::expr(mean(mpg)),
+        rsgl.log.avg.hp = rlang::expr(mean(rsgl.log.hp, na.rm = TRUE)),
+        rsgl.linear.avg.mpg = rlang::expr(mean(mpg, na.rm = TRUE)),
         rsgl.count = rlang::expr(dplyr::n())
       )
       sorted_expected <- expected[sort(names(expected))]
@@ -386,7 +386,7 @@ test_that("returns correct cols for no grouping and all aggs", {
   expected_df <- input_df |>
     dplyr::summarize(
       rsgl.count = dplyr::n(),
-      rsgl.linear.avg.mpg = mean(mpg)
+      rsgl.linear.avg.mpg = mean(mpg, na.rm = TRUE)
     )
   expect_equal_ignore_order(result_df, expected_df)
 })
@@ -419,7 +419,7 @@ test_that("returns untransformed col and aggs", {
   expected_df <- input_df |>
     dplyr::group_by(vs_cat) |>
     dplyr::summarize(
-      rsgl.linear.avg.mpg = mean(mpg),
+      rsgl.linear.avg.mpg = mean(mpg, na.rm = TRUE),
       rsgl.count = dplyr::n()
     )
 
@@ -453,7 +453,7 @@ test_that("returns binned col and aggs", {
   expected_df <- transformed_df |>
     dplyr::group_by(rsgl.linear.bin.30.mpg) |>
     dplyr::summarize(
-      rsgl.linear.avg.hp = mean(hp),
+      rsgl.linear.avg.hp = mean(hp, na.rm = TRUE),
       rsgl.count = dplyr::n()
     )
 
@@ -488,7 +488,7 @@ test_that("returns binned col with arg and aggs", {
   expected_df <- transformed_df |>
     dplyr::group_by(rsgl.linear.bin.5.mpg) |>
     dplyr::summarize(
-      rsgl.linear.avg.hp = mean(hp),
+      rsgl.linear.avg.hp = mean(hp, na.rm = TRUE),
       rsgl.count = dplyr::n()
     )
 
@@ -524,7 +524,7 @@ test_that("returns non-linear scaled binned col and aggs", {
   expected_df <- transformed_df |>
     dplyr::group_by(rsgl.log.bin.30.mpg) |>
     dplyr::summarize(
-      rsgl.linear.avg.hp = mean(hp),
+      rsgl.linear.avg.hp = mean(hp, na.rm = TRUE),
       rsgl.count = dplyr::n()
     )
 
@@ -616,7 +616,7 @@ test_that("returns binned and unbinned col and aggs", {
     dplyr::group_by(rsgl.linear.bin.30.mpg, vs_cat) |>
     dplyr::summarize(
       rsgl.count = dplyr::n(),
-      rsgl.linear.avg.hp = mean(hp)
+      rsgl.linear.avg.hp = mean(hp, na.rm = TRUE)
     )
 
   expect_equal_ignore_order(result_df, expected_df)
@@ -721,7 +721,7 @@ test_that("returns aggs from collection", {
     dplyr::group_by(hp, mpg) |>
     dplyr::summarize(
       rsgl.count = dplyr::n(),
-      rsgl.linear.avg.cyl = mean(cyl)
+      rsgl.linear.avg.cyl = mean(cyl, na.rm = TRUE)
     )
 
   expect_equal_ignore_order(result_df, expected_df)
@@ -759,7 +759,7 @@ test_that("returns aggs from mapping and collection without duplication", {
     dplyr::group_by(hp, mpg) |>
     dplyr::summarize(
       rsgl.count = dplyr::n(),
-      rsgl.linear.avg.hp = mean(hp)
+      rsgl.linear.avg.hp = mean(hp, na.rm = TRUE)
     )
 
   expect_equal_ignore_order(result_df, expected_df)
@@ -800,8 +800,8 @@ test_that("takes scales into account for agg", {
     dplyr::mutate(rsgl.log.cyl = log10(cyl)) |>
     dplyr::group_by(hp, mpg) |>
     dplyr::summarize(
-      rsgl.linear.avg.vs = mean(vs),
-      rsgl.log.avg.cyl = mean(rsgl.log.cyl)
+      rsgl.linear.avg.vs = mean(vs, na.rm = TRUE),
+      rsgl.log.avg.cyl = mean(rsgl.log.cyl, na.rm = TRUE)
     ) |>
     dplyr::mutate(rsgl.log.avg.cyl = 10^rsgl.log.avg.cyl)
 

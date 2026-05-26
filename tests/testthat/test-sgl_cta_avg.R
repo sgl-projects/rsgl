@@ -155,7 +155,7 @@ describe("agg_col_expr", {
       result <- agg_col_expr(test_avg, col_expr, NULL)
       expect_equal(
         result,
-        rlang::expr(mean(col_1))
+        rlang::expr(mean(col_1, na.rm = TRUE))
       )
     })
   })
@@ -168,7 +168,7 @@ describe("agg_col_expr", {
       result <- agg_col_expr(test_avg, col_expr, new_sgl_scale_log())
       expect_equal(
         result,
-        rlang::expr(mean(rsgl.log.col_1))
+        rlang::expr(mean(rsgl.log.col_1, na.rm = TRUE))
       )
     })
   })

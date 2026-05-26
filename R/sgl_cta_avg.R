@@ -55,10 +55,10 @@ agg_col_name.sgl_cta_avg <- function(cta, col_expr, scale) {
 #' @export
 agg_col_expr.sgl_cta_avg <- function(cta, col_expr, scale) {
   if (is.null(scale)) {
-    expr_str <- sprintf("mean(%s)", col_expr$column)
+    expr_str <- sprintf("mean(%s, na.rm=TRUE)", col_expr$column)
   } else {
     expr_str <- sprintf(
-      "mean(rsgl.%s.%s)",
+      "mean(rsgl.%s.%s, na.rm=TRUE)",
       scale_name(scale),
       col_expr$column
     )
