@@ -27,7 +27,5 @@ dbGetPlot(con, "
     origin
   using bars
 ")
-#> Warning: Removed 2 rows containing missing values or values outside the scale range
-#> (`geom_bar()`).
 
 ```

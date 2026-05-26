@@ -219,8 +219,6 @@ dbGetPlot(con, "
     year
   using points
 ")
-#> Warning: Removed 3 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 ```
 
 ![](rsgl_files/figure-html/unnamed-chunk-3-1.png)
@@ -236,8 +234,6 @@ dbGetPlot(con, "
     year
   using line
 ")
-#> Warning: Removed 3 rows containing missing values or values outside the scale range
-#> (`geom_line()`).
 ```
 
 ![](rsgl_files/figure-html/unnamed-chunk-4-1.png)
