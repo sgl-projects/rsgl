@@ -12,8 +12,7 @@ dbGetPlot(con, sgl_stmt)
 \item{sgl_stmt}{A SGL statement (string)}
 }
 \value{
-The plot defined by the SGL statement
-(a \link[ggplot2:ggplot]{ggplot2 plot})
+The plot defined by the SGL statement (a \code{sgl_plot} object)
 }
 \description{
 \code{dbGetPlot} takes a database connection and a SGL statement
