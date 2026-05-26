@@ -39,8 +39,6 @@ dbGetPlot(con, "
   from cars
   using boxes
 ")
-#> Warning: Removed 8 rows containing non-finite outside the scale range
-#> (`stat_boxplot()`).
 
 
 dbGetPlot(con, "
@@ -50,7 +48,5 @@ dbGetPlot(con, "
   from cars
   using horizontal boxes
 ")
-#> Warning: Removed 8 rows containing non-finite outside the scale range
-#> (`stat_boxplot()`).
 
 ```

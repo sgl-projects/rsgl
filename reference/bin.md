@@ -29,8 +29,6 @@ dbGetPlot(con, "
     bin(miles_per_gallon)
   using bars
 ")
-#> Warning: Removed 1 row containing missing values or values outside the scale range
-#> (`geom_bar()`).
 
 
 dbGetPlot(con, "
@@ -42,7 +40,5 @@ dbGetPlot(con, "
     bin(miles_per_gallon, 10)
   using bars
 ")
-#> Warning: Removed 1 row containing missing values or values outside the scale range
-#> (`geom_bar()`).
 
 ```

@@ -120,9 +120,9 @@ with two tables, <code>cars</code> and <code>trees</code>.</p>
 </h2>
 <p>The primary interface to rsgl is the <code>dbGetPlot</code> function,
 which takes a <a href="https://dbi.r-dbi.org" class="external-link">DBI</a> database
-connection and a SGL statement and returns a <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> plot. Although the
-examples in this tutorial use a connection to a DuckDB database,
-<code>dbGetPlot</code> will accept any DBI connection.</p>
+connection and a SGL statement and returns the corresponding plot.
+Although the examples in this tutorial use a connection to a DuckDB
+database, <code>dbGetPlot</code> will accept any DBI connection.</p>
 </div>
 <div class="section level2">
 <h2 id="the-sgl-language">The SGL Language<a class="anchor" aria-label="anchor" href="#the-sgl-language"></a>
@@ -140,9 +140,7 @@ which is often the name of a table in the database. Here, we specify the
 <span><span class="st">    miles_per_gallon as y</span></span>
 <span><span class="st">  from cars</span></span>
 <span><span class="st">  using points</span></span>
-<span><span class="st">"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 14 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="rsgl_files/figure-html/from_cars-1.png" class="r-plt" alt="" width="700"></p>
 <p>This is similar in usage to the <code>from</code> keyword in SQL,
 except that only a single data source is allowed (i.e., a
@@ -189,9 +187,7 @@ SQL.</p>
 <span><span class="st">    origin as color</span></span>
 <span><span class="st">  from cars</span></span>
 <span><span class="st">  using points</span></span>
-<span><span class="st">"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 14 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="rsgl_files/figure-html/visualize-1.png" class="r-plt" alt="" width="700"></p>
 <p>In addition to mapping aesthetics to columns, aesthetics can be
 mapped to expressions that include transformations and aggregations.</p>
@@ -211,9 +207,7 @@ aggregation to produce a histogram on <code>miles_per_gallon</code>.</p>
 <span><span class="st">  group by</span></span>
 <span><span class="st">    bin(miles_per_gallon)</span></span>
 <span><span class="st">  using bars</span></span>
-<span><span class="st">"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 row containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_bar()`).</span></span></code></pre></div>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="rsgl_files/figure-html/histogram-1.png" class="r-plt" alt="" width="700"></p>
 <p>Here we see that, similarly to SQL, SGL has a <code>group by</code>
 clause where aggregation groupings are specified.</p>
@@ -236,9 +230,7 @@ log scaling, resulting in a log-scaled histogram.</p>
 <span><span class="st">  using bars</span></span>
 <span><span class="st">  scale by</span></span>
 <span><span class="st">    log(x)</span></span>
-<span><span class="st">"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 row containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_bar()`).</span></span></code></pre></div>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="rsgl_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="700"></p>
 </div>
 <div class="section level3">
@@ -318,8 +310,7 @@ statistical transformation, such as linear regression:</p>
 <span><span class="st">    circumference as y</span></span>
 <span><span class="st">  from trees</span></span>
 <span><span class="st">  using regression line</span></span>
-<span><span class="st">"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; `geom_smooth()` using formula = 'y ~ x'</span></span></code></pre></div>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="rsgl_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="700"></p>
 <p>Collision qualifiers specify positional adjustments that are relevant
 to overlapping objects. Below we see an example of using the
@@ -333,9 +324,7 @@ variation so that overlapping points are discernible.</p>
 <span><span class="st">    miles_per_gallon as y</span></span>
 <span><span class="st">  from cars</span></span>
 <span><span class="st">  using points</span></span>
-<span><span class="st">"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 8 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="rsgl_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="700"></p>
 <p>With the <code>jittered</code> qualifier:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
@@ -345,9 +334,7 @@ variation so that overlapping points are discernible.</p>
 <span><span class="st">    miles_per_gallon as y</span></span>
 <span><span class="st">  from cars</span></span>
 <span><span class="st">  using jittered points</span></span>
-<span><span class="st">"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 8 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="rsgl_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="700"></p>
 </div>
 <div class="section level3">
@@ -373,12 +360,7 @@ layer a regression line on a scatterplot:</p>
 <span><span class="st">    miles_per_gallon as y</span></span>
 <span><span class="st">  from cars</span></span>
 <span><span class="st">  using regression line</span></span>
-<span><span class="st">"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; `geom_smooth()` using formula = 'y ~ x'</span></span>
-<span><span class="co">#&gt; Warning: Removed 14 rows containing non-finite outside the scale range</span></span>
-<span><span class="co">#&gt; (`stat_smooth()`).</span></span>
-<span><span class="co">#&gt; Warning: Removed 14 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="rsgl_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="700"></p>
 <p>Layers often share a data source and aesthetic mapping. To reduce
 verbosity in these cases, the <code>layer</code> operator can be applied
@@ -394,12 +376,7 @@ directly to geom expressions:</p>
 <span><span class="st">    layer</span></span>
 <span><span class="st">    regression line</span></span>
 <span><span class="st">  )</span></span>
-<span><span class="st">"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; `geom_smooth()` using formula = 'y ~ x'</span></span>
-<span><span class="co">#&gt; Warning: Removed 14 rows containing non-finite outside the scale range</span></span>
-<span><span class="co">#&gt; (`stat_smooth()`).</span></span>
-<span><span class="co">#&gt; Warning: Removed 14 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="rsgl_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="700"></p>
 <p>Layers may have different data sources and aesthetic mappings.
 However, a graphic has a single scale for each aesthetic, regardless of
@@ -430,12 +407,7 @@ default linear scaling for numerical mappings:</p>
 <span><span class="st">  )</span></span>
 <span><span class="st">  scale by</span></span>
 <span><span class="st">    log(x), log(y)</span></span>
-<span><span class="st">"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; `geom_smooth()` using formula = 'y ~ x'</span></span>
-<span><span class="co">#&gt; Warning: Removed 14 rows containing non-finite outside the scale range</span></span>
-<span><span class="co">#&gt; (`stat_smooth()`).</span></span>
-<span><span class="co">#&gt; Warning: Removed 14 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="rsgl_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="700"></p>
 <p>Scaling is performed prior to column-level transformations and
 aggregations. Additionally, scaling is performed prior to any positional
@@ -463,12 +435,7 @@ data values in a SQL subquery:</p>
 <span><span class="st">    layer</span></span>
 <span><span class="st">    regression line</span></span>
 <span><span class="st">  )</span></span>
-<span><span class="st">"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; `geom_smooth()` using formula = 'y ~ x'</span></span>
-<span><span class="co">#&gt; Warning: Removed 14 rows containing non-finite outside the scale range</span></span>
-<span><span class="co">#&gt; (`stat_smooth()`).</span></span>
-<span><span class="co">#&gt; Warning: Removed 14 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="rsgl_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="700"></p>
 </div>
 <div class="section level3">
@@ -530,9 +497,7 @@ default, but this can be modified with an orientation keyword:</p>
 <span><span class="st">  using points</span></span>
 <span><span class="st">  facet by</span></span>
 <span><span class="st">    origin</span></span>
-<span><span class="st">"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 14 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="rsgl_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" alt="" width="700"></p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/dbGetPlot.html">dbGetPlot</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span>
@@ -543,9 +508,7 @@ default, but this can be modified with an orientation keyword:</p>
 <span><span class="st">  using points</span></span>
 <span><span class="st">  facet by</span></span>
 <span><span class="st">    origin vertically</span></span>
-<span><span class="st">"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 14 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="rsgl_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" alt="" width="700"></p>
 <p>Two facet expressions may be specified, in which case one expression
 is represented horizontally while the other is represented
@@ -569,9 +532,7 @@ vertically:</p>
 <span><span class="st">  facet by</span></span>
 <span><span class="st">    era,</span></span>
 <span><span class="st">    origin</span></span>
-<span><span class="st">"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 14 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="rsgl_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" alt="" width="700"></p>
 <p>In SGL, facets are a graphic-level property, meaning that each SGL
 statement has at most one <code>facet by</code> clause, and that each
@@ -593,9 +554,7 @@ explicit titles in the <code>title</code> clause:</p>
 <span><span class="st">  title</span></span>
 <span><span class="st">    x as 'Horsepower',</span></span>
 <span><span class="st">    y as 'Miles Per Gallon'</span></span>
-<span><span class="st">"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 14 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="rsgl_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" alt="" width="700"></p>
 </div>
 </div>

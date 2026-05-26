@@ -22,8 +22,7 @@ dbGetPlot(con, sgl_stmt)
 
 ## Value
 
-The plot defined by the SGL statement (a [ggplot2
-plot](https://ggplot2.tidyverse.org/reference/ggplot.html))
+The plot defined by the SGL statement (a `sgl_plot` object)
 
 ## Examples
 
@@ -39,7 +38,5 @@ p <- dbGetPlot(con, "
   using points
 ")
 print(p)
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 
 ```

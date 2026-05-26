@@ -28,7 +28,5 @@ dbGetPlot(con, "
     log(x),
     log(y)
 ")
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 
 ```

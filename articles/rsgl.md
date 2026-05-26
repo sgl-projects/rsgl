@@ -61,9 +61,9 @@ dbGetQuery(con, "
 
 The primary interface to rsgl is the `dbGetPlot` function, which takes a
 [DBI](https://dbi.r-dbi.org) database connection and a SGL statement and
-returns a [ggplot2](https://ggplot2.tidyverse.org) plot. Although the
-examples in this tutorial use a connection to a DuckDB database,
-`dbGetPlot` will accept any DBI connection.
+returns the corresponding plot. Although the examples in this tutorial
+use a connection to a DuckDB database, `dbGetPlot` will accept any DBI
+connection.
 
 ## The SGL Language
 
@@ -82,8 +82,6 @@ dbGetPlot(con, "
   from cars
   using points
 ")
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 ```
 
 ![](rsgl_files/figure-html/from_cars-1.png)
@@ -136,8 +134,6 @@ dbGetPlot(con, "
   from cars
   using points
 ")
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 ```
 
 ![](rsgl_files/figure-html/visualize-1.png)
@@ -162,8 +158,6 @@ dbGetPlot(con, "
     bin(miles_per_gallon)
   using bars
 ")
-#> Warning: Removed 1 row containing missing values or values outside the scale range
-#> (`geom_bar()`).
 ```
 
 ![](rsgl_files/figure-html/histogram-1.png)
@@ -193,8 +187,6 @@ dbGetPlot(con, "
   scale by
     log(x)
 ")
-#> Warning: Removed 1 row containing missing values or values outside the scale range
-#> (`geom_bar()`).
 ```
 
 ![](rsgl_files/figure-html/unnamed-chunk-2-1.png)
@@ -293,7 +285,6 @@ dbGetPlot(con, "
   from trees
   using regression line
 ")
-#> `geom_smooth()` using formula = 'y ~ x'
 ```
 
 ![](rsgl_files/figure-html/unnamed-chunk-7-1.png)
@@ -314,8 +305,6 @@ dbGetPlot(con, "
   from cars
   using points
 ")
-#> Warning: Removed 8 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 ```
 
 ![](rsgl_files/figure-html/unnamed-chunk-8-1.png)
@@ -331,8 +320,6 @@ dbGetPlot(con, "
   from cars
   using jittered points
 ")
-#> Warning: Removed 8 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 ```
 
 ![](rsgl_files/figure-html/unnamed-chunk-9-1.png)
@@ -362,11 +349,6 @@ dbGetPlot(con, "
   from cars
   using regression line
 ")
-#> `geom_smooth()` using formula = 'y ~ x'
-#> Warning: Removed 14 rows containing non-finite outside the scale range
-#> (`stat_smooth()`).
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 ```
 
 ![](rsgl_files/figure-html/unnamed-chunk-10-1.png)
@@ -388,11 +370,6 @@ dbGetPlot(con, "
     regression line
   )
 ")
-#> `geom_smooth()` using formula = 'y ~ x'
-#> Warning: Removed 14 rows containing non-finite outside the scale range
-#> (`stat_smooth()`).
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 ```
 
 ![](rsgl_files/figure-html/unnamed-chunk-11-1.png)
@@ -428,11 +405,6 @@ dbGetPlot(con, "
   scale by
     log(x), log(y)
 ")
-#> `geom_smooth()` using formula = 'y ~ x'
-#> Warning: Removed 14 rows containing non-finite outside the scale range
-#> (`stat_smooth()`).
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 ```
 
 ![](rsgl_files/figure-html/unnamed-chunk-12-1.png)
@@ -466,11 +438,6 @@ dbGetPlot(con, "
     regression line
   )
 ")
-#> `geom_smooth()` using formula = 'y ~ x'
-#> Warning: Removed 14 rows containing non-finite outside the scale range
-#> (`stat_smooth()`).
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 ```
 
 ![](rsgl_files/figure-html/unnamed-chunk-13-1.png)
@@ -544,8 +511,6 @@ dbGetPlot(con, "
   facet by
     origin
 ")
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 ```
 
 ![](rsgl_files/figure-html/unnamed-chunk-16-1.png)
@@ -561,8 +526,6 @@ dbGetPlot(con, "
   facet by
     origin vertically
 ")
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 ```
 
 ![](rsgl_files/figure-html/unnamed-chunk-17-1.png)
@@ -591,8 +554,6 @@ dbGetPlot(con, "
     era,
     origin
 ")
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 ```
 
 ![](rsgl_files/figure-html/unnamed-chunk-18-1.png)
@@ -619,8 +580,6 @@ dbGetPlot(con, "
     x as 'Horsepower',
     y as 'Miles Per Gallon'
 ")
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 ```
 
 ![](rsgl_files/figure-html/unnamed-chunk-19-1.png)

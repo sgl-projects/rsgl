@@ -62,10 +62,5 @@ dbGetPlot(con, "
      log(x),
      log(y)
 ")
-#> `geom_smooth()` using formula = 'y ~ x'
-#> Warning: Removed 14 rows containing non-finite outside the scale range
-#> (`stat_smooth()`).
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 
 ```

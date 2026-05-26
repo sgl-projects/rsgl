@@ -29,8 +29,6 @@ dbGetPlot(con, "
     linear(x),
     linear(y)
 ")
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 
 
 # default linear scales
@@ -41,7 +39,5 @@ dbGetPlot(con, "
   from cars
   using points
 ")
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 
 ```

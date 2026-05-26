@@ -52,8 +52,6 @@ dbGetPlot(con, "
   from cars
   using points
 ")
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 ```
 
 ![](example-gallery_files/figure-html/unnamed-chunk-3-1.png)
@@ -71,8 +69,6 @@ dbGetPlot(con, "
     bin(miles_per_gallon)
   using bars
 ")
-#> Warning: Removed 1 row containing missing values or values outside the scale range
-#> (`geom_bar()`).
 ```
 
 ![](example-gallery_files/figure-html/unnamed-chunk-4-1.png)

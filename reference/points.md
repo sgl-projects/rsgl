@@ -40,8 +40,6 @@ dbGetPlot(con, "
   from cars
   using points
 ")
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 
 
 set.seed(0)
@@ -52,7 +50,5 @@ dbGetPlot(con, "
   from cars
   using jittered points
 ")
-#> Warning: Removed 8 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 
 ```
