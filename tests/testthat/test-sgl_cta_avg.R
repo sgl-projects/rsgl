@@ -110,6 +110,12 @@ describe("is_aggregation", {
   })
 })
 
+describe("needs_scaling", {
+  it("returns TRUE", {
+    expect_true(needs_scaling(test_avg))
+  })
+})
+
 describe("is_transformation", {
   it("returns false", {
     expect_false(is_transformation(test_avg))

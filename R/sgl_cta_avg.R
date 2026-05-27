@@ -38,6 +38,11 @@ is_transformation.sgl_cta_avg <- function(cta) {
 }
 
 #' @export
+needs_scaling.sgl_cta_avg <- function(cta) {
+  TRUE
+}
+
+#' @export
 agg_col_name.sgl_cta_avg <- function(cta, col_expr, scale) {
   if (is.null(scale)) {
     scale_nm <- "linear"
