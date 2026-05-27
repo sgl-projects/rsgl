@@ -82,6 +82,12 @@ test_that("is_transformation returns false", {
   expect_false(is_transformation(test_count))
 })
 
+describe("needs_scaling", {
+  it("returns FALSE", {
+    expect_false(needs_scaling(test_count))
+  })
+})
+
 describe("agg_col_name", {
   describe("scale is NULL", {
     it("returns rsgl.count", {

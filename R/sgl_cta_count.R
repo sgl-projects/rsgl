@@ -35,6 +35,11 @@ is_transformation.sgl_cta_count <- function(cta) {
 }
 
 #' @export
+needs_scaling.sgl_cta_count <- function(cta) {
+  FALSE
+}
+
+#' @export
 agg_col_name.sgl_cta_count <- function(cta, col_expr, scale) {
   "rsgl.count"
 }

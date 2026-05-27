@@ -8,18 +8,18 @@ add_scaled_cols <- function(layer, scales, df) {
   if (length(non_lin_scales) == 0) {
     return(df)
   }
+  agg_mappings <- filter_agg_exprs(layer$aes_mappings)
   non_lin_scaled_aes <- names(non_lin_scales)
-  aes_mappings <- layer$aes_mappings
-  non_lin_mappings <- aes_mappings[
-    names(aes_mappings) %in% non_lin_scaled_aes
+  non_lin_mappings <- agg_mappings[
+    names(agg_mappings) %in% non_lin_scaled_aes
   ]
-  avg_mappings <- filter_col_exprs_by_cta(non_lin_mappings, "avg")
-  if (length(avg_mappings) == 0) {
+  needs_scale_mappings <- purrr::keep(non_lin_mappings, ~ needs_scaling(.$cta))
+  if (length(needs_scale_mappings) == 0) {
     return(df)
   }
-  for (aes in names(avg_mappings)) {
+  for (aes in names(needs_scale_mappings)) {
     scale <- scales[[aes]]
-    existing_col <- avg_mappings[[aes]]$column
+    existing_col <- needs_scale_mappings[[aes]]$column
     new_col <- sprintf(
       "rsgl.%s.%s",
       scale_name(scale),
@@ -127,27 +127,27 @@ backscale_cols <- function(layer, scales, df) {
   if (length(non_lin_scales) == 0) {
     return(df)
   }
+  agg_mappings <- filter_agg_exprs(layer$aes_mappings)
   non_lin_scaled_aes <- names(non_lin_scales)
-  aes_mappings <- layer$aes_mappings
-  non_lin_mappings <- aes_mappings[
-    names(aes_mappings) %in% non_lin_scaled_aes
+  non_lin_mappings <- agg_mappings[
+    names(agg_mappings) %in% non_lin_scaled_aes
   ]
-  avg_mappings <- filter_col_exprs_by_cta(non_lin_mappings, "avg")
-  if (length(avg_mappings) == 0) {
+  needs_scale_mappings <- purrr::keep(non_lin_mappings, ~ needs_scaling(.$cta))
+  if (length(needs_scale_mappings) == 0) {
     return(df)
   }
-  for (aes in names(avg_mappings)) {
+  backscaled_cols <- character(0)
+  for (aes in names(needs_scale_mappings)) {
     scale <- scales[[aes]]
-    orig_col_name <- avg_mappings[[aes]]$column
-    agg_col_name <- sprintf(
-      "rsgl.%s.avg.%s",
-      scale_name(scale),
-      orig_col_name
-    )
-    df <- df |>
-      dplyr::mutate(
-        !!agg_col_name := apply_scale_inverse(scale, .data[[agg_col_name]])
-      )
+    col_expr <- needs_scale_mappings[[aes]]
+    col_name <- agg_col_name(col_expr$cta, col_expr, scale)
+    if (!(col_name %in% backscaled_cols)) {
+      df <- df |>
+        dplyr::mutate(
+          !!col_name := apply_scale_inverse(scale, .data[[col_name]])
+        )
+      backscaled_cols <- c(backscaled_cols, col_name)
+    }
   }
   df
 }

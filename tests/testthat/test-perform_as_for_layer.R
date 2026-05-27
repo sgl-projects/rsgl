@@ -32,7 +32,7 @@ describe("add_scaled_cols", {
     })
   })
   describe("scale by clause is present", {
-    describe("no scaled aes has avg mapping", {
+    describe("no scaled aes has mapping that needs scaling", {
       it("returns original dataframe", {
         rgs <- sgl_to_rgs("
 					visualize
@@ -56,7 +56,7 @@ describe("add_scaled_cols", {
         expect_equal(result_df, input_df)
       })
     })
-    describe("one scaled aes has avg mapping", {
+    describe("one scaled aes has mapping that needs scaling", {
       it("adds scaled column", {
         rgs <- sgl_to_rgs("
 					visualize
@@ -82,8 +82,8 @@ describe("add_scaled_cols", {
         expect_equal(result_df, expected_df)
       })
     })
-    describe("multiple scaled aes have avg mapping", {
-      describe("single scale type with distinct avg mapping", {
+    describe("multiple scaled aes have mappings that need scaling", {
+      describe("single scale type with distinct mappings", {
         it("adds scaled columns", {
           rgs <- sgl_to_rgs("
 						visualize
@@ -114,7 +114,7 @@ describe("add_scaled_cols", {
           expect_equal_ignore_order(result_df, expected_df)
         })
       })
-      describe("single scale type with same avg mapping", {
+      describe("single scale type with same mapping", {
         it("doesn't duplicate scaled column", {
           rgs <- sgl_to_rgs("
 						visualize
@@ -142,7 +142,7 @@ describe("add_scaled_cols", {
           expect_equal_ignore_order(result_df, expected_df)
         })
       })
-      describe("multiple scale types with avg mappings", {
+      describe("multiple scale types with mappings that need scaling", {
         it("adds scaled columns for each without duplication", {
           rgs <- sgl_to_rgs("
 						visualize
@@ -801,6 +801,43 @@ test_that("takes scales into account for agg", {
     dplyr::group_by(hp, mpg) |>
     dplyr::summarize(
       rsgl.linear.avg.vs = mean(vs, na.rm = TRUE),
+      rsgl.log.avg.cyl = mean(rsgl.log.cyl, na.rm = TRUE)
+    ) |>
+    dplyr::mutate(rsgl.log.avg.cyl = 10^rsgl.log.avg.cyl)
+
+  expect_equal_ignore_order(result_df, expected_df)
+})
+
+test_that("only backscales aggs once", {
+  rgs <- sgl_to_rgs("
+		visualize
+			hp as x,
+			mpg as y,
+			avg(cyl) as color,
+			avg(cyl) as size
+		from cars
+		group by
+			hp,
+			mpg
+		using points
+
+		scale by
+			log(color),
+			log(size)
+	")
+  dfs <- result_dfs(rgs, test_con)
+  layer <- rgs$layers[[1]]
+  input_df <- dfs[[1]]
+  scales <- rgs$scales
+
+  result_df <- perform_as_for_layer(
+    layer, input_df, scales
+  )
+
+  expected_df <- input_df |>
+    dplyr::mutate(rsgl.log.cyl = log10(cyl)) |>
+    dplyr::group_by(hp, mpg) |>
+    dplyr::summarize(
       rsgl.log.avg.cyl = mean(rsgl.log.cyl, na.rm = TRUE)
     ) |>
     dplyr::mutate(rsgl.log.avg.cyl = 10^rsgl.log.avg.cyl)

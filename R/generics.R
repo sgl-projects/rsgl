@@ -89,3 +89,7 @@ expr_text <- function(cta, col_expr) {
 group_aes_cols <- function(geom, layer, df, scales) {
   UseMethod("group_aes_cols")
 }
+
+needs_scaling <- function(cta) {
+  UseMethod("needs_scaling")
+}
