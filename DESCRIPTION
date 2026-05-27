@@ -1,6 +1,6 @@
 Package: rsgl
 Title: An R Implementation of the SGL Graphics Language
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R:
     person(
 			"Jon", "Chapman", , "jochapjo@icloud.com",
