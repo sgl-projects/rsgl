@@ -1,6 +1,6 @@
 # MIT License
 
-Copyright (c) 2025 rsgl authors
+Copyright (c) 2025 Jon Chapman
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the

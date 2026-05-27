@@ -2,7 +2,7 @@
 
 ## Authors
 
-- **Jon Chapman**. Author, maintainer.
+- **Jon Chapman**. Author, maintainer, copyright holder.
 
 ## Citation
 
