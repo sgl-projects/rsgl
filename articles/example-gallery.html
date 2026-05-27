@@ -166,6 +166,23 @@ analyzed.</p>
 <span><span class="st">  using lines</span></span>
 <span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="example-gallery_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="672"></p>
+<hr>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/dbGetPlot.html">dbGetPlot</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span>
+<span><span class="st">  visualize</span></span>
+<span><span class="st">    age as theta,</span></span>
+<span><span class="st">    radius as r</span></span>
+<span><span class="st">  from (</span></span>
+<span><span class="st">    select</span></span>
+<span><span class="st">      *,</span></span>
+<span><span class="st">      circumference/(2*pi()) as radius</span></span>
+<span><span class="st">    from trees</span></span>
+<span><span class="st">  )</span></span>
+<span><span class="st">  collect by</span></span>
+<span><span class="st">    tree_id</span></span>
+<span><span class="st">  using lines</span></span>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="example-gallery_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

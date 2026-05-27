@@ -109,3 +109,25 @@ dbGetPlot(con, "
 ```
 
 ![](example-gallery_files/figure-html/unnamed-chunk-6-1.png)
+
+------------------------------------------------------------------------
+
+``` r
+
+dbGetPlot(con, "
+  visualize
+    age as theta,
+    radius as r
+  from (
+    select
+      *,
+      circumference/(2*pi()) as radius
+    from trees
+  )
+  collect by
+    tree_id
+  using lines
+")
+```
+
+![](example-gallery_files/figure-html/unnamed-chunk-7-1.png)
