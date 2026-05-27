@@ -89,3 +89,22 @@ dbGetPlot(con, "
   using lines
 ")
 ```
+
+---
+
+```{r}
+dbGetPlot(con, "
+  visualize
+    age as theta,
+    radius as r
+  from (
+    select
+      *,
+      circumference/(2*pi()) as radius
+    from trees
+  )
+  collect by
+    tree_id
+  using lines
+")
+```
