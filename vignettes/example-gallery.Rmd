@@ -56,12 +56,47 @@ dbGetPlot(con, "
 ```{r}
 dbGetPlot(con, "
   visualize
+    horsepower as x,
+    miles_per_gallon as y
+  from cars
+  using (
+    points
+    layer
+    regression line
+  )
+  facet by
+    origin
+  scale by
+    log(x),
+    log(y)
+")
+```
+
+---
+
+```{r}
+dbGetPlot(con, "
+  visualize
     bin(miles_per_gallon) as x,
     count(*) as y
   from cars
   group by
     bin(miles_per_gallon)
   using bars
+")
+```
+
+---
+
+```{r}
+dbGetPlot(con, "
+  visualize
+    origin as x,
+    miles_per_gallon as y
+  from cars
+  using boxes
+  scale by
+    log(y)
 ")
 ```
 
