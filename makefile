@@ -24,7 +24,7 @@ parser :
 scanner :
 	flex -o $(SRC)/scanner.c $(SRC)/scanner.l
 
-$(TEST)/test_sgl_to_cgs.o : $(TEST)/test_sgl_to_cgs.c $(SRC)/aes.h $(SRC)/direction.h $(SRC)/sgl_to_cgs.h
+$(TEST)/test_sgl_to_cgs.o : $(TEST)/test_sgl_to_cgs.c $(SRC)/aes.h $(SRC)/direction.h $(SRC)/qual.h $(SRC)/sgl_to_cgs.h
 	$(CC) $(CFLAGS) $(CRITERION_CFLAGS) -o $(TEST)/test_sgl_to_cgs.o -c $(TEST)/test_sgl_to_cgs.c -I./$(SRC)
 
 $(TEST)/test_aes.o : $(TEST)/test_aes.c $(SRC)/aes.h $(SRC)/keyword.h
