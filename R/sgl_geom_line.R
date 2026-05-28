@@ -18,17 +18,24 @@ ggplot_geom.sgl_geom_line <- function(geom) {
 }
 
 #' @export
+group_aes_cols.sgl_geom_line <- function(geom, layer, df, scales) {
+  aes_mappings <- layer$aes_mappings
+  if ("color" %in% names(aes_mappings)) {
+    mapping_col_name("color", aes_mappings[["color"]], scales)
+  } else {
+    character(0)
+  }
+}
+
+#' @export
 ggplot_aes.sgl_geom_line <- function(geom, layer, df, scales) {
   ggplot_aes <- NextMethod()
   if (!("group" %in% names(ggplot_aes))) {
-    if ("colour" %in% names(ggplot_aes)) {
-      if (is_cat_or_bin_mapping(layer, df, "color")) {
-        ggplot_aes$group <- ggplot_aes$colour
-      } else {
-        ggplot_aes$group <- "1"
-      }
-    } else {
+    group_cols <- group_aes_cols(geom, layer, df, scales)
+    if (length(group_cols) == 0) {
       ggplot_aes$group <- "1"
+    } else {
+      ggplot_aes$group <- group_aes_expr(group_cols)
     }
   }
   ggplot_aes

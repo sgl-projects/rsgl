@@ -38,6 +38,54 @@ test_that("ggplot_geom returns geom_line function", {
   expect_equal(actual, ggplot2::geom_line)
 })
 
+describe("group_aes_cols", {
+  describe("no non-pos aes", {
+    it("returns empty character vector", {
+      rgs <- sgl_to_rgs("
+				visualize
+					hp as x,
+					mpg as y
+				from cars
+				using line
+			")
+      layer <- rgs$layers[[1]]
+      line <- layer$geom_expr$geom
+      scales <- rgs$scales
+      dfs <- result_dfs(rgs, test_con)
+      df <- dfs[[1]]
+
+      expect_equal(
+        group_aes_cols(line, layer, df, scales),
+        character(0)
+      )
+    })
+  })
+  describe("color is present", {
+    it("returns color mapping col name", {
+      rgs <- sgl_to_rgs("
+				visualize
+					hp as x,
+					mpg as y,
+					bin(wt) as color
+				from cars
+				using line
+				scale by
+					log(color)
+			")
+      layer <- rgs$layers[[1]]
+      line <- layer$geom_expr$geom
+      scales <- rgs$scales
+      dfs <- result_dfs(rgs, test_con)
+      df <- dfs[[1]]
+
+      expect_equal(
+        group_aes_cols(line, layer, df, scales),
+        "rsgl.log.bin.30.wt"
+      )
+    })
+  })
+})
+
 test_that(
   "ggplot_aes returns correct aes with grouping for x and y aesthetics",
   {
@@ -63,15 +111,17 @@ test_that(
 )
 
 test_that(
-  "ggplot_aes returns correct aes with grouping for numerical color aesthetic",
+  "ggplot_aes returns correct aes with grouping for color aesthetic",
   {
     rgs <- sgl_to_rgs("
 			visualize
 				day as x,
 				letter as y,
-				number as color
+				bin(wt) as color
 			from synth
 			using line
+			scale by
+				log(color)
 		")
     dfs <- result_dfs(rgs, test_con)
     df <- dfs[[1]]
@@ -81,55 +131,16 @@ test_that(
 
     expect_equal(class(actual_aes)[1], "ggplot2::mapping")
     expect_equal(names(actual_aes), c("x", "y", "colour", "group"))
-    expect_equal(ggplot2::as_label(actual_aes$colour), "number")
-    expect_equal(actual_aes$group, "1")
+    expect_equal(
+      ggplot2::as_label(actual_aes$colour),
+      "rsgl.log.bin.30.wt"
+    )
+    expect_equal(
+      ggplot2::as_label(actual_aes$group),
+      "rsgl.log.bin.30.wt"
+    )
   }
 )
-
-test_that(
-  "ggplot_aes returns correct aes with grouping for temporal color aesthetic",
-  {
-    rgs <- sgl_to_rgs("
-			visualize
-				number as x,
-				letter as y,
-				day as color
-			from synth
-			using line
-		")
-    dfs <- result_dfs(rgs, test_con)
-    df <- dfs[[1]]
-    layer <- rgs$layers[[1]]
-
-    actual_aes <- ggplot_aes(layer$geom_expr$geom, layer, df, rgs$scales)
-
-    expect_equal(class(actual_aes)[1], "ggplot2::mapping")
-    expect_equal(names(actual_aes), c("x", "y", "colour", "group"))
-    expect_equal(ggplot2::as_label(actual_aes$colour), "day")
-    expect_equal(actual_aes$group, "1")
-  }
-)
-
-test_that("ggplot_aes groups by color column for categorical color aesthetic", {
-  rgs <- sgl_to_rgs("
-    visualize
-      day as x,
-      letter as y,
-      boolean as color
-    from synth
-    using line
-  ")
-  dfs <- result_dfs(rgs, test_con)
-  df <- dfs[[1]]
-  layer <- rgs$layers[[1]]
-
-  actual_aes <- ggplot_aes(layer$geom_expr$geom, layer, df, rgs$scales)
-
-  expect_equal(class(actual_aes)[1], "ggplot2::mapping")
-  expect_equal(names(actual_aes), c("x", "y", "colour", "group"))
-  expect_equal(ggplot2::as_label(actual_aes$colour), "boolean")
-  expect_equal(ggplot2::as_label(actual_aes$group), "boolean")
-})
 
 test_that("ggplot_aes maps to cta generated columns correctly", {
   rgs <- sgl_to_rgs("
@@ -154,32 +165,6 @@ test_that("ggplot_aes maps to cta generated columns correctly", {
   expect_equal(ggplot2::as_label(actual_aes$x), "rsgl.log.bin.5.mpg")
   expect_equal(ggplot2::as_label(actual_aes$y), "rsgl.count")
   expect_equal(actual_aes$group, "1")
-})
-
-test_that("ggplot_aes groups by binned color mapping", {
-  rgs <- sgl_to_rgs("
-    visualize
-      bin(mpg) as x,
-      count(*) as y,
-			bin(hp) as color
-    from cars
-		group by
-			bin(mpg),
-			bin(hp)
-    using line
-		scale by
-			log(x)
-  ")
-  dfs <- result_dfs(rgs, test_con)
-  df <- dfs[[1]]
-  layer <- rgs$layers[[1]]
-
-  actual_aes <- ggplot_aes(layer$geom_expr$geom, layer, df, rgs$scales)
-
-  expect_equal(class(actual_aes)[1], "ggplot2::mapping")
-  expect_equal(names(actual_aes), c("x", "y", "colour", "group"))
-  expect_equal(ggplot2::as_label(actual_aes$colour), "rsgl.linear.bin.30.hp")
-  expect_equal(ggplot2::as_label(actual_aes$group), "rsgl.linear.bin.30.hp")
 })
 
 test_that("ggplot_aes replaces theta and r with x and y", {

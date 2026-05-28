@@ -56,19 +56,22 @@ test_that("generates line chart", {
   vdiffr::expect_doppelganger("line chart", p)
 })
 
-test_that("line chart collects by color column if column is categorical", {
+test_that("line chart default collection on color column", {
   sgl_stmt <- "
 		visualize
-			day as x,
-			boolean as y,
-			boolean as color
-		from synth
+			hp as x,
+			mpg as y,
+			cyl as color
+		from cars
 		using lines
 	"
 
   p <- dbGetPlot(test_con, sgl_stmt)
 
-  vdiffr::expect_doppelganger("line chart with color grouping", p)
+  vdiffr::expect_doppelganger(
+    "line chart default collection on color column",
+    p
+  )
 })
 
 test_that("generates histogram", {
@@ -212,13 +215,7 @@ test_that("generates linear regression line plot", {
 			hp as x,
 			mpg as y,
 			cyl as color
-		from (
-			select
-				hp,
-				mpg,
-				cyl::varchar as cyl
-			from cars
-		)
+		from cars
 		using regression lines
 	"
 
