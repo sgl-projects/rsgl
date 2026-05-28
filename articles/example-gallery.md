@@ -62,6 +62,30 @@ dbGetPlot(con, "
 
 dbGetPlot(con, "
   visualize
+    horsepower as x,
+    miles_per_gallon as y
+  from cars
+  using (
+    points
+    layer
+    regression line
+  )
+  facet by
+    origin
+  scale by
+    log(x),
+    log(y)
+")
+```
+
+![](example-gallery_files/figure-html/unnamed-chunk-4-1.png)
+
+------------------------------------------------------------------------
+
+``` r
+
+dbGetPlot(con, "
+  visualize
     bin(miles_per_gallon) as x,
     count(*) as y
   from cars
@@ -71,7 +95,24 @@ dbGetPlot(con, "
 ")
 ```
 
-![](example-gallery_files/figure-html/unnamed-chunk-4-1.png)
+![](example-gallery_files/figure-html/unnamed-chunk-5-1.png)
+
+------------------------------------------------------------------------
+
+``` r
+
+dbGetPlot(con, "
+  visualize
+    origin as x,
+    miles_per_gallon as y
+  from cars
+  using boxes
+  scale by
+    log(y)
+")
+```
+
+![](example-gallery_files/figure-html/unnamed-chunk-6-1.png)
 
 ## Trees
 
@@ -108,7 +149,7 @@ dbGetPlot(con, "
 ")
 ```
 
-![](example-gallery_files/figure-html/unnamed-chunk-6-1.png)
+![](example-gallery_files/figure-html/unnamed-chunk-8-1.png)
 
 ------------------------------------------------------------------------
 
@@ -130,4 +171,4 @@ dbGetPlot(con, "
 ")
 ```
 
-![](example-gallery_files/figure-html/unnamed-chunk-7-1.png)
+![](example-gallery_files/figure-html/unnamed-chunk-9-1.png)
