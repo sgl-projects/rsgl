@@ -25,7 +25,14 @@ and is based on the grammar of graphics.
 
 ## Installation
 
-rsgl is not yet available on CRAN but can be installed from GitHub with:
+To install the official [CRAN](https://cran.r-project.org) release:
+
+```{r, eval=FALSE}
+install.packages("rsgl")
+```
+
+If you instead want the development version, install from GitHub with:
+
 ```{r, eval=FALSE}
 # install.packages("devtools")
 devtools::install_github("sgl-projects/rsgl")
