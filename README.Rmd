@@ -47,7 +47,7 @@ The following example demonstrates creating a DBI connection to an in-memory
 [DuckDB](https://duckdb.org) database, loading it with data,
 and then generating a scatterplot from a SGL statement.
 
-```{r usage}
+```{r usage, warning = FALSE}
 library(duckdb)
 library(rsgl)
 

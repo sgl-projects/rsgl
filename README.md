@@ -40,9 +40,7 @@ and then generating a scatterplot from a SGL statement.
 
 ``` r
 library(duckdb)
-#> Warning: package 'duckdb' was built under R version 4.5.2
 #> Loading required package: DBI
-#> Warning: package 'DBI' was built under R version 4.5.2
 library(rsgl)
 #> 
 #> Attaching package: 'rsgl'

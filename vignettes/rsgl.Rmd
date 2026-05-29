@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 For use with the examples in this tutorial, we will create an in-memory
 [DuckDB](https://duckdb.org) database and load it with two tables,
 `cars` and `trees`.
-```{r setup}
+```{r setup, warning = FALSE}
 library(rsgl)
 library(duckdb)
 

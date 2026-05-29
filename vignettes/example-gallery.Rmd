@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 The examples on this page will use an in-memory [DuckDB](https://duckdb.org)
 database loaded with data.
 Multiple datasets are used and the page is organized by the dataset being analyzed.
-```{r setup}
+```{r setup, warning = FALSE}
 library(rsgl)
 library(duckdb)
 
