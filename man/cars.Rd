@@ -14,6 +14,13 @@ A data frame with 406 rows and 5 variables:
 \item{year}{Model year (1970–1982).}
 }
 }
+\source{
+Derived from the cars dataset in the vega-datasets collection
+(\url{https://github.com/vega/vega-datasets/blob/main/data/cars.json}). The
+\code{Miles_per_Gallon}, \code{Horsepower}, and \code{Origin} columns were kept and
+renamed, \code{year} is the year taken from the original \code{Year} date, and
+\code{car_id} is a row identifier.
+}
 \usage{
 cars
 }
