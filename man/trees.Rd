@@ -12,6 +12,10 @@ A data frame with 35 rows and 3 variables:
 \item{circumference}{Trunk circumference at the time of measurement.}
 }
 }
+\source{
+Derived from \link[datasets:Orange]{datasets::Orange} (R Core Team), with the \code{Tree}
+column renamed to \code{tree_id}.
+}
 \usage{
 trees
 }

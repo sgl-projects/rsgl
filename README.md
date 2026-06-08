@@ -15,7 +15,13 @@ based on the grammar of graphics.
 
 ## Installation
 
-rsgl is not yet available on CRAN but can be installed from GitHub with:
+To install the official [CRAN](https://cran.r-project.org) release:
+
+``` r
+install.packages("rsgl")
+```
+
+If you instead want the development version, install from GitHub with:
 
 ``` r
 # install.packages("devtools")
@@ -34,9 +40,7 @@ and then generating a scatterplot from a SGL statement.
 
 ``` r
 library(duckdb)
-#> Warning: package 'duckdb' was built under R version 4.5.2
 #> Loading required package: DBI
-#> Warning: package 'DBI' was built under R version 4.5.2
 library(rsgl)
 #> 
 #> Attaching package: 'rsgl'

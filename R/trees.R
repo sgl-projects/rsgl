@@ -11,4 +11,6 @@
 #'   \item{age}{Age of the tree at the time of measurement.}
 #'   \item{circumference}{Trunk circumference at the time of measurement.}
 #' }
+#' @source Derived from [datasets::Orange] (R Core Team), with the `Tree`
+#'   column renamed to `tree_id`.
 "trees"

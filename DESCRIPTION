@@ -1,14 +1,17 @@
 Package: rsgl
-Title: An R Implementation of the SGL Graphics Language
-Version: 0.0.0.9000
-Authors@R:
-    person(
-			"Jon", "Chapman", , "jochapjo@icloud.com",
-			role = c("aut", "cre", "cph"),
-		)
-Description: An implementation of the SGL graphics language,
-    allowing you to generate plots from a database connection 
-    using SGL.
+Title: An Implementation of the 'SGL' Graphics Language
+Version: 0.1.0
+Authors@R: c(
+    person("Jon", "Chapman", , "jochapjo@icloud.com",
+           role = c("aut", "cre", "cph")),
+    person("Free Software Foundation, Inc.", role = "cph",
+           comment = "Bison parser skeleton"))
+Description: Generates plots from a database connection
+    and a 'SGL' statement. 'SGL' is a graphics language designed
+    to look and feel like 'SQL'. It is especially useful for
+    those familiar with 'SQL' who want to specify plots in a
+    similar manner. The 'SGL' language is described in
+    Chapman (2025) <doi:10.48550/arXiv.2505.14690>.
 License: MIT + file LICENSE
 URL: https://github.com/sgl-projects/rsgl, https://sgl-projects.github.io/rsgl/, https://arxiv.org/abs/2505.14690
 BugReports: https://github.com/sgl-projects/rsgl/issues
