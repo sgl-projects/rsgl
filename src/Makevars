@@ -1,5 +1,5 @@
 # Objects to build
-OBJECTS = RcppExports.o sgl_to_rgs.o parser.tab.o scanner.o aes.o geom.o cta.o qual.o scale.o keyword.o case.o
+OBJECTS = RcppExports.o sgl_to_rgs.o parser.tab.o scanner.o aes.o geom.o cta.o qual.o scale.o keyword.o case.o cgs_order.o
 
 # All target
 all: $(SHLIB)
