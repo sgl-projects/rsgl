@@ -10,7 +10,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/sgl-projects/rsgl/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/sgl-projects/rsgl/blob/v0.1.0/inst/CITATION)
 
 Chapman J (2026). *rsgl: An Implementation of the 'SGL' Graphics
 Language*. R package version 0.1.0,
