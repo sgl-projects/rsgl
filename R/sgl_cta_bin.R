@@ -3,7 +3,7 @@ new_sgl_cta_bin <- function() {
 }
 
 #' @export
-cta_fn_name.sgl_cta_bin <- function(cta) {
+sgl_func_name.sgl_cta_bin <- function(sgl_r_obj) {
   "bin"
 }
 
@@ -15,7 +15,7 @@ valid_cta.sgl_cta_bin <- function(cta, col_expr, df) {
   }
   col <- df[[col_name]]
   if (is_categorical_col(col)) {
-    bin_fn_name <- cta_fn_name(cta)
+    bin_fn_name <- sgl_func_name(cta)
     errmsg <- sprintf(
       "Error: cannot apply %s to a categorical column, found %s(%s).",
       bin_fn_name,
@@ -46,7 +46,9 @@ add_transformed_column.sgl_cta_bin <-
       num_bins <- 30
     }
     new_col_name <- paste(
-      "rsgl", scale_name(scale), cta_fn_name(cta), num_bins, input_col_name,
+      "rsgl",
+      sgl_func_name(scale), sgl_func_name(cta),
+      num_bins, input_col_name,
       sep = "."
     )
     if (new_col_name %in% colnames(df)) {
@@ -69,7 +71,7 @@ is_transformation.sgl_cta_bin <- function(cta) {
 
 #' @export
 expr_text.sgl_cta_bin <- function(cta, col_expr) {
-  bin_fn_name <- cta_fn_name(cta)
+  bin_fn_name <- sgl_func_name(cta)
   if ("arg" %in% names(col_expr)) {
     title <- sprintf(
       "%s(%s, %s)",

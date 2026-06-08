@@ -26,10 +26,6 @@ valid_cta <- function(cta, col_expr, df) {
   UseMethod("valid_cta")
 }
 
-cta_fn_name <- function(cta) {
-  UseMethod("cta_fn_name")
-}
-
 add_transformed_column <- function(cta, input_col_name, df, ...) {
   UseMethod("add_transformed_column")
 }
@@ -42,8 +38,8 @@ is_transformation <- function(cta) {
   UseMethod("is_transformation")
 }
 
-scale_name <- function(scale) {
-  UseMethod("scale_name")
+sgl_func_name <- function(sgl_r_obj) {
+  UseMethod("sgl_func_name")
 }
 
 valid_scale <- function(scale, aes, layers, dfs) {

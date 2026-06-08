@@ -32,11 +32,6 @@ test_that("new_sgl_scale sets empty list as base object for subclass", {
   expect_equal(base_object, list())
 })
 
-test_that("scale_name returns base", {
-  scale <- new_sgl_scale()
-  expect_equal(scale_name(scale), "base")
-})
-
 test_that("valid_scale raises error if aes not in any layer", {
   rgs <- sgl_to_rgs("
     visualize

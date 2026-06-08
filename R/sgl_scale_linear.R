@@ -3,7 +3,7 @@ new_sgl_scale_linear <- function() {
 }
 
 #' @export
-scale_name.sgl_scale_linear <- function(scale) {
+sgl_func_name.sgl_scale_linear <- function(sgl_r_obj) {
   "linear"
 }
 

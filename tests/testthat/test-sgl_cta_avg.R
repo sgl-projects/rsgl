@@ -21,8 +21,8 @@ test_that("new_sgl_cta_avg sets empty list as base object", {
   expect_equal(base_object, list())
 })
 
-test_that("cta_fn_name returns avg", {
-  expect_equal(cta_fn_name(test_avg), "avg")
+test_that("sgl_func_name returns avg", {
+  expect_equal(sgl_func_name(test_avg), "avg")
 })
 
 test_that("valid_cta raises error for *", {

@@ -15,9 +15,9 @@ test_that("new_sgl_cta_bin sets empty list as base object", {
   expect_equal(base_object, list())
 })
 
-test_that("cta_fn_name returns bin", {
+test_that("sgl_func_name returns bin", {
   bin <- new_sgl_cta_bin()
-  expect_equal(cta_fn_name(bin), "bin")
+  expect_equal(sgl_func_name(bin), "bin")
 })
 
 test_that("valid_cta raises error for *", {

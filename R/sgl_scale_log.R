@@ -3,7 +3,7 @@ new_sgl_scale_log <- function() {
 }
 
 #' @export
-scale_name.sgl_scale_log <- function(scale) {
+sgl_func_name.sgl_scale_log <- function(sgl_r_obj) {
   "log"
 }
 

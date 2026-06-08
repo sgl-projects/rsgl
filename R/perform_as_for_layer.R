@@ -22,7 +22,7 @@ add_scaled_cols <- function(layer, scales, df) {
     existing_col <- needs_scale_mappings[[aes]]$column
     new_col <- sprintf(
       "rsgl.%s.%s",
-      scale_name(scale),
+      sgl_func_name(scale),
       existing_col
     )
     if (!(new_col %in% names(df))) {
@@ -79,7 +79,7 @@ group_by_col_names <- function(col_expr, aes_mappings, scales) {
   if (!(list(col_expr) %in% aes_mappings)) {
     transformed_col_name <- sprintf(
       "rsgl.%s.bin.%s.%s",
-      scale_name(new_sgl_scale_linear()),
+      sgl_func_name(new_sgl_scale_linear()),
       num_bins,
       column
     )
@@ -96,7 +96,7 @@ group_by_col_names <- function(col_expr, aes_mappings, scales) {
   for (scale in corresponding_scales) {
     transformed_col_name <- sprintf(
       "rsgl.%s.bin.%s.%s",
-      scale_name(scale),
+      sgl_func_name(scale),
       num_bins,
       column
     )
@@ -108,7 +108,7 @@ group_by_col_names <- function(col_expr, aes_mappings, scales) {
   if (length(unscaled_aes) > 0) {
     transformed_col_name <- sprintf(
       "rsgl.%s.bin.%s.%s",
-      scale_name(new_sgl_scale_linear()),
+      sgl_func_name(new_sgl_scale_linear()),
       num_bins,
       column
     )
