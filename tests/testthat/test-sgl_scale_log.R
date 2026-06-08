@@ -213,6 +213,50 @@ describe("valid_scale", {
       )
     })
   })
+  describe("non-positive values", {
+    df_1 <- data.frame(
+      col_1 = c(1.2, 3.4, NA),
+      col_2 = c(5.6, NA, 7.8)
+    )
+    df_2 <- data.frame(
+      col_1 = c(1.2, 3.4, NA),
+      col_2 = c(5.6, NA, -7.8)
+    )
+    dfs <- list(df_1, df_2)
+    rgs <- sgl_to_rgs("
+			visualize
+				col_1 as x,
+				col_2 as y
+			from placeholder
+			using (
+				points
+				layer
+				regression line
+			)
+		")
+    layers <- rgs$layers
+    log <- new_sgl_scale_log()
+    describe("no layer has non-pos value", {
+      it("doesn't raise error", {
+        expect_no_error(
+          valid_scale(log, "x", layers, dfs)
+        )
+      })
+    })
+    describe("layer has non-pos value", {
+      it("raises error", {
+        expected_msg <- paste(
+          "Error: the log scale can only be applied to aesthetics",
+          "where all values from mappings are positive."
+        )
+        expect_error(
+          valid_scale(log, "y", layers, dfs),
+          expected_msg,
+          fixed = TRUE
+        )
+      })
+    })
+  })
 })
 
 test_that("apply_scale returns log (base 10) of the input values", {

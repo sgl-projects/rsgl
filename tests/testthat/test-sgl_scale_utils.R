@@ -1,3 +1,100 @@
+describe("non_pos_in_layer", {
+  df <- data.frame(
+    col_1 = c(1.2, 3.4, NA),
+    col_2 = c(1.2, NA, -3.4),
+    col_3 = c(1.2, NA, 0),
+    col_4 = c(NA, NA, NA)
+  )
+  rgs <- sgl_to_rgs("
+		visualize
+			col_1 as x,
+			col_2 as y,
+			count(*) as color
+		from placeholder
+		using points
+	")
+  layer <- rgs$layers[[1]]
+  it("returns false if all values are pos or NA", {
+    expect_false(
+      non_pos_in_layer("x", layer, df)
+    )
+  })
+  it("returns true if any zeros present", {
+    zero_test_layer <- layer
+    zero_test_layer$aes_mappings$x$column <- "col_3"
+    expect_true(
+      non_pos_in_layer("x", zero_test_layer, df)
+    )
+  })
+  it("returns true if any negative values present", {
+    expect_true(
+      non_pos_in_layer("y", layer, df)
+    )
+  })
+  it("returns false if all NA's", {
+    na_test_layer <- layer
+    na_test_layer$aes_mappings$x$column <- "col_4"
+    expect_false(
+      non_pos_in_layer("x", na_test_layer, df)
+    )
+  })
+  it("returns false if mapped to count(*)", {
+    expect_false(
+      non_pos_in_layer("color", layer, df)
+    )
+  })
+  it("returns false if no mapping for aes in layer", {
+    expect_false(
+      non_pos_in_layer("size", layer, df)
+    )
+  })
+})
+
+describe("raise_for_non_pos", {
+  df_1 <- data.frame(
+    col_1 = c(1.2, 3.4, NA),
+    col_2 = c(5.6, NA, 7.8)
+  )
+  df_2 <- data.frame(
+    col_1 = c(1.2, 3.4, NA),
+    col_2 = c(5.6, NA, -7.8)
+  )
+  dfs <- list(df_1, df_2)
+  rgs <- sgl_to_rgs("
+		visualize
+			col_1 as x,
+			col_2 as y
+		from placeholder
+		using (
+			points
+			layer
+			regression line
+		)
+	")
+  layers <- rgs$layers
+  scale <- new_sgl_scale_log()
+  describe("no layer has non-pos value", {
+    it("doesn't raise error", {
+      expect_no_error(
+        raise_for_non_pos(scale, "x", layers, dfs)
+      )
+    })
+  })
+  describe("layer has non-pos value", {
+    it("raises error", {
+      expected_msg <- paste(
+        "Error: the log scale can only be applied to aesthetics",
+        "where all values from mappings are positive."
+      )
+      expect_error(
+        raise_for_non_pos(scale, "y", layers, dfs),
+        expected_msg,
+        fixed = TRUE
+      )
+    })
+  })
+})
+
 test_that("non_numerical_in_layer returns FALSE for no aes mapping", {
   rgs <- sgl_to_rgs("
 		visualize

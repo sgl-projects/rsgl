@@ -26,6 +26,35 @@ raise_for_non_nums <- function(scale, aes, layers, dfs) {
   }
 }
 
+non_pos_in_layer <- function(aes, layer, df) {
+  aes_mappings <- layer$aes_mappings
+  if (aes %in% names(aes_mappings)) {
+    col_expr <- aes_mappings[[aes]]
+    if (!col_expr_has_cta(col_expr, "count")) {
+      col <- column_from_aes(layer, df, aes)
+      if (any(col <= 0, na.rm = TRUE)) {
+        return(TRUE)
+      }
+    }
+  }
+  FALSE
+}
+
+raise_for_non_pos <- function(scale, aes, layers, dfs) {
+  non_pos_found <- purrr::map2_lgl(
+    layers, dfs,
+    function(layer, df) non_pos_in_layer(aes, layer, df)
+  )
+  if (any(non_pos_found)) {
+    unformatted_msg <- paste(
+      "Error: the %s scale can only be applied to aesthetics",
+      "where all values from mappings are positive."
+    )
+    err_msg <- sprintf(unformatted_msg, sgl_func_name(scale))
+    stop(err_msg)
+  }
+}
+
 ggplot_color_aes <- function(rgs) {
   ggplot_aes <- character(0)
   for (layer in rgs$layers) {
