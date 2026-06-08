@@ -11,6 +11,7 @@ sgl_func_name.sgl_scale_ln <- function(sgl_r_obj) {
 valid_scale.sgl_scale_ln <- function(scale, aes, layers, dfs) {
   NextMethod()
   raise_for_non_nums(scale, aes, layers, dfs)
+  raise_for_non_pos(scale, aes, layers, dfs)
 }
 
 #' @export
