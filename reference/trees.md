@@ -28,3 +28,8 @@ A data frame with 35 rows and 3 variables:
 - circumference:
 
   Trunk circumference at the time of measurement.
+
+## Source
+
+Derived from [datasets::Orange](https://rdrr.io/r/datasets/Orange.html)
+(R Core Team), with the `Tree` column renamed to `tree_id`.

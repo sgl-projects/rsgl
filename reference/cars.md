@@ -35,3 +35,11 @@ A data frame with 406 rows and 5 variables:
 - year:
 
   Model year (1970–1982).
+
+## Source
+
+Derived from the cars dataset in the vega-datasets collection
+(<https://github.com/vega/vega-datasets/blob/main/data/cars.json>). The
+`Miles_per_Gallon`, `Horsepower`, and `Origin` columns were kept and
+renamed, `year` is the year taken from the original `Year` date, and
+`car_id` is a row identifier.
