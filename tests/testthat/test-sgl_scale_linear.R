@@ -1,24 +1,21 @@
 test_linear <- new_sgl_scale_linear()
 
-test_that(
-  paste(
-    "new_sgl_scale_linear returns an instance",
-    "of the sgl_scale_linear subclass"
-  ),
-  {
-    expect_equal(attr(test_linear, "class"), c("sgl_scale_linear", "sgl_scale"))
-  }
-)
+describe("new_sgl_scale_linear", {
+  it("returns an instance of the sgl_scale_linear subclass", {
+    expect_equal(
+      attr(test_linear, "class"),
+      c("sgl_scale_linear", "sgl_scale")
+    )
+  })
+  it("only adds class attribute", {
+    all_attributes <- names(attributes(test_linear))
+    expect_equal(all_attributes, "class")
+  })
+  it("sets empty list as base object", {
+    base_object <- unclass(test_linear)
 
-test_that("new_sgl_scale_linear only adds class attribute", {
-  all_attributes <- names(attributes(test_linear))
-  expect_equal(all_attributes, "class")
-})
-
-test_that("new_sgl_scale_linear sets empty list as base object", {
-  base_object <- unclass(test_linear)
-
-  expect_equal(base_object, list())
+    expect_equal(base_object, list())
+  })
 })
 
 test_that("sgl_func_name returns linear", {
