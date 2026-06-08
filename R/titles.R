@@ -7,10 +7,6 @@ title_for_aes <- function(aes, rgs) {
   if (aes %in% names(titles)) {
     return(titles[[aes]])
   }
-  # this function does not distinguish between fill and colour
-  # for bars and non-geoms, it treats all geoms equally
-  # and gets the default title from the first layer
-  # where a color mapping is present
   for (layer in rgs$layers) {
     if (aes %in% names(layer$aes_mappings)) {
       col_expr <- layer$aes_mappings[[aes]]
