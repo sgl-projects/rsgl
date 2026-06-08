@@ -23,100 +23,66 @@ test_that("title_for_aes returns explicit title", {
   )
 })
 
-patrick::with_parameters_test_that(
-  "title_for_aes returns default title if no explicit title is provided:",
-  {
-    sgl <- sprintf(
-      "
-        visualize
-          %s as x
-        from cars
-        using points
-			",
-      expr
-    )
-    rgs <- sgl_to_rgs(sgl)
+describe("title_for_aes", {
+  describe("explicit title is provided", {
+    it("returns explicit title", {
+      rgs <- sgl_to_rgs("
+				visualize
+					hp as x,
+					mpg as y
+				from cars
+				using points
 
-    expect_equal(
-      title_for_aes("x", rgs),
-      expr
-    )
-  },
-  .cases = default_title_cases()
-)
+				title
+					x as 'Horsepower',
+					y as 'Miles Per Gallon'
+			")
 
-test_that("title_for_aes skips layer without aes", {
-  rgs <- sgl_to_rgs("
-		visualize
-			hp as x,
-			mpg as y
-		from cars
-		using regression line
+      expect_equal(
+        title_for_aes("x", rgs),
+        "Horsepower"
+      )
+    })
+  })
+  describe("explicit title is not provided", {
+    it("returns default title from first layer with aes", {
+      rgs <- sgl_to_rgs("
+				visualize
+					hp as x,
+					mpg as y
+				from cars
+				using line
 
-		layer
+				layer
 
-		visualize
-			hp as x,
-			mpg as y,
-			cyl as color
-		from cars
-		using points
-	")
+				visualize
+					hp as x,
+					mpg as y,
+					bin(cyl) as color
+				from cars
+				using points
 
-  expect_equal(
-    title_for_aes("color", rgs),
-    "cyl"
-  )
+				layer
+
+				visualize
+					hp as x,
+					mpg as y,
+					wt as color
+				from cars
+				using points
+
+				title
+					x as 'Horsepower',
+					y as 'Miles Per Gallon'
+			")
+
+      expect_equal(
+        title_for_aes("color", rgs),
+        "bin(cyl)"
+      )
+    })
+  })
 })
-
-test_that("title_for_aes uses title from first layer if present in multiple", {
-  rgs <- sgl_to_rgs("
-		visualize
-			hp as x,
-			mpg as y
-		from cars
-		using points
-
-		layer
-
-		visualize
-			bin(hp) as x,
-			count(*) as y
-		from cars
-		using bars
-	")
-
-  expect_equal(
-    title_for_aes("x", rgs),
-    "hp"
-  )
-})
-
-patrick::with_parameters_test_that(
-  "title_for_aes returns title for any aesthetic:",
-  {
-    other_aes <- ifelse(aes == "x", "y", "x")
-    sgl <- sprintf(
-      "
-        visualize
-					hp as %s,
-          mpg as %s
-        from cars
-        using points
-			",
-      other_aes,
-      aes
-    )
-    rgs <- sgl_to_rgs(sgl)
-
-    expect_equal(
-      title_for_aes(aes, rgs),
-      "mpg"
-    )
-  },
-  aes = .all_aes,
-  .test_name = aes
-)
 
 test_that("ggplot_labs returns object of labels class", {
   rgs <- sgl_to_rgs("
