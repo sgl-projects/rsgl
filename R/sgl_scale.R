@@ -6,11 +6,6 @@ new_sgl_scale <- function(class = character()) {
 }
 
 #' @export
-scale_name.sgl_scale <- function(scale) {
-  "base"
-}
-
-#' @export
 valid_scale.sgl_scale <- function(scale, aes, layers, dfs) {
   mapped_aes_by_layer <- lapply(
     layers,

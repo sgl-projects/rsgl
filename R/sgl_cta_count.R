@@ -3,13 +3,13 @@ new_sgl_cta_count <- function() {
 }
 
 #' @export
-cta_fn_name.sgl_cta_count <- function(cta) {
+sgl_func_name.sgl_cta_count <- function(sgl_r_obj) {
   "count"
 }
 
 #' @export
 valid_cta.sgl_cta_count <- function(cta, col_expr, df) {
-  count_fn_name <- cta_fn_name(cta)
+  count_fn_name <- sgl_func_name(cta)
   col_name <- col_expr$column
   if (col_name != "*") {
     err_msg <- sprintf(
@@ -53,6 +53,6 @@ agg_col_expr.sgl_cta_count <- function(cta, col_expr, scale) {
 expr_text.sgl_cta_count <- function(cta, col_expr) {
   sprintf(
     "%s(*)",
-    cta_fn_name(cta)
+    sgl_func_name(cta)
   )
 }

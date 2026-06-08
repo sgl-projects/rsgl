@@ -3,7 +3,7 @@ new_sgl_scale_ln <- function() {
 }
 
 #' @export
-scale_name.sgl_scale_ln <- function(scale) {
+sgl_func_name.sgl_scale_ln <- function(sgl_r_obj) {
   "ln"
 }
 

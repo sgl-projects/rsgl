@@ -21,7 +21,7 @@ raise_for_non_nums <- function(scale, aes, layers, dfs) {
       "Error: the %s scale can only be applied",
       "to aesthetics with numerical mappings."
     )
-    errmsg <- sprintf(unformatted_msg, scale_name(scale))
+    errmsg <- sprintf(unformatted_msg, sgl_func_name(scale))
     stop(errmsg)
   }
 }

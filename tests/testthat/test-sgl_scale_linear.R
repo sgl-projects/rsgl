@@ -21,8 +21,8 @@ test_that("new_sgl_scale_linear sets empty list as base object", {
   expect_equal(base_object, list())
 })
 
-test_that("scale_name returns linear", {
-  expect_equal(scale_name(test_linear), "linear")
+test_that("sgl_func_name returns linear", {
+  expect_equal(sgl_func_name(test_linear), "linear")
 })
 
 describe("valid_scale", {

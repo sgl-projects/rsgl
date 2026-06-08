@@ -21,9 +21,9 @@ test_that("new_sgl_scale_log sets empty list as base object", {
   expect_equal(base_object, list())
 })
 
-test_that("scale_name returns log", {
+test_that("sgl_func_name returns log", {
   log <- new_sgl_scale_log()
-  expect_equal(scale_name(log), "log")
+  expect_equal(sgl_func_name(log), "log")
 })
 
 test_that("valid_scale raises error if aes not in any layer", {

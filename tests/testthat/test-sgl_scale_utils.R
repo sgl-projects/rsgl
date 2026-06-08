@@ -74,7 +74,7 @@ describe("raise_for_non_nums", {
       ")
       dfs <- result_dfs(rgs, test_con)
 
-      scale <- new_sgl_scale()
+      scale <- new_sgl_scale_log()
       expect_no_error(
         raise_for_non_nums(scale, "color", rgs$layers, dfs),
       )
@@ -88,9 +88,9 @@ describe("raise_for_non_nums", {
       ")
       dfs <- result_dfs(rgs, test_con)
 
-      scale <- new_sgl_scale()
+      scale <- new_sgl_scale_log()
       expected_msg <- paste(
-        "Error: the base scale can only be applied",
+        "Error: the log scale can only be applied",
         "to aesthetics with numerical mappings."
       )
       expect_error(
@@ -108,9 +108,9 @@ describe("raise_for_non_nums", {
       ")
       dfs <- result_dfs(rgs, test_con)
 
-      scale <- new_sgl_scale()
+      scale <- new_sgl_scale_log()
       expected_msg <- paste(
-        "Error: the base scale can only be applied",
+        "Error: the log scale can only be applied",
         "to aesthetics with numerical mappings."
       )
       expect_error(
@@ -128,7 +128,7 @@ describe("raise_for_non_nums", {
       ")
       dfs <- result_dfs(rgs, test_con)
 
-      scale <- new_sgl_scale()
+      scale <- new_sgl_scale_log()
       expect_no_error(
         raise_for_non_nums(scale, "x", rgs$layers, dfs)
       )
@@ -149,7 +149,7 @@ describe("raise_for_non_nums", {
       ")
       dfs <- result_dfs(rgs, test_con)
 
-      scale <- new_sgl_scale()
+      scale <- new_sgl_scale_log()
       expect_no_error(
         raise_for_non_nums(scale, "color", rgs$layers, dfs)
       )
@@ -170,9 +170,9 @@ describe("raise_for_non_nums", {
       ")
       dfs <- result_dfs(rgs, test_con)
 
-      scale <- new_sgl_scale()
+      scale <- new_sgl_scale_log()
       expected_msg <- paste(
-        "Error: the base scale can only be applied",
+        "Error: the log scale can only be applied",
         "to aesthetics with numerical mappings."
       )
       expect_error(
@@ -197,7 +197,7 @@ describe("raise_for_non_nums", {
       ")
       dfs <- result_dfs(rgs, test_con)
 
-      scale <- new_sgl_scale()
+      scale <- new_sgl_scale_log()
       expect_no_error(
         raise_for_non_nums(scale, "x", rgs$layers, dfs)
       )

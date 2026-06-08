@@ -3,14 +3,14 @@ new_sgl_cta_avg <- function() {
 }
 
 #' @export
-cta_fn_name.sgl_cta_avg <- function(cta) {
+sgl_func_name.sgl_cta_avg <- function(sgl_r_obj) {
   "avg"
 }
 
 #' @export
 valid_cta.sgl_cta_avg <- function(cta, col_expr, df) {
   col_name <- col_expr$column
-  avg_fn_name <- cta_fn_name(cta)
+  avg_fn_name <- sgl_func_name(cta)
   if (col_name == "*") {
     stop("Error: '*' cannot be used with the avg function.")
   }
@@ -47,12 +47,12 @@ agg_col_name.sgl_cta_avg <- function(cta, col_expr, scale) {
   if (is.null(scale)) {
     scale_nm <- "linear"
   } else {
-    scale_nm <- scale_name(scale)
+    scale_nm <- sgl_func_name(scale)
   }
   sprintf(
     "rsgl.%s.%s.%s",
     scale_nm,
-    cta_fn_name(cta),
+    sgl_func_name(cta),
     col_expr$column
   )
 }
@@ -64,7 +64,7 @@ agg_col_expr.sgl_cta_avg <- function(cta, col_expr, scale) {
   } else {
     expr_str <- sprintf(
       "mean(rsgl.%s.%s, na.rm=TRUE)",
-      scale_name(scale),
+      sgl_func_name(scale),
       col_expr$column
     )
   }
@@ -75,7 +75,7 @@ agg_col_expr.sgl_cta_avg <- function(cta, col_expr, scale) {
 expr_text.sgl_cta_avg <- function(cta, col_expr) {
   sprintf(
     "%s(%s)",
-    cta_fn_name(cta),
+    sgl_func_name(cta),
     col_expr$column
   )
 }
