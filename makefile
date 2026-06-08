@@ -6,8 +6,8 @@ TEST_LDFLAGS := $(shell pkg-config --libs criterion)
 SRC=src
 TEST=src/test
 
-SRC_OBJS=$(SRC)/parser.tab.o $(SRC)/scanner.o $(SRC)/aes.o $(SRC)/geom.o $(SRC)/cta.o $(SRC)/qual.o $(SRC)/scale.o $(SRC)/keyword.o $(SRC)/case.o
-TEST_OBJS=$(TEST)/test_sgl_to_cgs.o $(TEST)/test_aes.o $(TEST)/test_geom.o $(TEST)/test_cta.o $(TEST)/test_qual.o $(TEST)/test_scale.o $(TEST)/test_keyword.o $(TEST)/test_case.o $(TEST)/stubs.o
+SRC_OBJS=$(SRC)/parser.tab.o $(SRC)/scanner.o $(SRC)/aes.o $(SRC)/geom.o $(SRC)/cta.o $(SRC)/qual.o $(SRC)/scale.o $(SRC)/keyword.o $(SRC)/case.o $(SRC)/cgs_order.o
+TEST_OBJS=$(TEST)/test_sgl_to_cgs.o $(TEST)/test_aes.o $(TEST)/test_geom.o $(TEST)/test_cta.o $(TEST)/test_qual.o $(TEST)/test_scale.o $(TEST)/test_keyword.o $(TEST)/test_case.o $(TEST)/test_cgs_order.o $(TEST)/stubs.o
 
 test : $(TEST)/test
 	$(TEST)/test -j1
@@ -47,6 +47,9 @@ $(TEST)/test_keyword.o : $(TEST)/test_keyword.c $(SRC)/keyword.h
 
 $(TEST)/test_case.o : $(TEST)/test_case.c $(SRC)/case.h
 	$(CC) $(CFLAGS) $(CRITERION_CFLAGS) -o $(TEST)/test_case.o -c $(TEST)/test_case.c -I./$(SRC)
+
+$(TEST)/test_cgs_order.o : $(TEST)/test_cgs_order.c $(SRC)/cgs_order.h $(SRC)/cgs.h
+	$(CC) $(CFLAGS) $(CRITERION_CFLAGS) -o $(TEST)/test_cgs_order.o -c $(TEST)/test_cgs_order.c -I./$(SRC)
 
 $(TEST)/stubs.o : $(TEST)/stubs.c
 	$(CC) $(CFLAGS) -o $(TEST)/stubs.o -c $(TEST)/stubs.c
