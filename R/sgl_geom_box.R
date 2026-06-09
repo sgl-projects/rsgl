@@ -52,15 +52,15 @@ group_aes_cols.sgl_geom_box <- function(geom, layer, df, scales) {
         }
       }
     } else {
-      ggplot_dir <- ggplot_direction(layer, df)
+      ggplot_orntn <- ggplot_orientation(layer, df)
       if (names(pos_mappings)[1] %in% .cart_aes) {
-        if (ggplot_dir == "x") {
+        if (ggplot_orntn == "x") {
           aes_for_group <- "x"
         } else {
           aes_for_group <- "y"
         }
       } else {
-        if (ggplot_dir == "x") {
+        if (ggplot_orntn == "x") {
           aes_for_group <- "theta"
         } else {
           aes_for_group <- "r"
@@ -107,7 +107,7 @@ has_direction.sgl_geom_box <- function(geom) {
 }
 
 #' @export
-ggplot_dir_from_qual.sgl_geom_box <- function(geom, qual) {
+ggplot_orntn_from_qual.sgl_geom_box <- function(geom, qual) {
   if (qual == "vertical") {
     return("x")
   }

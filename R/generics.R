@@ -66,8 +66,8 @@ has_direction <- function(geom) {
   UseMethod("has_direction")
 }
 
-ggplot_dir_from_qual <- function(geom, qual) {
-  UseMethod("ggplot_dir_from_qual")
+ggplot_orntn_from_qual <- function(geom, qual) {
+  UseMethod("ggplot_orntn_from_qual")
 }
 
 agg_col_name <- function(cta, col_expr, scale) {

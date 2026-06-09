@@ -166,7 +166,7 @@ describe("group_aes_cols", {
     })
     describe("direction qualifier is not present", {
       describe("cart coords", {
-        describe("x has direction priority", {
+        describe("x has orientation priority", {
           it("returns x mapping", {
             rgs <- sgl_to_rgs("
 							visualize
@@ -192,7 +192,7 @@ describe("group_aes_cols", {
             )
           })
         })
-        describe("y has direction priority", {
+        describe("y has orientation priority", {
           it("returns y mapping", {
             rgs <- sgl_to_rgs("
 							visualize
@@ -220,7 +220,7 @@ describe("group_aes_cols", {
         })
       })
       describe("polar coords", {
-        describe("theta has direction priority", {
+        describe("theta has orientation priority", {
           it("returns theta mapping", {
             rgs <- sgl_to_rgs("
 							visualize
@@ -246,7 +246,7 @@ describe("group_aes_cols", {
             )
           })
         })
-        describe("r has direction priority", {
+        describe("r has orientation priority", {
           it("returns r mapping", {
             rgs <- sgl_to_rgs("
 							visualize
@@ -719,16 +719,16 @@ describe("has_direction", {
   })
 })
 
-describe("ggplot_dir_from_qual", {
+describe("ggplot_orntn_from_qual", {
   it("returns x for vertical qual", {
     expect_equal(
-      ggplot_dir_from_qual(test_box, "vertical"),
+      ggplot_orntn_from_qual(test_box, "vertical"),
       "x"
     )
   })
   it("returns y for horizontal qual", {
     expect_equal(
-      ggplot_dir_from_qual(test_box, "horizontal"),
+      ggplot_orntn_from_qual(test_box, "horizontal"),
       "y"
     )
   })
