@@ -57,7 +57,7 @@ ggplot_layer <- function(rgs_layer, df, scales) {
   }
 
   if (has_direction(geom)) {
-    ggplot_layer_args$orientation <- ggplot_direction(rgs_layer, df)
+    ggplot_layer_args$orientation <- ggplot_orientation(rgs_layer, df)
   }
 
   layer <- do.call(ggplot_geom(geom), ggplot_layer_args)

@@ -1,4 +1,4 @@
-describe("dir_priority_ranking", {
+describe("orntn_priority_ranking", {
   it("gives correct priority for each category", {
     cases <- tibble::tribble(
       ~col_name, ~expected_priority,
@@ -23,24 +23,24 @@ describe("dir_priority_ranking", {
       df <- dfs[[1]]
 
       expect_equal(
-        dir_priority_ranking(layer, df, "x"),
+        orntn_priority_ranking(layer, df, "x"),
         expected_priority
       )
     })
   })
 })
 
-describe("ggplot_direction", {
+describe("ggplot_orientation", {
   describe("direction qualifier is present", {
-    it("returns direction from ggplot_dir_from_qual", {
+    it("returns orientation from ggplot_orntn_from_qual", {
       cases <- tibble::tribble(
-        ~geom, ~qual, ~expected_dir,
+        ~geom, ~qual, ~expected_orientation,
         "line", "horizontal", "x",
         "line", "vertical", "y",
         "bar", "horizontal", "y",
         "bar", "vertical", "x"
       )
-      purrr::pwalk(cases, function(geom, qual, expected_dir) {
+      purrr::pwalk(cases, function(geom, qual, expected_orientation) {
         sgl <- sprintf(
           "
 						visualize
@@ -58,23 +58,23 @@ describe("ggplot_direction", {
         df <- dfs[[1]]
 
         expect_equal(
-          ggplot_direction(layer, df),
-          expected_dir
+          ggplot_orientation(layer, df),
+          expected_orientation
         )
       })
     })
   })
   describe("direction qualifier is not present", {
     describe("one positional aesthetic", {
-      it("returns correct dir for each pos aes", {
+      it("returns correct orientation for each pos aes", {
         cases <- tibble::tribble(
-          ~aes, ~expected_dir,
+          ~aes, ~expected_orientation,
           "x", "y",
           "y", "x",
           "theta", "y",
           "r", "x"
         )
-        purrr::pwalk(cases, function(aes, expected_dir) {
+        purrr::pwalk(cases, function(aes, expected_orientation) {
           sgl <- sprintf(
             "
 							visualize
@@ -90,17 +90,17 @@ describe("ggplot_direction", {
           df <- dfs[[1]]
 
           expect_equal(
-            ggplot_direction(layer, df),
-            expected_dir
+            ggplot_orientation(layer, df),
+            expected_orientation
           )
         })
       })
     })
     describe("two positional aesthetics", {
       describe("box with collection on one pos aes", {
-        it("returns correct dir based on collected aes", {
+        it("returns correct orientation based on collected aes", {
           cases <- tibble::tribble(
-            ~collected_aes, ~uncollected_aes, ~expected_dir,
+            ~collected_aes, ~uncollected_aes, ~expected_orientation,
             "x", "y", "x",
             "y", "x", "y",
             "theta", "r", "x",
@@ -108,7 +108,7 @@ describe("ggplot_direction", {
           )
           purrr::pwalk(
             cases,
-            function(collected_aes, uncollected_aes, expected_dir) {
+            function(collected_aes, uncollected_aes, expected_orientation) {
               sgl <- sprintf(
                 "
 									visualize
@@ -128,18 +128,18 @@ describe("ggplot_direction", {
               df <- dfs[[1]]
 
               expect_equal(
-                ggplot_direction(layer, df),
-                expected_dir
+                ggplot_orientation(layer, df),
+                expected_orientation
               )
             }
           )
         })
       })
       describe("not box with collection on one pos aes", {
-        it("returns dir based on priority ranking", {
+        it("returns orientation based on priority ranking", {
           # tie goes to x
           cases <- tibble::tribble(
-            ~aes_1, ~aes_2, ~expr_1, ~expr_2, ~expected_dir,
+            ~aes_1, ~aes_2, ~expr_1, ~expr_2, ~expected_orientation,
             "x", "y", "day", "number", "x",
             "y", "x", "day", "number", "y",
             "x", "y", "day", "day_and_time", "x",
@@ -149,7 +149,7 @@ describe("ggplot_direction", {
           )
           purrr::pwalk(
             cases,
-            function(aes_1, aes_2, expr_1, expr_2, expected_dir) {
+            function(aes_1, aes_2, expr_1, expr_2, expected_orientation) {
               sgl <- sprintf(
                 "
 									visualize
@@ -169,8 +169,8 @@ describe("ggplot_direction", {
               df <- dfs[[1]]
 
               expect_equal(
-                ggplot_direction(layer, df),
-                expected_dir
+                ggplot_orientation(layer, df),
+                expected_orientation
               )
             }
           )

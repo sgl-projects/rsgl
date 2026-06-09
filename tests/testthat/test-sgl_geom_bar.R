@@ -234,18 +234,18 @@ describe("has_direction", {
   })
 })
 
-describe("ggplot_dir_from_qual", {
+describe("ggplot_orntn_from_qual", {
   it("returns x for vertical qual", {
     bar <- new_sgl_geom_bar()
     expect_equal(
-      ggplot_dir_from_qual(bar, "vertical"),
+      ggplot_orntn_from_qual(bar, "vertical"),
       "x"
     )
   })
   it("returns y for horizontal qual", {
     bar <- new_sgl_geom_bar()
     expect_equal(
-      ggplot_dir_from_qual(bar, "horizontal"),
+      ggplot_orntn_from_qual(bar, "horizontal"),
       "y"
     )
   })

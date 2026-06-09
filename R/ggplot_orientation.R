@@ -1,4 +1,4 @@
-dir_priority_ranking <- function(layer, df, aes) {
+orntn_priority_ranking <- function(layer, df, aes) {
   if (is_temporal_mapping(layer, df, aes)) {
     return(1)
   }
@@ -11,12 +11,12 @@ dir_priority_ranking <- function(layer, df, aes) {
   4
 }
 
-ggplot_direction <- function(layer, df) {
+ggplot_orientation <- function(layer, df) {
   geom <- layer$geom_expr$geom
   qual <- layer$geom_expr$qual
 
   if (qual %in% c("vertical", "horizontal")) {
-    return(ggplot_dir_from_qual(geom, qual))
+    return(ggplot_orntn_from_qual(geom, qual))
   }
 
   aes_mappings <- layer$aes_mappings
@@ -49,11 +49,11 @@ ggplot_direction <- function(layer, df) {
   }
 
   if (names(pos_mappings)[1] %in% .cart_aes) {
-    x_rank <- dir_priority_ranking(layer, df, "x")
-    y_rank <- dir_priority_ranking(layer, df, "y")
+    x_rank <- orntn_priority_ranking(layer, df, "x")
+    y_rank <- orntn_priority_ranking(layer, df, "y")
   } else {
-    x_rank <- dir_priority_ranking(layer, df, "theta")
-    y_rank <- dir_priority_ranking(layer, df, "r")
+    x_rank <- orntn_priority_ranking(layer, df, "theta")
+    y_rank <- orntn_priority_ranking(layer, df, "r")
   }
   if (x_rank <= y_rank) {
     return("x")

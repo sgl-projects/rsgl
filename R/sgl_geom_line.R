@@ -66,7 +66,7 @@ has_direction.sgl_geom_line <- function(geom) {
 }
 
 #' @export
-ggplot_dir_from_qual.sgl_geom_line <- function(geom, qual) {
+ggplot_orntn_from_qual.sgl_geom_line <- function(geom, qual) {
   if (qual == "horizontal") {
     return("x")
   }

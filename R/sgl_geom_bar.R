@@ -41,7 +41,7 @@ has_direction.sgl_geom_bar <- function(geom) {
 }
 
 #' @export
-ggplot_dir_from_qual.sgl_geom_bar <- function(geom, qual) {
+ggplot_orntn_from_qual.sgl_geom_bar <- function(geom, qual) {
   if (qual == "vertical") {
     return("x")
   }

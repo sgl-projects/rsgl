@@ -391,18 +391,18 @@ describe("has_direction", {
   })
 })
 
-describe("ggplot_dir_from_qual", {
+describe("ggplot_orntn_from_qual", {
   it("returns x for horizontal qual", {
     line <- new_sgl_geom_line()
     expect_equal(
-      ggplot_dir_from_qual(line, "horizontal"),
+      ggplot_orntn_from_qual(line, "horizontal"),
       "x"
     )
   })
   it("returns y for vertical qual", {
     line <- new_sgl_geom_line()
     expect_equal(
-      ggplot_dir_from_qual(line, "vertical"),
+      ggplot_orntn_from_qual(line, "vertical"),
       "y"
     )
   })
