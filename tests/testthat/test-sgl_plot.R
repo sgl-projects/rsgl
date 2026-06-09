@@ -449,15 +449,10 @@ test_that("generates faceted scatterplot", {
 		visualize
 			hp as x,
 			mpg as y
-		from (
-			select
-				*,
-				cast(cyl as varchar) as cyl_cat
-			from cars
-		)
+		from cars
 		using points
 		facet by
-			cyl_cat
+			cyl
   "
 
   p <- dbGetPlot(test_con, sgl_stmt)
