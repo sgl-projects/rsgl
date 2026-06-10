@@ -18,8 +18,10 @@ describe("new_sgl_scale_linear", {
   })
 })
 
-test_that("sgl_func_name returns linear", {
-  expect_equal(sgl_func_name(test_linear), "linear")
+describe("sgl_func_name", {
+  it("returns linear", {
+    expect_equal(sgl_func_name(test_linear), "linear")
+  })
 })
 
 describe("valid_scale", {
@@ -185,22 +187,26 @@ describe("valid_scale", {
   })
 })
 
-test_that("apply_scale returns original values", {
-  input <- c(1.2, NA, 3.4)
+describe("apply_scale", {
+  it("returns original values", {
+    input <- c(1.2, NA, 3.4)
 
-  expect_equal(
-    apply_scale(test_linear, input),
-    input
-  )
+    expect_equal(
+      apply_scale(test_linear, input),
+      input
+    )
+  })
 })
 
-test_that("apply_scale_inverse returns original values", {
-  input <- c(1.2, NA, 3.4)
+describe("apply_scale_inverse", {
+  it("returns original values", {
+    input <- c(1.2, NA, 3.4)
 
-  expect_equal(
-    apply_scale_inverse(test_linear, input),
-    input
-  )
+    expect_equal(
+      apply_scale_inverse(test_linear, input),
+      input
+    )
+  })
 })
 
 non_color_scale_cases <- function() {
