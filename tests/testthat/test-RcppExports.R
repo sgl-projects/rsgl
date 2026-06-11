@@ -1086,6 +1086,23 @@ test_that("raises error for unquoted title", {
   )
 })
 
+test_that("raises error for multiple titles for aes", {
+  sgl_stmt <- "
+		visualize
+			col_1 as x
+		from table_1
+		using points
+		title
+			x as 'first title',
+			x as 'second title'
+	"
+
+  expect_error(
+    sgl_to_rgs(sgl_stmt),
+    "Multiple titles provided for the x aesthetic\n"
+  )
+})
+
 test_that("raises error for general syntax error", {
   sgl_stmt <- "
 		visualize
