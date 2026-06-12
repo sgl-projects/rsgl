@@ -86,6 +86,26 @@ dbGetPlot(con, "
 
 dbGetPlot(con, "
   visualize
+    count(*) as theta,
+    origin as color
+  from cars
+  group by
+    origin
+  using bars
+  title
+    theta as 'Number of Cars',
+    color as 'Country of Origin'
+")
+```
+
+![](example-gallery_files/figure-html/unnamed-chunk-5-1.png)
+
+------------------------------------------------------------------------
+
+``` r
+
+dbGetPlot(con, "
+  visualize
     bin(miles_per_gallon) as x,
     count(*) as y
   from cars
@@ -95,7 +115,7 @@ dbGetPlot(con, "
 ")
 ```
 
-![](example-gallery_files/figure-html/unnamed-chunk-5-1.png)
+![](example-gallery_files/figure-html/unnamed-chunk-6-1.png)
 
 ------------------------------------------------------------------------
 
@@ -112,7 +132,7 @@ dbGetPlot(con, "
 ")
 ```
 
-![](example-gallery_files/figure-html/unnamed-chunk-6-1.png)
+![](example-gallery_files/figure-html/unnamed-chunk-7-1.png)
 
 ## Trees
 
@@ -149,7 +169,7 @@ dbGetPlot(con, "
 ")
 ```
 
-![](example-gallery_files/figure-html/unnamed-chunk-8-1.png)
+![](example-gallery_files/figure-html/unnamed-chunk-9-1.png)
 
 ------------------------------------------------------------------------
 
@@ -171,4 +191,4 @@ dbGetPlot(con, "
 ")
 ```
 
-![](example-gallery_files/figure-html/unnamed-chunk-9-1.png)
+![](example-gallery_files/figure-html/unnamed-chunk-10-1.png)
