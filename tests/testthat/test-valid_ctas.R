@@ -148,7 +148,7 @@ test_that(
 				bin(carat) as x,
 				count(*) as y,
 				cut as color
-			from cars
+			from diamonds
 			group by
 				bin(carat),
 				cut

@@ -202,7 +202,7 @@ patrick::with_parameters_test_that(
 
 				visualize
 					pop as x,
-					umemploy as y
+					unemploy as y
 				from economics
 				using points
 			",
