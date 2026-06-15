@@ -67,6 +67,13 @@ dbGetPlot(con, "
 
 # Package index
 
+## The SGL Language
+
+The [Get started](https://sgl-projects.github.io/rsgl/articles/rsgl.md)
+guide and the [SGL paper](https://arxiv.org/pdf/2505.14690) document SGL
+language clauses and related concepts. The pages below document specific
+geoms, transformations, aggregations, and scales available within SGL.
+
 ## Generating plots
 
 - [`dbGetPlot()`](https://sgl-projects.github.io/rsgl/reference/dbGetPlot.md)
