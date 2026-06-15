@@ -24,10 +24,17 @@ navbar:
         - text: Example gallery
           href: articles/example-gallery.html
         - text: ---
-        - text: "SGL Paper (arXiv)"
+        - text: "SGL Paper"
           href: https://arxiv.org/pdf/2505.14690
 
 reference:
+  - title: The SGL Language
+    desc: >
+      The [Get started](../articles/rsgl.html) guide
+      and the [SGL paper](https://arxiv.org/pdf/2505.14690)
+      document SGL language clauses and related concepts.
+      The pages below document specific
+      geoms, transformations, aggregations, and scales available within SGL.
   - title: Generating plots
     contents:
       - dbGetPlot
