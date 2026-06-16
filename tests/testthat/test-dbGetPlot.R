@@ -1,6 +1,6 @@
 test_sgl_stmt <- "
   visualize
-    hp as x,
+    HP as x,
     mpg as y
   from cars
   using points
@@ -23,10 +23,10 @@ describe("dbGetPlot", {
     all_attributes <- names(attributes(test_plot))
     expect_setequal(all_attributes, c("names", "class"))
   })
-  it("returns rgs with result dfs as base object", {
+  it("returns matching case rgs with result dfs as base object", {
     rgs <- sgl_to_rgs(test_sgl_stmt)
     dfs <- result_dfs(rgs, test_con)
-    expected <- rgs
+    expected <- match_col_casing(rgs, dfs)
     expected$result_dfs <- dfs
 
     expect_equal(

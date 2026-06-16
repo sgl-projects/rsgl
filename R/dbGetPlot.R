@@ -25,6 +25,7 @@
 dbGetPlot <- function(con, sgl_stmt) { # nolint: object_name_linter
   rgs <- sgl_to_rgs(sgl_stmt)
   dfs <- result_dfs(rgs, con)
+  rgs <- match_col_casing(rgs, dfs)
   validate_semantics(rgs, dfs)
   sgl_plot <- rgs
   sgl_plot$result_dfs <- dfs

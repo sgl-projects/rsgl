@@ -499,10 +499,12 @@ test_that("generates plot with explicit titles", {
 test_that("generates plot regardless of case", {
   sgl_stmt <- "
 		VisualiZe
-			hp aS X,
-			mpg As y
+			Hp aS X,
+			mPG As y
 		FrOM cars
 		usinG PoiNts
+		FaCEt By
+			CyL
 	"
 
   p <- dbGetPlot(test_con, sgl_stmt)
