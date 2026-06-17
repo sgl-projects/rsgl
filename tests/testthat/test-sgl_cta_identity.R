@@ -24,13 +24,14 @@ describe("new_sgl_cta_identity", {
 })
 
 describe("valid_cta", {
+  df <- data.frame()
   it("raises error for *", {
     col_expr <- list(
       column = "*",
       cta = test_identity
     )
     expect_error(
-      valid_cta(test_identity, col_expr, data.frame()),
+      valid_cta(test_identity, col_expr, df),
       "Error: '*' can only be used inside an aggregation function",
       fixed = TRUE
     )
@@ -43,7 +44,7 @@ describe("valid_cta", {
     )
 
     expect_no_error(
-      valid_cta(test_identity, col_expr, data.frame())
+      valid_cta(test_identity, col_expr, df)
     )
   })
 })
