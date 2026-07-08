@@ -24,307 +24,309 @@ df_with_supported_r_classes <- function() {
   df
 }
 
-test_that("is_numerical_col determines whether column is numerical", {
-  df <- df_with_supported_r_classes()
+describe("is_numerical_col", {
+  it("determines whether column is numerical", {
+    df <- df_with_supported_r_classes()
 
-  expect_equal(is_numerical_col(df$numeric_col), TRUE)
-  expect_equal(is_numerical_col(df$logical_col), FALSE)
-  expect_equal(is_numerical_col(df$Date_col), FALSE)
-  expect_equal(is_numerical_col(df$integer_col), TRUE)
-  expect_equal(is_numerical_col(df$difftime_col), TRUE)
-  expect_equal(is_numerical_col(df$POSIXct_col), FALSE)
-  expect_equal(is_numerical_col(df$character_col), FALSE)
-  expect_equal(is_numerical_col(df$factor_col), FALSE)
+    expect_equal(is_numerical_col(df$numeric_col), TRUE)
+    expect_equal(is_numerical_col(df$logical_col), FALSE)
+    expect_equal(is_numerical_col(df$Date_col), FALSE)
+    expect_equal(is_numerical_col(df$integer_col), TRUE)
+    expect_equal(is_numerical_col(df$difftime_col), TRUE)
+    expect_equal(is_numerical_col(df$POSIXct_col), FALSE)
+    expect_equal(is_numerical_col(df$character_col), FALSE)
+    expect_equal(is_numerical_col(df$factor_col), FALSE)
+  })
 })
 
-test_that("is_categorical_col determines whether column is categorical", {
-  df <- df_with_supported_r_classes()
+describe("is_categorical_col", {
+  it("determines whether column is categorical", {
+    df <- df_with_supported_r_classes()
 
-  expect_equal(is_categorical_col(df$numeric_col), FALSE)
-  expect_equal(is_categorical_col(df$logical_col), TRUE)
-  expect_equal(is_categorical_col(df$Date_col), FALSE)
-  expect_equal(is_categorical_col(df$integer_col), FALSE)
-  expect_equal(is_categorical_col(df$difftime_col), FALSE)
-  expect_equal(is_categorical_col(df$POSIXct_col), FALSE)
-  expect_equal(is_categorical_col(df$character_col), TRUE)
-  expect_equal(is_categorical_col(df$factor_col), TRUE)
+    expect_equal(is_categorical_col(df$numeric_col), FALSE)
+    expect_equal(is_categorical_col(df$logical_col), TRUE)
+    expect_equal(is_categorical_col(df$Date_col), FALSE)
+    expect_equal(is_categorical_col(df$integer_col), FALSE)
+    expect_equal(is_categorical_col(df$difftime_col), FALSE)
+    expect_equal(is_categorical_col(df$POSIXct_col), FALSE)
+    expect_equal(is_categorical_col(df$character_col), TRUE)
+    expect_equal(is_categorical_col(df$factor_col), TRUE)
+  })
 })
 
-test_that("is_date_col determines whether column is a date", {
-  df <- df_with_supported_r_classes()
+describe("is_date_col", {
+  it("determines whether column is a date", {
+    df <- df_with_supported_r_classes()
 
-  expect_equal(is_date_col(df$numeric_col), FALSE)
-  expect_equal(is_date_col(df$logical_col), FALSE)
-  expect_equal(is_date_col(df$Date_col), TRUE)
-  expect_equal(is_date_col(df$integer_col), FALSE)
-  expect_equal(is_date_col(df$difftime_col), FALSE)
-  expect_equal(is_date_col(df$POSIXct_col), FALSE)
-  expect_equal(is_date_col(df$character_col), FALSE)
-  expect_equal(is_date_col(df$factor_col), FALSE)
+    expect_equal(is_date_col(df$numeric_col), FALSE)
+    expect_equal(is_date_col(df$logical_col), FALSE)
+    expect_equal(is_date_col(df$Date_col), TRUE)
+    expect_equal(is_date_col(df$integer_col), FALSE)
+    expect_equal(is_date_col(df$difftime_col), FALSE)
+    expect_equal(is_date_col(df$POSIXct_col), FALSE)
+    expect_equal(is_date_col(df$character_col), FALSE)
+    expect_equal(is_date_col(df$factor_col), FALSE)
+  })
 })
 
-test_that("is_timestamp_col determines whether column is a timestamp", {
-  df <- df_with_supported_r_classes()
+describe("is_timestamp_col", {
+  it("determines whether column is a timestamp", {
+    df <- df_with_supported_r_classes()
 
-  expect_equal(is_timestamp_col(df$numeric_col), FALSE)
-  expect_equal(is_timestamp_col(df$logical_col), FALSE)
-  expect_equal(is_timestamp_col(df$Date_col), FALSE)
-  expect_equal(is_timestamp_col(df$integer_col), FALSE)
-  expect_equal(is_timestamp_col(df$difftime_col), FALSE)
-  expect_equal(is_timestamp_col(df$POSIXct_col), TRUE)
-  expect_equal(is_timestamp_col(df$character_col), FALSE)
-  expect_equal(is_timestamp_col(df$factor_col), FALSE)
+    expect_equal(is_timestamp_col(df$numeric_col), FALSE)
+    expect_equal(is_timestamp_col(df$logical_col), FALSE)
+    expect_equal(is_timestamp_col(df$Date_col), FALSE)
+    expect_equal(is_timestamp_col(df$integer_col), FALSE)
+    expect_equal(is_timestamp_col(df$difftime_col), FALSE)
+    expect_equal(is_timestamp_col(df$POSIXct_col), TRUE)
+    expect_equal(is_timestamp_col(df$character_col), FALSE)
+    expect_equal(is_timestamp_col(df$factor_col), FALSE)
+  })
 })
 
-test_that("is_temporal_col determines whether column is temporal", {
-  df <- df_with_supported_r_classes()
+describe("is_temporal_col", {
+  it("determines whether column is temporal", {
+    df <- df_with_supported_r_classes()
 
-  expect_equal(is_temporal_col(df$numeric_col), FALSE)
-  expect_equal(is_temporal_col(df$logical_col), FALSE)
-  expect_equal(is_temporal_col(df$Date_col), TRUE)
-  expect_equal(is_temporal_col(df$integer_col), FALSE)
-  expect_equal(is_temporal_col(df$difftime_col), FALSE)
-  expect_equal(is_temporal_col(df$POSIXct_col), TRUE)
-  expect_equal(is_temporal_col(df$character_col), FALSE)
-  expect_equal(is_temporal_col(df$factor_col), FALSE)
+    expect_equal(is_temporal_col(df$numeric_col), FALSE)
+    expect_equal(is_temporal_col(df$logical_col), FALSE)
+    expect_equal(is_temporal_col(df$Date_col), TRUE)
+    expect_equal(is_temporal_col(df$integer_col), FALSE)
+    expect_equal(is_temporal_col(df$difftime_col), FALSE)
+    expect_equal(is_temporal_col(df$POSIXct_col), TRUE)
+    expect_equal(is_temporal_col(df$character_col), FALSE)
+    expect_equal(is_temporal_col(df$factor_col), FALSE)
+  })
 })
 
-test_that("is_numerical_mapping returns true for count star", {
-  df <- df_with_supported_r_classes()
-  rgs <- sgl_to_rgs("
-		visualize
-			bin(numeric_col) as x,
-			count(*) as y
-		from all_classes
-		group by
-			bin(numeric_col)
-		using points
-	")
-
-  expect_equal(is_numerical_mapping(rgs$layers[[1]], df, "y"), TRUE)
-})
-
-test_that(
-  "is_numerical_mapping determines whether mapping to column is numerical",
-  {
+describe("is_numerical_mapping", {
+  it("returns true for count star", {
     df <- df_with_supported_r_classes()
     rgs <- sgl_to_rgs("
-			visualize
-				numeric_col as x,
-				logical_col as y,
-				Date_col as color
-			from all_classes
-			using points
-		")
+      visualize
+        bin(numeric_col) as x,
+        count(*) as y
+      from all_classes
+      group by
+        bin(numeric_col)
+      using points
+    ")
+
+    expect_equal(is_numerical_mapping(rgs$layers[[1]], df, "y"), TRUE)
+  })
+  it("determines whether mapping to column is numerical", {
+    df <- df_with_supported_r_classes()
+    rgs <- sgl_to_rgs("
+      visualize
+        numeric_col as x,
+        logical_col as y,
+        Date_col as color
+      from all_classes
+      using points
+    ")
 
     expect_equal(is_numerical_mapping(rgs$layers[[1]], df, "x"), TRUE)
     expect_equal(is_numerical_mapping(rgs$layers[[1]], df, "y"), FALSE)
     expect_equal(is_numerical_mapping(rgs$layers[[1]], df, "color"), FALSE)
-  }
-)
-
-test_that("is_categorical_mapping returns false for count star", {
-  df <- df_with_supported_r_classes()
-  rgs <- sgl_to_rgs("
-		visualize
-			bin(numeric_col) as x,
-			count(*) as y
-		from all_classes
-		group by
-			bin(numeric_col)
-		using points
-	")
-
-  expect_equal(is_categorical_mapping(rgs$layers[[1]], df, "y"), FALSE)
+  })
 })
 
-test_that(
-  "is_categorical_mapping determines whether mapping to column is categorical",
-  {
+describe("is_categorical_mapping", {
+  it("returns false for count star", {
     df <- df_with_supported_r_classes()
     rgs <- sgl_to_rgs("
-			visualize
-				numeric_col as x,
-				logical_col as y,
-				Date_col as color
-			from all_classes
-			using points
-		")
+      visualize
+        bin(numeric_col) as x,
+        count(*) as y
+      from all_classes
+      group by
+        bin(numeric_col)
+      using points
+    ")
+
+    expect_equal(is_categorical_mapping(rgs$layers[[1]], df, "y"), FALSE)
+  })
+  it("determines whether mapping to column is categorical", {
+    df <- df_with_supported_r_classes()
+    rgs <- sgl_to_rgs("
+      visualize
+        numeric_col as x,
+        logical_col as y,
+        Date_col as color
+      from all_classes
+      using points
+    ")
 
     expect_equal(is_categorical_mapping(rgs$layers[[1]], df, "x"), FALSE)
     expect_equal(is_categorical_mapping(rgs$layers[[1]], df, "y"), TRUE)
     expect_equal(is_categorical_mapping(rgs$layers[[1]], df, "color"), FALSE)
-  }
-)
-
-test_that("is_date_mapping returns false for count star", {
-  df <- df_with_supported_r_classes()
-  rgs <- sgl_to_rgs("
-		visualize
-			bin(numeric_col) as x,
-			count(*) as y
-		from all_classes
-		group by
-			bin(numeric_col)
-		using points
-	")
-
-  expect_equal(is_date_mapping(rgs$layers[[1]], df, "y"), FALSE)
+  })
 })
 
-test_that(
-  "is_date_mapping determines whether mapping to column is date",
-  {
+describe("is_date_mapping", {
+  it("returns false for count star", {
     df <- df_with_supported_r_classes()
     rgs <- sgl_to_rgs("
-			visualize
-				numeric_col as x,
-				logical_col as y,
-				Date_col as color,
-				POSIXct_col as size
-			from all_classes
-			using points
-		")
+      visualize
+        bin(numeric_col) as x,
+        count(*) as y
+      from all_classes
+      group by
+        bin(numeric_col)
+      using points
+    ")
+
+    expect_equal(is_date_mapping(rgs$layers[[1]], df, "y"), FALSE)
+  })
+  it("determines whether mapping to column is date", {
+    df <- df_with_supported_r_classes()
+    rgs <- sgl_to_rgs("
+      visualize
+        numeric_col as x,
+        logical_col as y,
+        Date_col as color,
+        POSIXct_col as size
+      from all_classes
+      using points
+    ")
 
     expect_equal(is_date_mapping(rgs$layers[[1]], df, "x"), FALSE)
     expect_equal(is_date_mapping(rgs$layers[[1]], df, "y"), FALSE)
     expect_equal(is_date_mapping(rgs$layers[[1]], df, "color"), TRUE)
     expect_equal(is_date_mapping(rgs$layers[[1]], df, "size"), FALSE)
-  }
-)
-
-test_that("is_timestamp_mapping returns false for count star", {
-  df <- df_with_supported_r_classes()
-  rgs <- sgl_to_rgs("
-		visualize
-			bin(numeric_col) as x,
-			count(*) as y
-		from all_classes
-		group by
-			bin(numeric_col)
-		using points
-	")
-
-  expect_equal(is_timestamp_mapping(rgs$layers[[1]], df, "y"), FALSE)
+  })
 })
 
-test_that(
-  "is_timestamp_mapping determines whether mapping to column is timestamp",
-  {
+describe("is_timestamp_mapping", {
+  it("returns false for count star", {
     df <- df_with_supported_r_classes()
     rgs <- sgl_to_rgs("
-			visualize
-				numeric_col as x,
-				logical_col as y,
-				Date_col as color,
-				POSIXct_col as size
-			from all_classes
-			using points
-		")
+      visualize
+        bin(numeric_col) as x,
+        count(*) as y
+      from all_classes
+      group by
+        bin(numeric_col)
+      using points
+    ")
+
+    expect_equal(is_timestamp_mapping(rgs$layers[[1]], df, "y"), FALSE)
+  })
+  it("determines whether mapping to column is timestamp", {
+    df <- df_with_supported_r_classes()
+    rgs <- sgl_to_rgs("
+      visualize
+        numeric_col as x,
+        logical_col as y,
+        Date_col as color,
+        POSIXct_col as size
+      from all_classes
+      using points
+    ")
 
     expect_equal(is_timestamp_mapping(rgs$layers[[1]], df, "x"), FALSE)
     expect_equal(is_timestamp_mapping(rgs$layers[[1]], df, "y"), FALSE)
     expect_equal(is_timestamp_mapping(rgs$layers[[1]], df, "color"), FALSE)
     expect_equal(is_timestamp_mapping(rgs$layers[[1]], df, "size"), TRUE)
-  }
-)
-
-test_that("is_temporal_mapping returns false for count star", {
-  df <- df_with_supported_r_classes()
-  rgs <- sgl_to_rgs("
-		visualize
-			bin(numeric_col) as x,
-			count(*) as y
-		from all_classes
-		group by
-			bin(numeric_col)
-		using points
-	")
-
-  expect_equal(is_temporal_mapping(rgs$layers[[1]], df, "y"), FALSE)
+  })
 })
 
-test_that(
-  "is_temporal_mapping determines whether mapping to column is temporal",
-  {
+describe("is_temporal_mapping", {
+  it("returns false for count star", {
     df <- df_with_supported_r_classes()
     rgs <- sgl_to_rgs("
-			visualize
-				numeric_col as x,
-				logical_col as y,
-				Date_col as color,
-				POSIXct_col as size
-			from all_classes
-			using points
-		")
+      visualize
+        bin(numeric_col) as x,
+        count(*) as y
+      from all_classes
+      group by
+        bin(numeric_col)
+      using points
+    ")
+
+    expect_equal(is_temporal_mapping(rgs$layers[[1]], df, "y"), FALSE)
+  })
+  it("determines whether mapping to column is temporal", {
+    df <- df_with_supported_r_classes()
+    rgs <- sgl_to_rgs("
+      visualize
+        numeric_col as x,
+        logical_col as y,
+        Date_col as color,
+        POSIXct_col as size
+      from all_classes
+      using points
+    ")
 
     expect_equal(is_temporal_mapping(rgs$layers[[1]], df, "x"), FALSE)
     expect_equal(is_temporal_mapping(rgs$layers[[1]], df, "y"), FALSE)
     expect_equal(is_temporal_mapping(rgs$layers[[1]], df, "color"), TRUE)
     expect_equal(is_temporal_mapping(rgs$layers[[1]], df, "size"), TRUE)
-  }
-)
-
-test_that("is_binned_mapping determines whether mapping is binned", {
-  rgs <- sgl_to_rgs("
-		visualize
-			bin(numeric_col) as x,
-			count(*) as y,
-			logical_col as color
-		from all_classes
-		group by
-			bin(numeric_col),
-			logical_col
-		using bars
-	")
-
-  layer <- rgs$layers[[1]]
-  expect_equal(is_binned_mapping(layer, "x"), TRUE)
-  expect_equal(is_binned_mapping(layer, "y"), FALSE)
-  expect_equal(is_binned_mapping(layer, "color"), FALSE)
+  })
 })
 
-test_that("type_classifications raises error if table doesn't exist", {
-  expect_error(
-    type_classifications(test_con, "not_a_table"),
-    "Error: Table with name not_a_table does not exist!"
-  )
+describe("is_binned_mapping", {
+  it("determines whether mapping is binned", {
+    rgs <- sgl_to_rgs("
+      visualize
+        bin(numeric_col) as x,
+        count(*) as y,
+        logical_col as color
+      from all_classes
+      group by
+        bin(numeric_col),
+        logical_col
+      using bars
+    ")
+
+    layer <- rgs$layers[[1]]
+    expect_equal(is_binned_mapping(layer, "x"), TRUE)
+    expect_equal(is_binned_mapping(layer, "y"), FALSE)
+    expect_equal(is_binned_mapping(layer, "color"), FALSE)
+  })
 })
 
-test_that("type_classifications returns correct classes for table cols", {
-  DBI::dbBegin(test_con)
-  withr::defer(DBI::dbRollback(test_con))
-  DBI::dbExecute(test_con, "alter table synth add column blob_col BLOB")
-
-  actual <- type_classifications(test_con, "synth")
-
-  expected <- data.frame(
-    column_name = c(
-      "letter", "number", "day",
-      "day_and_time", "boolean", "blob_col"
-    ),
-    column_class = c(
-      "categorical", "numerical", "temporal",
-      "temporal", "categorical", "unknown"
+describe("type_classifications", {
+  it("raises error if table doesn't exist", {
+    expect_error(
+      type_classifications(test_con, "not_a_table"),
+      "Error: Table with name not_a_table does not exist!"
     )
-  )
+  })
+  it("returns correct classes for table cols", {
+    DBI::dbBegin(test_con)
+    withr::defer(DBI::dbRollback(test_con))
+    DBI::dbExecute(test_con, "alter table synth add column blob_col BLOB")
 
-  expect_equal(actual, expected)
-})
+    actual <- type_classifications(test_con, "synth")
 
-test_that("type_classifications handles table names needing quoting", {
-  DBI::dbBegin(test_con)
-  withr::defer(DBI::dbRollback(test_con))
-  DBI::dbExecute(
-    test_con,
-    'create table "weird-name" (a INTEGER, b VARCHAR)'
-  )
+    expected <- data.frame(
+      column_name = c(
+        "letter", "number", "day",
+        "day_and_time", "boolean", "blob_col"
+      ),
+      column_class = c(
+        "categorical", "numerical", "temporal",
+        "temporal", "categorical", "unknown"
+      )
+    )
 
-  actual <- type_classifications(test_con, "weird-name")
+    expect_equal(actual, expected)
+  })
+  it("handles table names needing quoting", {
+    DBI::dbBegin(test_con)
+    withr::defer(DBI::dbRollback(test_con))
+    DBI::dbExecute(
+      test_con,
+      'create table "weird-name" (a INTEGER, b VARCHAR)'
+    )
 
-  expected <- data.frame(
-    column_name = c("a", "b"),
-    column_class = c("numerical", "categorical")
-  )
-  expect_equal(actual, expected)
+    actual <- type_classifications(test_con, "weird-name")
+
+    expected <- data.frame(
+      column_name = c("a", "b"),
+      column_class = c("numerical", "categorical")
+    )
+    expect_equal(actual, expected)
+  })
 })
