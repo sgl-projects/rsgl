@@ -1,10 +1,10 @@
 pandoc: 3.8.3
-pkgdown: 2.2.0
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   example-gallery: example-gallery.html
   rsgl: rsgl.html
-last_built: 2026-07-02T13:53Z
+last_built: 2026-07-08T13:57Z
 urls:
   reference: https://sgl-projects.github.io/rsgl/reference
   article: https://sgl-projects.github.io/rsgl/articles
