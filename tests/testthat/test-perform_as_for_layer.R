@@ -357,9 +357,10 @@ test_that("doesn't do anything if no aggregations are specified", {
   layer <- rgs$layers[[1]]
   input_df <- dfs[[1]]
   scales <- rgs$scales
+  facets <- rgs$facets
 
   result_df <- perform_as_for_layer(
-    layer, input_df, scales
+    layer, input_df, scales, facets
   )
 
   expect_equal_ignore_order(result_df, input_df)
@@ -378,9 +379,10 @@ test_that("returns correct cols for no grouping and all aggs", {
   layer <- rgs$layers[[1]]
   input_df <- dfs[[1]]
   scales <- rgs$scales
+  facets <- rgs$facets
 
   result_df <- perform_as_for_layer(
-    layer, input_df, scales
+    layer, input_df, scales, facets
   )
 
   expected_df <- input_df |>
@@ -411,9 +413,10 @@ test_that("returns untransformed col and aggs", {
   input_df <- dfs[[1]]
   layer <- rgs$layers[[1]]
   scales <- rgs$scales
+  facets <- rgs$facets
 
   result_df <- perform_as_for_layer(
-    layer, input_df, scales
+    layer, input_df, scales, facets
   )
 
   expected_df <- input_df |>
@@ -441,13 +444,14 @@ test_that("returns binned col and aggs", {
   layer <- rgs$layers[[1]]
   input_df <- dfs[[1]]
   scales <- rgs$scales
+  facets <- rgs$facets
   transformed_df <- add_transformed_column(
     new_sgl_cta_bin(), "mpg", input_df,
     scale = new_sgl_scale_linear()
   )
 
   result_df <- perform_as_for_layer(
-    layer, transformed_df, scales
+    layer, transformed_df, scales, facets
   )
 
   expected_df <- transformed_df |>
@@ -475,6 +479,7 @@ test_that("returns binned col with arg and aggs", {
   layer <- rgs$layers[[1]]
   input_df <- dfs[[1]]
   scales <- rgs$scales
+  facets <- rgs$facets
   transformed_df <- add_transformed_column(
     new_sgl_cta_bin(), "mpg", input_df,
     num_bins = 5,
@@ -482,7 +487,7 @@ test_that("returns binned col with arg and aggs", {
   )
 
   result_df <- perform_as_for_layer(
-    layer, transformed_df, scales
+    layer, transformed_df, scales, facets
   )
 
   expected_df <- transformed_df |>
@@ -512,13 +517,14 @@ test_that("returns non-linear scaled binned col and aggs", {
   layer <- rgs$layers[[1]]
   input_df <- dfs[[1]]
   scales <- rgs$scales
+  facets <- rgs$facets
   transformed_df <- add_transformed_column(
     new_sgl_cta_bin(), "mpg", input_df,
     scale = new_sgl_scale_log()
   )
 
   result_df <- perform_as_for_layer(
-    layer, transformed_df, scales
+    layer, transformed_df, scales, facets
   )
 
   expected_df <- transformed_df |>
@@ -550,6 +556,7 @@ test_that("returns binned cols and aggs for multiple scales", {
   layer <- rgs$layers[[1]]
   input_df <- dfs[[1]]
   scales <- rgs$scales
+  facets <- rgs$facets
   int_df <- add_transformed_column(
     new_sgl_cta_bin(), "mpg", input_df,
     scale = new_sgl_scale_log()
@@ -565,7 +572,7 @@ test_that("returns binned cols and aggs for multiple scales", {
 
 
   result_df <- perform_as_for_layer(
-    layer, transformed_df, scales
+    layer, transformed_df, scales, facets
   )
 
   expected_df <- transformed_df |>
@@ -603,13 +610,14 @@ test_that("returns binned and unbinned col and aggs", {
   layer <- rgs$layers[[1]]
   input_df <- dfs[[1]]
   scales <- rgs$scales
+  facets <- rgs$facets
   transformed_df <- add_transformed_column(
     new_sgl_cta_bin(), "mpg", input_df,
     scale = new_sgl_scale_linear()
   )
 
   result_df <- perform_as_for_layer(
-    layer, transformed_df, scales
+    layer, transformed_df, scales, facets
   )
 
   expected_df <- transformed_df |>
@@ -642,13 +650,14 @@ test_that("returns additional grouping not in aes mapping", {
   layer <- rgs$layers[[1]]
   input_df <- dfs[[1]]
   scales <- rgs$scales
+  facets <- rgs$facets
   transformed_df <- add_transformed_column(
     new_sgl_cta_bin(), "mpg", input_df,
     scale = new_sgl_scale_linear()
   )
 
   result_df <- perform_as_for_layer(
-    layer, transformed_df, scales
+    layer, transformed_df, scales, facets
   )
 
   expected_df <- transformed_df |>
@@ -678,17 +687,187 @@ test_that("returns additional binned grouping not in aes mapping", {
   layer <- rgs$layers[[1]]
   input_df <- dfs[[1]]
   scales <- rgs$scales
+  facets <- rgs$facets
   transformed_df <- add_transformed_column(
     new_sgl_cta_bin(), "mpg", input_df,
     scale = new_sgl_scale_linear()
   )
 
   result_df <- perform_as_for_layer(
-    layer, transformed_df, scales
+    layer, transformed_df, scales, facets
   )
 
   expected_df <- transformed_df |>
     dplyr::group_by(vs_cat, rsgl.linear.bin.30.mpg) |>
+    dplyr::summarize(rsgl.count = dplyr::n())
+
+  expect_equal_ignore_order(result_df, expected_df)
+})
+
+test_that("returns single facet grouping", {
+  rgs <- sgl_to_rgs("
+		visualize
+			bin(mpg) as x,
+			count(*) as y
+		from cars
+		group by
+			bin(mpg)
+		using bars
+    facet by
+      vs
+	")
+  dfs <- result_dfs(rgs, test_con)
+  layer <- rgs$layers[[1]]
+  input_df <- dfs[[1]]
+  scales <- rgs$scales
+  facets <- rgs$facets
+  transformed_df <- add_transformed_column(
+    new_sgl_cta_bin(), "mpg", input_df,
+    scale = new_sgl_scale_linear()
+  )
+
+  result_df <- perform_as_for_layer(
+    layer, transformed_df, scales, facets
+  )
+
+  expected_df <- transformed_df |>
+    dplyr::group_by(rsgl.linear.bin.30.mpg, vs) |>
+    dplyr::summarize(rsgl.count = dplyr::n())
+
+  expect_equal_ignore_order(result_df, expected_df)
+})
+
+test_that("returns multiple facet groupings", {
+  rgs <- sgl_to_rgs("
+		visualize
+			bin(mpg) as x,
+			count(*) as y
+		from cars
+		group by
+			bin(mpg)
+		using bars
+    facet by
+      vs,
+      am
+	")
+  dfs <- result_dfs(rgs, test_con)
+  layer <- rgs$layers[[1]]
+  input_df <- dfs[[1]]
+  scales <- rgs$scales
+  facets <- rgs$facets
+  transformed_df <- add_transformed_column(
+    new_sgl_cta_bin(), "mpg", input_df,
+    scale = new_sgl_scale_linear()
+  )
+
+  result_df <- perform_as_for_layer(
+    layer, transformed_df, scales, facets
+  )
+
+  expected_df <- transformed_df |>
+    dplyr::group_by(rsgl.linear.bin.30.mpg, vs, am) |>
+    dplyr::summarize(rsgl.count = dplyr::n())
+
+  expect_equal_ignore_order(result_df, expected_df)
+})
+
+test_that("ignores facets that arent in source", {
+  rgs <- sgl_to_rgs("
+		visualize
+			bin(mpg) as x,
+			count(*) as y
+		from cars
+		group by
+			bin(mpg)
+		using bars
+    facet by
+      not_in_source,
+      also_not_in_source
+	")
+  dfs <- result_dfs(rgs, test_con)
+  layer <- rgs$layers[[1]]
+  input_df <- dfs[[1]]
+  scales <- rgs$scales
+  facets <- rgs$facets
+  transformed_df <- add_transformed_column(
+    new_sgl_cta_bin(), "mpg", input_df,
+    scale = new_sgl_scale_linear()
+  )
+
+  result_df <- perform_as_for_layer(
+    layer, transformed_df, scales, facets
+  )
+
+  expected_df <- transformed_df |>
+    dplyr::group_by(rsgl.linear.bin.30.mpg) |>
+    dplyr::summarize(rsgl.count = dplyr::n())
+
+  expect_equal_ignore_order(result_df, expected_df)
+})
+
+test_that("only groups on facets in source", {
+  rgs <- sgl_to_rgs("
+		visualize
+			bin(mpg) as x,
+			count(*) as y
+		from cars
+		group by
+			bin(mpg)
+		using bars
+    facet by
+      vs,
+      not_in_source
+	")
+  dfs <- result_dfs(rgs, test_con)
+  layer <- rgs$layers[[1]]
+  input_df <- dfs[[1]]
+  scales <- rgs$scales
+  facets <- rgs$facets
+  transformed_df <- add_transformed_column(
+    new_sgl_cta_bin(), "mpg", input_df,
+    scale = new_sgl_scale_linear()
+  )
+
+  result_df <- perform_as_for_layer(
+    layer, transformed_df, scales, facets
+  )
+
+  expected_df <- transformed_df |>
+    dplyr::group_by(rsgl.linear.bin.30.mpg, vs) |>
+    dplyr::summarize(rsgl.count = dplyr::n())
+
+  expect_equal_ignore_order(result_df, expected_df)
+})
+
+test_that("allows redundant group by and facet by expr", {
+  rgs <- sgl_to_rgs("
+		visualize
+			bin(mpg) as x,
+			count(*) as y
+		from cars
+		group by
+			bin(mpg),
+      vs
+		using bars
+    facet by
+      vs
+	")
+  dfs <- result_dfs(rgs, test_con)
+  layer <- rgs$layers[[1]]
+  input_df <- dfs[[1]]
+  scales <- rgs$scales
+  facets <- rgs$facets
+  transformed_df <- add_transformed_column(
+    new_sgl_cta_bin(), "mpg", input_df,
+    scale = new_sgl_scale_linear()
+  )
+
+  result_df <- perform_as_for_layer(
+    layer, transformed_df, scales, facets
+  )
+
+  expected_df <- transformed_df |>
+    dplyr::group_by(rsgl.linear.bin.30.mpg, vs) |>
     dplyr::summarize(rsgl.count = dplyr::n())
 
   expect_equal_ignore_order(result_df, expected_df)
@@ -712,9 +891,10 @@ test_that("returns aggs from collection", {
   layer <- rgs$layers[[1]]
   input_df <- dfs[[1]]
   scales <- rgs$scales
+  facets <- rgs$facets
 
   result_df <- perform_as_for_layer(
-    layer, input_df, scales
+    layer, input_df, scales, facets
   )
 
   expected_df <- input_df |>
@@ -746,13 +926,14 @@ test_that("returns aggs from mapping and collection without duplication", {
   layer <- rgs$layers[[1]]
   input_df <- dfs[[1]]
   scales <- rgs$scales
+  facets <- rgs$facets
   transformed_df <- add_transformed_column(
     new_sgl_cta_bin(), "mpg", input_df,
     scale = new_sgl_scale_linear()
   )
 
   result_df <- perform_as_for_layer(
-    layer, transformed_df, scales
+    layer, transformed_df, scales, facets
   )
 
   expected_df <- transformed_df |>
@@ -787,13 +968,14 @@ test_that("takes scales into account for agg", {
   layer <- rgs$layers[[1]]
   input_df <- dfs[[1]]
   scales <- rgs$scales
+  facets <- rgs$facets
   transformed_df <- add_transformed_column(
     new_sgl_cta_bin(), "mpg", input_df,
     scale = new_sgl_scale_linear()
   )
 
   result_df <- perform_as_for_layer(
-    layer, transformed_df, scales
+    layer, transformed_df, scales, facets
   )
 
   expected_df <- transformed_df |>
@@ -829,9 +1011,10 @@ test_that("only backscales aggs once", {
   layer <- rgs$layers[[1]]
   input_df <- dfs[[1]]
   scales <- rgs$scales
+  facets <- rgs$facets
 
   result_df <- perform_as_for_layer(
-    layer, input_df, scales
+    layer, input_df, scales, facets
   )
 
   expected_df <- input_df |>
