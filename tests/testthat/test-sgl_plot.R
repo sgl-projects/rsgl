@@ -476,6 +476,24 @@ test_that("generates plot faceted on non-categorical column", {
   vdiffr::expect_doppelganger("non-categorical facet", p)
 })
 
+test_that("generates faceted plot with ctas", {
+  sgl_stmt <- "
+		visualize
+			bin(mpg) as x,
+			count(*) as y
+		from cars
+    group by
+      bin(mpg)
+		using bars
+		facet by
+			cyl
+  "
+
+  p <- dbGetPlot(test_con, sgl_stmt)
+
+  vdiffr::expect_doppelganger("faceted plot with ctas", p)
+})
+
 test_that("generates plot with explicit titles", {
   sgl_stmt <- "
 		visualize

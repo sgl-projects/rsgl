@@ -152,7 +152,7 @@ backscale_cols <- function(layer, scales, df) {
   df
 }
 
-perform_as_for_layer <- function(layer, df, scales) {
+perform_as_for_layer <- function(layer, df, scales, facets) {
   aes_mappings <- layer$aes_mappings
   aes_aggs <- filter_agg_exprs(aes_mappings)
   collect_aggs <- filter_agg_exprs(layer$collections)
@@ -172,6 +172,14 @@ perform_as_for_layer <- function(layer, df, scales) {
     function(col_expr) group_by_col_names(col_expr, aes_mappings, scales)
   )
   group_by_cols <- unlist(group_by_col_list)
+  if (!is.null(facets)) {
+    facets_in_source <- purrr::keep(facets, ~ (.$column %in% names(df)))
+    if (length(facets_in_source) > 0) {
+      facet_cols <- purrr::map_chr(facets_in_source, ~ (.$column))
+      group_by_cols <- c(group_by_cols, facet_cols)
+    }
+  }
+  group_by_cols <- unique(group_by_cols)
 
   agg_df <- scaled_df |>
     dplyr::group_by(dplyr::pick(dplyr::all_of(group_by_cols))) |>

@@ -45,6 +45,7 @@ test_that("performs cta's for single layer", {
   layer <- rgs$layers[[1]]
   input_df <- input_dfs[[1]]
   scales <- rgs$scales
+  facets <- rgs$facets
 
   actual_dfs <- perform_ctas(rgs, input_dfs)
 
@@ -56,7 +57,8 @@ test_that("performs cta's for single layer", {
   aggregated_df <- perform_as_for_layer(
     layer,
     transformed_df,
-    scales
+    scales,
+    facets
   )
   expected_dfs <- list(aggregated_df)
 
@@ -93,6 +95,7 @@ test_that(
     second_input_df <- input_dfs[[2]]
     second_layer <- rgs$layers[[2]]
     scales <- rgs$scales
+    facets <- rgs$facets
 
     actual_dfs <- perform_ctas(rgs, input_dfs)
 
@@ -104,7 +107,8 @@ test_that(
     aggregated_df <- perform_as_for_layer(
       second_layer,
       transformed_df,
-      scales
+      scales,
+      facets
     )
     expected_dfs <- list(first_input_df, aggregated_df)
 
@@ -143,6 +147,7 @@ test_that("performs cta's for multiple transformed layers", {
   second_layer <- rgs$layers[[2]]
   second_input_df <- input_dfs[[2]]
   scales <- rgs$scales
+  facets <- rgs$facets
 
   actual_dfs <- perform_ctas(rgs, input_dfs)
 
@@ -154,7 +159,8 @@ test_that("performs cta's for multiple transformed layers", {
   first_aggregated_df <- perform_as_for_layer(
     first_layer,
     first_transformed_df,
-    scales
+    scales,
+    facets
   )
   second_transformed_df <- perform_cts_for_layer(
     second_layer,
@@ -164,7 +170,8 @@ test_that("performs cta's for multiple transformed layers", {
   second_aggregated_df <- perform_as_for_layer(
     second_layer,
     second_transformed_df,
-    scales
+    scales,
+    facets
   )
 
   expected_dfs <- list(first_aggregated_df, second_aggregated_df)

@@ -1,12 +1,14 @@
-perform_ctas_for_layer <- function(layer, df, scales) {
+perform_ctas_for_layer <- function(layer, df, scales, facets) {
   post_ct_df <- perform_cts_for_layer(layer, df, scales)
-  post_cta_df <- perform_as_for_layer(layer, post_ct_df, scales)
+  post_cta_df <- perform_as_for_layer(layer, post_ct_df, scales, facets)
   post_cta_df
 }
 
 perform_ctas <- function(rgs, dfs) {
   Map(
-    function(layer, df) perform_ctas_for_layer(layer, df, rgs$scales),
+    function(layer, df) {
+      perform_ctas_for_layer(layer, df, rgs$scales, rgs$facets)
+    },
     rgs$layers,
     dfs
   )
