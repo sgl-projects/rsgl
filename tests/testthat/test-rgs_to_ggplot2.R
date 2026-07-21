@@ -190,6 +190,23 @@ describe("ggplot_layer", {
 
     expect_s3_class(actual_layer$geom, "GeomBoxplot")
   })
+  it("has correct geom for violin", {
+    rgs <- sgl_to_rgs("
+      visualize
+        cut as x,
+        price as y
+      from diamonds
+      using violins
+    ")
+    dfs <- result_dfs(rgs, test_con)
+    rgs_layer <- rgs$layers[[1]]
+    df <- dfs[[1]]
+    scales <- rgs$scales
+
+    actual_layer <- ggplot_layer(rgs_layer, df, scales)
+
+    expect_s3_class(actual_layer$geom, "GeomViolin")
+  })
   it("has stacked bars by default", {
     rgs <- sgl_to_rgs("
       visualize
@@ -330,6 +347,23 @@ describe("ggplot_layer", {
     actual_layer <- ggplot_layer(rgs_layer, df, scales)
 
     expect_s3_class(actual_layer$stat, "StatBoxplot")
+  })
+  it("has ydensity stat for violin geom", {
+    rgs <- sgl_to_rgs("
+      visualize
+        cut as x,
+        price as y
+      from diamonds
+      using violins
+    ")
+    dfs <- result_dfs(rgs, test_con)
+    rgs_layer <- rgs$layers[[1]]
+    df <- dfs[[1]]
+    scales <- rgs$scales
+
+    actual_layer <- ggplot_layer(rgs_layer, df, scales)
+
+    expect_s3_class(actual_layer$stat, "StatYdensity")
   })
   it("doesn't have orientation if geom doesn't have direction", {
     rgs <- sgl_to_rgs("

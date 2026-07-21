@@ -97,7 +97,7 @@ describe("ggplot_orientation", {
       })
     })
     describe("two positional aesthetics", {
-      describe("box with collection on one pos aes", {
+      describe("ext-1 with collection on one pos aes", {
         it("returns correct orientation based on collected aes", {
           cases <- tibble::tribble(
             ~collected_aes, ~uncollected_aes, ~expected_orientation,
@@ -135,7 +135,7 @@ describe("ggplot_orientation", {
           )
         })
       })
-      describe("not box with collection on one pos aes", {
+      describe("not ext-1 with collection on one pos aes", {
         it("returns orientation based on priority ranking", {
           # tie goes to x
           cases <- tibble::tribble(

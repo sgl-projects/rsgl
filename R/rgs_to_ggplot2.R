@@ -47,7 +47,10 @@ ggplot_layer <- function(rgs_layer, df, scales) {
   if (qual == "regression") {
     ggplot_layer_args$stat <- "smooth"
     ggplot_layer_args$method <- "lm"
-  } else if (!identical(geom, new_sgl_geom_box())) {
+  } else if (
+    !identical(geom, new_sgl_geom_box()) &&
+      !identical(geom, new_sgl_geom_violin())
+  ) {
     ggplot_layer_args$stat <- "identity"
   }
   if (qual == "jittered") {

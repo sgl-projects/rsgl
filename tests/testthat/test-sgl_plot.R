@@ -173,6 +173,20 @@ test_that("generates box plot with default collection on numerical mappings", {
   vdiffr::expect_doppelganger("boxplot with default collection", p)
 })
 
+test_that("generates violin plot", {
+  sgl_stmt <- "
+		visualize
+			cut as x,
+			price as y
+		from diamonds
+		using violins
+	"
+
+  p <- dbGetPlot(test_con, sgl_stmt)
+
+  vdiffr::expect_doppelganger("violin plot", p)
+})
+
 test_that("uses subquery as a data source", {
   sgl_stmt <- "
 		visualize

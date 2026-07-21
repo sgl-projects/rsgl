@@ -109,6 +109,9 @@ Rcpp::List r_geom_expr(struct geom_expr *c_geom_expr) {
 		case BOX:
 			r_geom_class = "sgl_geom_box";
 			break;
+		case VIOLIN:
+			r_geom_class = "sgl_geom_violin";
+			break;
 	}
 	Rcpp::List r_geom_obj;
 	r_geom_obj.attr("class") = Rcpp::CharacterVector::create(r_geom_class, "sgl_geom");
