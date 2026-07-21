@@ -1,27 +1,28 @@
-expected_box_dir <- function(ext_aes) {
+expected_ext_dir <- function(ext_aes) {
   if (ext_aes %in% c("x", "theta")) {
     return("horizontal")
   }
   "vertical"
 }
 
-valid_box_direction <- function(layer) {
+valid_ext_direction <- function(layer) {
   aes_mappings <- layer$aes_mappings
   direction <- layer$geom_expr$qual
+  gm_nm <- geom_name(layer$geom_expr$geom)
   pos_mappings <- aes_mappings[
     names(aes_mappings) %in% .pos_aes
   ]
   if (length(pos_mappings) == 1) {
     pos_aes <- names(pos_mappings)
-    expected_dir <- expected_box_dir(pos_aes)
+    expected_dir <- expected_ext_dir(pos_aes)
     if (direction != expected_dir) {
       unformatted_msg <- paste(
         "Error: a single positional aesthetic",
         "of %s does not align with the %s qualifier",
-        "for the box geom."
+        "for the %s geom."
       )
       err_msg <- sprintf(
-        unformatted_msg, pos_aes, direction
+        unformatted_msg, pos_aes, direction, gm_nm
       )
       stop(err_msg)
     }
@@ -31,15 +32,15 @@ valid_box_direction <- function(layer) {
     ]
     if (length(uncollected_mappings) == 1) {
       uncollected_aes <- names(uncollected_mappings)
-      expected_dir <- expected_box_dir(uncollected_aes)
+      expected_dir <- expected_ext_dir(uncollected_aes)
       if (direction != expected_dir) {
         unformatted_msg <- paste(
           "Error: a single uncollected positional aesthetic",
           "of %s does not align with the %s qualifier",
-          "for the box geom."
+          "for the %s geom."
         )
         err_msg <- sprintf(
-          unformatted_msg, uncollected_aes, direction
+          unformatted_msg, uncollected_aes, direction, gm_nm
         )
         stop(err_msg)
       }
@@ -61,7 +62,7 @@ valid_qualifier <- function(layer) {
     )
     stop(err_msg)
   }
-  if (identical(geom, new_sgl_geom_box())) {
-    valid_box_direction(layer)
+  if (is_collective(geom) && extension(geom) == 1) {
+    valid_ext_direction(layer)
   }
 }

@@ -5,7 +5,8 @@ enum geom {
 	BAR,
 	BOX,
 	LINE,
-	POINT
+	POINT,
+	VIOLIN
 };
 
 int valid_geom_str(const char *geom_str);

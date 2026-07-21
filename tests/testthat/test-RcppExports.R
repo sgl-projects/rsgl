@@ -188,6 +188,25 @@ test_that("adds box geom", {
   expect_equal(actual_qual, expected_qual)
 })
 
+test_that("adds violin geom", {
+  sgl_stmt <- "
+		visualize
+			col_1 as x
+		from table_1
+		using violin
+	"
+
+  rgs <- sgl_to_rgs(sgl_stmt)
+
+  geom_expr <- rgs$layers[[1]]$geom_expr
+  actual_geom <- geom_expr$geom
+  expected_geom <- new_sgl_geom_violin()
+  expect_equal(actual_geom, expected_geom)
+  actual_qual <- geom_expr$qual
+  expected_qual <- "default"
+  expect_equal(actual_qual, expected_qual)
+})
+
 test_that("adds geom with qualifier", {
   sgl_stmt <- "
 		visualize

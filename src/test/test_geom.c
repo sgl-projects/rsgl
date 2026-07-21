@@ -55,6 +55,18 @@ Test(valid_geom_str, treats_boxes_as_valid) {
 	cr_expect(valid_geom_str(geom_str));
 }
 
+Test(valid_geom_str, treats_violin_as_valid) {
+	char *geom_str = "violin";
+
+	cr_expect(valid_geom_str(geom_str));
+}
+
+Test(valid_geom_str, treats_violins_as_valid) {
+	char *geom_str = "violins";
+
+	cr_expect(valid_geom_str(geom_str));
+}
+
 Test(valid_geom_str, treats_made_up_geom_as_invalid) {
 	char *geom_str = "notavalidgeom";
 
@@ -107,4 +119,16 @@ Test(geom_enum, returns_box_enum_for_boxes) {
 	char *geom_str = "boxes";
 
 	cr_expect(geom_enum(geom_str) == BOX);
+}
+
+Test(geom_enum, returns_violin_enum_for_violin) {
+	char *geom_str = "violin";
+
+	cr_expect(geom_enum(geom_str) == VIOLIN);
+}
+
+Test(geom_enum, returns_violin_enum_for_violins) {
+	char *geom_str = "violins";
+
+	cr_expect(geom_enum(geom_str) == VIOLIN);
 }

@@ -1,4 +1,4 @@
-describe("valid_box_direction", {
+describe("valid_ext_direction", {
   describe("one pos aes", {
     describe("direction and pos aes align", {
       it("doesn't raise error", {
@@ -23,7 +23,7 @@ describe("valid_box_direction", {
           layer <- rgs$layers[[1]]
 
           expect_no_error(
-            valid_box_direction(layer)
+            valid_ext_direction(layer)
           )
         }
       })
@@ -59,7 +59,7 @@ describe("valid_box_direction", {
             unformatted_msg, aes, unaligned_dirs[aes]
           )
           expect_error(
-            valid_box_direction(layer),
+            valid_ext_direction(layer),
             expected_msg,
             fixed = TRUE
           )
@@ -86,7 +86,7 @@ describe("valid_box_direction", {
           layer <- rgs$layers[[1]]
 
           expect_no_error(
-            valid_box_direction(layer)
+            valid_ext_direction(layer)
           )
         }
       })
@@ -112,7 +112,7 @@ describe("valid_box_direction", {
             layer <- rgs$layers[[1]]
 
             expect_no_error(
-              valid_box_direction(layer)
+              valid_ext_direction(layer)
             )
           }
         })
@@ -138,7 +138,7 @@ describe("valid_box_direction", {
             layer <- rgs$layers[[1]]
 
             expect_no_error(
-              valid_box_direction(layer)
+              valid_ext_direction(layer)
             )
           }
         })
@@ -176,7 +176,7 @@ describe("valid_box_direction", {
               layer <- rgs$layers[[1]]
 
               expect_no_error(
-                valid_box_direction(layer)
+                valid_ext_direction(layer)
               )
             }
           })
@@ -221,7 +221,7 @@ describe("valid_box_direction", {
                 unformatted_msg, aes, unaligned_dirs[aes]
               )
               expect_error(
-                valid_box_direction(layer),
+                valid_ext_direction(layer),
                 expected_msg,
                 fixed = TRUE
               )
@@ -278,7 +278,7 @@ describe("valid_qualifier", {
       fixed = TRUE
     )
   })
-  it("performs additional checks for box direction", {
+  it("performs additional checks for extension-1 collective geom", {
     rgs <- sgl_to_rgs("
 			visualize
 				hp as x,
@@ -301,7 +301,7 @@ describe("valid_qualifier", {
       fixed = TRUE
     )
   })
-  it("doesn't perform additional checks for non-box", {
+  it("doesn't perform additional checks for extension-2 collective geom", {
     rgs <- sgl_to_rgs("
 			visualize
 				hp as x,
@@ -310,6 +310,22 @@ describe("valid_qualifier", {
 			collect by
 				hp
 			using horizontal lines
+		")
+    layer <- rgs$layers[[1]]
+
+    expect_no_error(
+      valid_qualifier(layer)
+    )
+  })
+  it("doesn't perform additional checks for non-collective geom", {
+    rgs <- sgl_to_rgs("
+			visualize
+				hp as x,
+				mpg as y
+			from cars
+			collect by
+				hp
+			using horizontal bars
 		")
     layer <- rgs$layers[[1]]
 

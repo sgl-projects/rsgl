@@ -10,7 +10,9 @@ static struct keyword_enum_row geom_keyword_enum_table[] = {
 	{"line", LINE},
 	{"lines", LINE},
 	{"box", BOX},
-	{"boxes", BOX}
+	{"boxes", BOX},
+	{"violin", VIOLIN},
+	{"violins", VIOLIN}
 };
 
 static int geom_count = ARRAY_COUNT(geom_keyword_enum_table);

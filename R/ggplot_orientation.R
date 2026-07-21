@@ -32,7 +32,7 @@ ggplot_orientation <- function(layer, df) {
     return("x")
   }
 
-  if (identical(geom, new_sgl_geom_box())) {
+  if (is_collective(geom) && extension(geom) == 1) {
     if ("collections" %in% names(layer)) {
       collections <- layer$collections
       uncollected_pos <- pos_mappings[
