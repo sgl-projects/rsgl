@@ -21,6 +21,8 @@ geoms, transformations, aggregations, and scales available within SGL.
 - [`bars`](https://sgl-projects.github.io/rsgl/reference/bars.md) : Bars
 - [`boxes`](https://sgl-projects.github.io/rsgl/reference/boxes.md) :
   Boxes
+- [`violins`](https://sgl-projects.github.io/rsgl/reference/violins.md)
+  : Violins
 
 ## Column-level transformations
 
