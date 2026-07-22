@@ -1,5 +1,6 @@
 CC = gcc
 CFLAGS = -g
+DEPFLAGS = -MMD -MP
 CRITERION_CFLAGS := $(shell pkg-config --cflags criterion)
 TEST_LDFLAGS := $(shell pkg-config --libs criterion)
 
@@ -24,41 +25,14 @@ parser :
 scanner :
 	flex -o $(SRC)/scanner.c $(SRC)/scanner.l
 
-$(TEST)/test_sgl_to_cgs.o : $(TEST)/test_sgl_to_cgs.c $(SRC)/aes.h $(SRC)/direction.h $(SRC)/qual.h $(SRC)/cgs_free.h $(SRC)/sgl_to_cgs.h
-	$(CC) $(CFLAGS) $(CRITERION_CFLAGS) -o $(TEST)/test_sgl_to_cgs.o -c $(TEST)/test_sgl_to_cgs.c -I./$(SRC)
+$(TEST)/%.o : $(TEST)/%.c
+	$(CC) $(CFLAGS) $(DEPFLAGS) $(CRITERION_CFLAGS) -I./$(SRC) -o $@ -c $<
 
-$(TEST)/test_aes.o : $(TEST)/test_aes.c $(SRC)/aes.h $(SRC)/keyword.h $(SRC)/array.h
-	$(CC) $(CFLAGS) $(CRITERION_CFLAGS) -o $(TEST)/test_aes.o -c $(TEST)/test_aes.c -I./$(SRC)
-
-$(TEST)/test_geom.o : $(TEST)/test_geom.c $(SRC)/geom.h $(SRC)/keyword.h
-	$(CC) $(CFLAGS) $(CRITERION_CFLAGS) -o $(TEST)/test_geom.o -c $(TEST)/test_geom.c -I./$(SRC)
-
-$(TEST)/test_cta.o : $(TEST)/test_cta.c $(SRC)/cta.h $(SRC)/keyword.h $(SRC)/array.h
-	$(CC) $(CFLAGS) $(CRITERION_CFLAGS) -o $(TEST)/test_cta.o -c $(TEST)/test_cta.c -I./$(SRC)
-
-$(TEST)/test_qual.o : $(TEST)/test_qual.c $(SRC)/qual.h $(SRC)/keyword.h
-	$(CC) $(CFLAGS) $(CRITERION_CFLAGS) -o $(TEST)/test_qual.o -c $(TEST)/test_qual.c -I./$(SRC)
-
-$(TEST)/test_scale.o : $(TEST)/test_scale.c $(SRC)/scale.h $(SRC)/keyword.h $(SRC)/array.h
-	$(CC) $(CFLAGS) $(CRITERION_CFLAGS) -o $(TEST)/test_scale.o -c $(TEST)/test_scale.c -I./$(SRC)
-
-$(TEST)/test_keyword.o : $(TEST)/test_keyword.c $(SRC)/keyword.h $(SRC)/array.h
-	$(CC) $(CFLAGS) $(CRITERION_CFLAGS) -o $(TEST)/test_keyword.o -c $(TEST)/test_keyword.c -I./$(SRC)
-
-$(TEST)/test_title.o : $(TEST)/test_title.c $(SRC)/title.h $(SRC)/aes.h $(SRC)/cgs.h
-	$(CC) $(CFLAGS) $(CRITERION_CFLAGS) -o $(TEST)/test_title.o -c $(TEST)/test_title.c -I./$(SRC)
-
-$(TEST)/test_case.o : $(TEST)/test_case.c $(SRC)/case.h
-	$(CC) $(CFLAGS) $(CRITERION_CFLAGS) -o $(TEST)/test_case.o -c $(TEST)/test_case.c -I./$(SRC)
-
-$(TEST)/test_cgs_order.o : $(TEST)/test_cgs_order.c $(SRC)/cgs_order.h $(SRC)/cgs.h
-	$(CC) $(CFLAGS) $(CRITERION_CFLAGS) -o $(TEST)/test_cgs_order.o -c $(TEST)/test_cgs_order.c -I./$(SRC)
-
-$(TEST)/stubs.o : $(TEST)/stubs.c
-	$(CC) $(CFLAGS) -o $(TEST)/stubs.o -c $(TEST)/stubs.c
+-include $(TEST_OBJS:.o=.d)
 
 clean :
 	rm -f $(SRC)/*.o
 	rm -f $(SRC)/*.so
 	rm -f $(TEST)/*.o
+	rm -f $(TEST)/*.d
 	rm -f $(TEST)/test
