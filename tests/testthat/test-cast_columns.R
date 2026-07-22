@@ -41,7 +41,7 @@ describe("aes_has_dt_and_ts", {
       })
     })
     describe("aes is in multiple layers", {
-      describe("mappings are not temporal", {
+      describe("no mappings are temporal", {
         it("returns FALSE", {
           rgs <- sgl_to_rgs("
 						visualize
@@ -63,8 +63,30 @@ describe("aes_has_dt_and_ts", {
           )
         })
       })
-      describe("mappings are temporal", {
-        describe("mappings are to dates", {
+      describe("only one mapping is temporal", {
+        it("returns FALSE", {
+          rgs <- sgl_to_rgs("
+						visualize
+							letter as x
+						from synth
+						using points
+
+						layer
+
+						visualize
+							date as x
+						from synth
+						using points
+					")
+          dfs <- result_dfs(rgs, test_con)
+
+          expect_false(
+            aes_has_dt_and_ts("x", rgs$layers, dfs)
+          )
+        })
+      })
+      describe("at least two mappings are temporal", {
+        describe("mappings are all to dates", {
           it("returns FALSE", {
             rgs <- sgl_to_rgs("
 							visualize
@@ -86,7 +108,7 @@ describe("aes_has_dt_and_ts", {
             )
           })
         })
-        describe("mappings are to timestamps", {
+        describe("mappings are all to timestamps", {
           it("returns FALSE", {
             rgs <- sgl_to_rgs("
 							visualize
