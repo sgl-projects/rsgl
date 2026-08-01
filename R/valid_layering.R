@@ -1,8 +1,7 @@
 valid_layering_for_aes <- function(rgs, dfs, aes) {
   if (aes %in% .pos_aes) {
-    aes_in_layer <- sapply(
-      rgs$layers,
-      function(layer) aes %in% names(layer$aes_mappings)
+    aes_in_layer <- purrr::map_lgl(
+      rgs$layers, ~ (aes %in% names(.$aes_mappings))
     )
     if (!all(aes_in_layer)) {
       unformatted_msg <- paste(
@@ -13,28 +12,21 @@ valid_layering_for_aes <- function(rgs, dfs, aes) {
       stop(errmsg)
     }
   }
-  numerical_found <- 0
-  categorical_found <- 0
-  temporal_found <- 0
+  found_vec <- c(numerical = FALSE, categorical = FALSE, temporal = FALSE)
   type_found_in_layer <- function(layer, df) {
     aes_mappings <- layer$aes_mappings
     if (aes %in% names(aes_mappings)) {
       if (is_numerical_mapping(layer, df, aes)) {
-        numerical_found <<- 1
+        found_vec["numerical"] <<- TRUE
       } else if (is_categorical_mapping(layer, df, aes)) {
-        categorical_found <<- 1
+        found_vec["categorical"] <<- TRUE
       } else if (is_temporal_mapping(layer, df, aes)) {
-        temporal_found <<- 1
+        found_vec["temporal"] <<- TRUE
       }
     }
   }
-  Map(type_found_in_layer, rgs$layers, dfs)
-  types_vec <- c("numerical", "categorical", "temporal")
-  found_vec <- sapply(
-    c(numerical_found, categorical_found, temporal_found),
-    as.logical
-  )
-  types_found <- types_vec[found_vec]
+  purrr::walk2(rgs$layers, dfs, type_found_in_layer)
+  types_found <- names(found_vec[found_vec])
   if (length(types_found) > 1) {
     unformatted_msg <- paste(
       "Error: an aesthetic must be mapped to the same type",
