@@ -30,7 +30,7 @@ The plot defined by the SGL statement (a `sgl_plot` object)
 library(duckdb)
 con <- dbConnect(duckdb())
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmpF85TT5/duckdb
+#> ℹ /tmp/RtmpcA5Zlb/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
