@@ -1,122 +1,163 @@
-describe("column_exists", {
-  describe("column is the wildcard", {
-    it("returns TRUE regardless of cta", {
+describe("all_column_refs", {
+  describe("only visualize clause", {
+    it("returns all refs from visualize clause", {
       rgs <- sgl_to_rgs("
-				visualize
-					* as x,
-					bin(*) as y,
-					count(*) as color
-				from cars
-				using points
-			")
-      dfs <- result_dfs(rgs, test_con)
-      df <- dfs[[1]]
-      col_exprs <- rgs$layers[[1]]$aes_mappings
+        visualize
+          mpg as x,
+          cyl as y
+        from cars
+        using points
+      ")
+      layer <- rgs$layers[[1]]
 
       expect_equal(
-        column_exists(col_exprs, df),
-        c("*" = TRUE)
+        sort(all_column_refs(layer)),
+        sort(c("mpg", "cyl"))
       )
     })
   })
-  describe("reference is not the wildcard", {
-    describe("column does exist", {
-      it("returns TRUE regardless of cta", {
-        rgs <- sgl_to_rgs("
-					visualize
-						hp as x,
-						bin(mpg) as y,
-						count(cyl) as color
-					from cars
-					using points
-				")
-        dfs <- result_dfs(rgs, test_con)
-        df <- dfs[[1]]
-        col_exprs <- rgs$layers[[1]]$aes_mappings
+  describe("only visualize and group by clauses", {
+    it("returns all refs from visualize and group by clauses", {
+      rgs <- sgl_to_rgs("
+        visualize
+          mpg as x,
+          cyl as y
+        from cars
+        group by
+          disp,
+          hp
+        using points
+      ")
+      layer <- rgs$layers[[1]]
 
+      expect_equal(
+        sort(all_column_refs(layer)),
+        sort(c("mpg", "cyl", "disp", "hp"))
+      )
+    })
+  })
+  describe("only visualize and collect by clauses", {
+    it("returns all refs from visualize and collect by clauses", {
+      rgs <- sgl_to_rgs("
+        visualize
+          mpg as x,
+          cyl as y
+        from cars
+        collect by
+          disp,
+          hp
+        using points
+      ")
+      layer <- rgs$layers[[1]]
+
+      expect_equal(
+        sort(all_column_refs(layer)),
+        sort(c("mpg", "cyl", "disp", "hp"))
+      )
+    })
+  })
+  describe("all three clauses", {
+    it("returns all refs from all three clauses", {
+      rgs <- sgl_to_rgs("
+        visualize
+          mpg as x,
+          cyl as y
+        from cars
+        group by
+          disp,
+          hp
+        collect by
+          drat,
+          wt
+        using points
+      ")
+      layer <- rgs$layers[[1]]
+
+      expect_equal(
+        sort(all_column_refs(layer)),
+        sort(c("mpg", "cyl", "disp", "hp", "drat", "wt"))
+      )
+    })
+  })
+  it("doesn't return duplicates", {
+    rgs <- sgl_to_rgs("
+      visualize
+        mpg as x,
+        cyl as y
+      from cars
+      group by
+        mpg,
+        cyl
+      collect by
+        mpg,
+        cyl
+      using points
+    ")
+    layer <- rgs$layers[[1]]
+
+    expect_equal(
+      sort(all_column_refs(layer)),
+      sort(c("mpg", "cyl"))
+    )
+  })
+})
+
+describe("column_exists", {
+  test_df <- DBI::dbGetQuery(test_con, "select * from cars")
+  describe("single ref", {
+    describe("ref is the wildcard", {
+      it("returns TRUE", {
         expect_equal(
-          column_exists(col_exprs, df),
-          c(cyl = TRUE, mpg = TRUE, hp = TRUE)
+          column_exists("*", test_df),
+          c("*" = TRUE)
         )
       })
     })
-    describe("column doesn't exist", {
-      it("returns FALSE regardless of cta", {
-        rgs <- sgl_to_rgs("
-					visualize
-						not_a_col_1 as x,
-						bin(not_a_col_2) as y,
-						count(not_a_col_3) as color
-					from cars
-					using points
-				")
-        dfs <- result_dfs(rgs, test_con)
-        df <- dfs[[1]]
-        col_exprs <- rgs$layers[[1]]$aes_mappings
-
-        expect_equal(
-          column_exists(col_exprs, df),
-          c(not_a_col_3 = FALSE, not_a_col_2 = FALSE, not_a_col_1 = FALSE)
-        )
+    describe("ref is not the wildcard", {
+      describe("column does exist", {
+        it("returns TRUE", {
+          expect_equal(
+            column_exists("mpg", test_df),
+            c(mpg = TRUE)
+          )
+        })
+      })
+      describe("column doesn't exist", {
+        it("returns FALSE", {
+          expect_equal(
+            column_exists("not_a_col", test_df),
+            c(not_a_col = FALSE)
+          )
+        })
       })
     })
   })
-  it("handles mixture of existing and non-existing columns", {
-    rgs <- sgl_to_rgs("
-			visualize
-				hp as x,
-				not_a_col as y,
-				* as color
-			from cars
-			using points
-		")
-    dfs <- result_dfs(rgs, test_con)
-    df <- dfs[[1]]
-    col_exprs <- rgs$layers[[1]]$aes_mappings
-
-    expect_equal(
-      column_exists(col_exprs, df),
-      c("*" = TRUE, not_a_col = FALSE, hp = TRUE)
-    )
+  describe("multiple refs", {
+    it("determines existence correctly for each ref", {
+      expect_equal(
+        column_exists(c("*", "mpg", "not_a_col"), test_df),
+        c("*" = TRUE, mpg = TRUE, not_a_col = FALSE)
+      )
+    })
   })
-  it("doesn't duplicate results", {
-    rgs <- sgl_to_rgs("
-			visualize
-				hp as x,
-				bin(hp) as y,
-				not_a_col_1 as theta,
-				count(not_a_col_1) as r,
-				bin(*) as color,
-				count(*) as size
-			from cars
-			using points
-		")
-    dfs <- result_dfs(rgs, test_con)
-    df <- dfs[[1]]
-    col_exprs <- rgs$layers[[1]]$aes_mappings
+})
 
-    expect_equal(
-      column_exists(col_exprs, df),
-      c("*" = TRUE, not_a_col_1 = FALSE, hp = TRUE)
-    )
+describe("raise_if_col_missing", {
+  describe("no columns are missing", {
+    it("doesn't raise error", {
+      expect_no_error(
+        raise_if_col_missing(c("mpg" = TRUE, "cyl" = TRUE))
+      )
+    })
   })
-  it("works with unnamed col_exprs", {
-    rgs <- sgl_to_rgs("
-			visualize
-				hp as x,
-				not_a_col as y,
-				* as color
-			from cars
-			using points
-		")
-    dfs <- result_dfs(rgs, test_con)
-    df <- dfs[[1]]
-    col_exprs <- unname(rgs$layers[[1]]$aes_mappings)
-
-    expect_equal(
-      column_exists(col_exprs, df),
-      c("*" = TRUE, not_a_col = FALSE, hp = TRUE)
-    )
+  describe("column are missing", {
+    it("raises error that specifies first missing column", {
+      expect_error(
+        raise_if_col_missing(c("mpg" = TRUE, "cyl" = FALSE, "disp" = FALSE)),
+        "Error: referenced column 'cyl' not found",
+        fixed = TRUE
+      )
+    })
   })
 })
 
@@ -222,5 +263,21 @@ describe("valid_column_refs", {
         fixed = TRUE
       )
     })
+  })
+  it("allows missing clauses", {
+    rgs <- sgl_to_rgs("
+      visualize
+        cut as x,
+        clarity as y
+      from diamonds
+      using lines
+    ")
+    layer <- rgs$layers[[1]]
+    dfs <- result_dfs(rgs, test_con)
+    df <- dfs[[1]]
+
+    expect_no_error(
+      valid_column_refs(layer, df)
+    )
   })
 })
