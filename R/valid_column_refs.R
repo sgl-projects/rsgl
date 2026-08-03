@@ -1,7 +1,10 @@
-column_exists <- function(col_exprs, df) {
-  refs <- unique(
-    purrr::map_chr(col_exprs, "column")
-  )
+all_column_refs <- function(layer) {
+  all_col_exprs <- c(layer$aes_mappings, layer$groupings, layer$collections)
+  all_refs <- purrr::map_chr(all_col_exprs, ~ (.$column))
+  unique(all_refs)
+}
+
+column_exists <- function(refs, df) {
   results <- refs %in% names(df)
   names(results) <- refs
   if ("*" %in% names(results)) {
@@ -10,8 +13,7 @@ column_exists <- function(col_exprs, df) {
   results
 }
 
-raise_if_col_missing <- function(col_exprs, df) {
-  exists_results <- column_exists(col_exprs, df)
+raise_if_col_missing <- function(exists_results) {
   missing_col_names <- names(exists_results)[!exists_results]
   if (length(missing_col_names) > 0) {
     errmsg <- sprintf(
@@ -23,13 +25,7 @@ raise_if_col_missing <- function(col_exprs, df) {
 }
 
 valid_column_refs <- function(layer, df) {
-  all_col_exprs <- list(
-    layer$aes_mappings,
-    layer$groupings,
-    layer$collections
-  )
-  lapply(
-    all_col_exprs,
-    function(col_exprs) raise_if_col_missing(col_exprs, df)
-  )
+  refs <- all_column_refs(layer)
+  exists_results <- column_exists(refs, df)
+  raise_if_col_missing(exists_results)
 }
