@@ -16,6 +16,7 @@
 #include "direction.h"
 #include "case.h"
 #include "title.h"
+#include "mapping.h"
 #include "cgs_order.h"
 
 void set_scanner_input(const char *input_string);
@@ -160,14 +161,31 @@ aes_mapping: col_expr AS UNQUOTED_STRING {
 		YYERROR;
 	}	
 
-	struct aes_mapping *new_mapping = malloc(sizeof(struct aes_mapping));
-	new_mapping->aes=aes_enum(aes_str);
+	enum aes aes = aes_enum(aes_str);
+
+	struct layer *current_layer = cgs->layers;
+
+	if (mapping_exists(aes, current_layer->aes_mappings)) {
+		print_result = asprintf(
+			errmsg,
+			"Multiple mappings provided in a single layer for the %s aesthetic\n",
+			aes_str
+		);
+		if(print_result == -1) {
+			Rf_error("Memory allocation failed.");
+		}
+		YYERROR;
+	}
+
 	free(aes_str);
 
-	new_mapping->col_expr=$1;
-	new_mapping->next=cgs->layers->aes_mappings;	
+	struct aes_mapping *new_mapping = malloc(sizeof(struct aes_mapping));
+	new_mapping->aes=aes;
 
-	cgs->layers->aes_mappings=new_mapping;
+	new_mapping->col_expr=$1;
+	new_mapping->next=current_layer->aes_mappings;
+
+	current_layer->aes_mappings=new_mapping;
 }
 
 col_expr: UNQUOTED_STRING '(' UNQUOTED_STRING ')' {
