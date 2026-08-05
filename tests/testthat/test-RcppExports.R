@@ -930,6 +930,21 @@ test_that("raises error for invalid aesthetic", {
   )
 })
 
+test_that("raises error for multiple mappings for aes", {
+  sgl_stmt <- "
+		visualize
+			col_1 as x,
+			col_2 as x
+		from table_1
+		using points
+	"
+
+  expect_error(
+    sgl_to_rgs(sgl_stmt),
+    "Multiple mappings provided in a single layer for the x aesthetic\n"
+  )
+})
+
 test_that("raises error for invalid geom", {
   sgl_stmt <- "
 		visualize

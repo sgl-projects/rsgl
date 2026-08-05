@@ -784,6 +784,19 @@ Test(test_sgl_to_cgs, sets_errmsg_for_invalid_aes) {
 	cr_expect(!strcmp(errmsg, expected_msg));
 }
 
+Test(test_sgl_to_cgs, sets_errmsg_for_multiple_mappings_for_aes) {
+	char *test_stmt = "visualize\n"
+										"	col_1 as x,\n"
+										"	col_2 as x\n"
+										"from table_1\n"
+										"using points\n";
+
+	sgl_to_cgs(test_stmt, cgs, &errmsg);
+
+	char *expected_msg = "Multiple mappings provided in a single layer for the x aesthetic\n";
+	cr_expect(!strcmp(errmsg, expected_msg));
+}
+
 Test(test_sgl_to_cgs, sets_errmsg_for_invalid_geom) {
 	char *test_stmt = "visualize\n"
 										"	col_1 as x\n"
