@@ -17,7 +17,7 @@ the default scale for numerical aesthetic mappings.
 library(duckdb)
 con <- dbConnect(duckdb())
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmpRvPSdz/duckdb
+#> ℹ /tmp/RtmprCHpYD/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
