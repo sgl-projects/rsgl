@@ -1,10 +1,10 @@
 #include<stddef.h>
 #include"aes.h"
 #include"cgs.h"
-#include"mapping.h"
+#include"aes_mapping.h"
 
-int mapping_exists(enum aes aes, struct aes_mapping *mappings) {
-	struct aes_mapping *current_mapping = mappings;
+int aes_mapping_exists(enum aes aes, struct aes_mapping *aes_mappings) {
+	struct aes_mapping *current_mapping = aes_mappings;
 	while (current_mapping != NULL) {
 		if (current_mapping->aes == aes) {
 			return 1;

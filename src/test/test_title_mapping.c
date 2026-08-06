@@ -2,13 +2,13 @@
 #include<criterion/criterion.h>
 #include<aes.h>
 #include<cgs.h>
-#include<title.h>
+#include<title_mapping.h>
 
-Test(title_exists, returns_0_for_null_ptr) {
-	cr_expect(!title_exists(X, NULL));
+Test(title_mapping_exists, returns_0_for_null_ptr) {
+	cr_expect(!title_mapping_exists(X, NULL));
 }
 
-Test(title_exists, returns_0_if_title_for_aes_doesnt_exist) {
+Test(title_mapping_exists, returns_0_if_title_for_aes_doesnt_exist) {
 	struct title_expr title_1 = {
 		.aes=Y,
 		.title="y title"
@@ -19,10 +19,10 @@ Test(title_exists, returns_0_if_title_for_aes_doesnt_exist) {
 	};
 	title_1.next=&title_2;
 
-	cr_expect(!title_exists(X, &title_1));
+	cr_expect(!title_mapping_exists(X, &title_1));
 }
 
-Test(title_exists, returns_1_if_title_for_aes_exists) {
+Test(title_mapping_exists, returns_1_if_title_for_aes_exists) {
 	struct title_expr title_1 = {
 		.aes=Y,
 		.title="y title"
@@ -33,5 +33,5 @@ Test(title_exists, returns_1_if_title_for_aes_exists) {
 	};
 	title_1.next=&title_2;
 
-	cr_expect(title_exists(X, &title_1));
+	cr_expect(title_mapping_exists(X, &title_1));
 }

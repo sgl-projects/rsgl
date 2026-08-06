@@ -82,8 +82,8 @@
 #include "scale.h"
 #include "direction.h"
 #include "case.h"
-#include "title.h"
-#include "mapping.h"
+#include "title_mapping.h"
+#include "aes_mapping.h"
 #include "cgs_order.h"
 
 void set_scanner_input(const char *input_string);
@@ -1319,7 +1319,7 @@ yyreduce:
 
 	struct layer *current_layer = cgs->layers;
 
-	if (mapping_exists(aes, current_layer->aes_mappings)) {
+	if (aes_mapping_exists(aes, current_layer->aes_mappings)) {
 		print_result = asprintf(
 			errmsg,
 			"Multiple mappings provided in a single layer for the %s aesthetic\n",
@@ -1563,7 +1563,7 @@ yyreduce:
 
 	enum aes aes = aes_enum(aes_str);
 
-	if (title_exists(aes, cgs->titles)) {
+	if (title_mapping_exists(aes, cgs->titles)) {
 		print_result = asprintf(
 			errmsg,
 			"Multiple titles provided for the %s aesthetic\n",
