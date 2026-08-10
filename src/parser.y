@@ -17,6 +17,7 @@
 #include "case.h"
 #include "title_mapping.h"
 #include "aes_mapping.h"
+#include "scale_mapping.h"
 #include "cgs_order.h"
 
 void set_scanner_input(const char *input_string);
@@ -308,10 +309,24 @@ scale_expr: UNQUOTED_STRING '(' UNQUOTED_STRING ')' {
 		YYERROR;
 	}	
 
+	enum aes aes = aes_enum(aes_str);
+
+	if (scale_mapping_exists(aes, cgs->scales)) {
+		print_result = asprintf(
+			errmsg,
+			"Multiple scales provided for the %s aesthetic\n",
+			aes_str
+		);
+		if(print_result == -1) {
+			Rf_error("Memory allocation failed.");
+		}
+		YYERROR;
+	}
+
+	free(aes_str);
+
 	enum scale scale = scale_enum(scale_str);
 	free(scale_str);
-	enum aes aes = aes_enum(aes_str);
-	free(aes_str);
 
 	struct scale_expr *new_scale = malloc(sizeof(struct scale_expr));
 	new_scale->aes=aes;

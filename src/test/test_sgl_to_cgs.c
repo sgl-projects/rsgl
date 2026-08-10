@@ -922,6 +922,21 @@ Test(test_sgl_to_cgs, sets_errmsg_for_invalid_scale_aes) {
 	cr_expect(!strcmp(errmsg, expected_msg));
 }
 
+Test(test_sgl_to_cgs, sets_errmsg_for_multiple_scales_for_aes) {
+	char *test_stmt = "visualize\n"
+										"	col_1 as x\n"
+										"from table_1\n"
+										"using points\n"
+										"scale by\n"
+										"	log(x),\n"
+										"	ln(x)\n";
+
+	sgl_to_cgs(test_stmt, cgs, &errmsg);
+
+	char *expected_msg = "Multiple scales provided for the x aesthetic\n";
+	cr_expect(!strcmp(errmsg, expected_msg));
+}
+
 Test(test_sgl_to_cgs, sets_errmsg_for_invalid_title_aes) {
 	char *test_stmt = "visualize\n"
 										"	col_1 as x\n"
