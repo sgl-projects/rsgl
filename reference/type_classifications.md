@@ -31,7 +31,7 @@ A dataframe listing the SGL type classification of each column.
 library(duckdb)
 con <- dbConnect(duckdb())
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmplOvonl/duckdb
+#> ℹ /tmp/RtmpMm0YzW/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
