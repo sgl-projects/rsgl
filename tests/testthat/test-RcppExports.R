@@ -1088,6 +1088,23 @@ test_that("raises error for invalid scale aes", {
   )
 })
 
+test_that("raises error for multiple scales for aes", {
+  sgl_stmt <- "
+		visualize
+			col_1 as x
+		from table_1
+		using points
+		scale by
+			log(x),
+			ln(x)
+	"
+
+  expect_error(
+    sgl_to_rgs(sgl_stmt),
+    "Multiple scales provided for the x aesthetic\n"
+  )
+})
+
 test_that("raises error for invalid title aes", {
   sgl_stmt <- "
 		visualize

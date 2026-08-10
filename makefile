@@ -7,8 +7,8 @@ TEST_LDFLAGS := $(shell pkg-config --libs criterion)
 SRC=src
 TEST=src/test
 
-SRC_OBJS=$(SRC)/parser.tab.o $(SRC)/scanner.o $(SRC)/aes.o $(SRC)/geom.o $(SRC)/cta.o $(SRC)/qual.o $(SRC)/scale.o $(SRC)/keyword.o $(SRC)/title_mapping.o $(SRC)/aes_mapping.o $(SRC)/case.o $(SRC)/cgs_order.o $(SRC)/cgs_free.o
-TEST_OBJS=$(TEST)/test_sgl_to_cgs.o $(TEST)/test_aes.o $(TEST)/test_geom.o $(TEST)/test_cta.o $(TEST)/test_qual.o $(TEST)/test_scale.o $(TEST)/test_keyword.o $(TEST)/test_title_mapping.o $(TEST)/test_aes_mapping.o $(TEST)/test_case.o $(TEST)/test_cgs_order.o $(TEST)/stubs.o
+SRC_OBJS=$(SRC)/parser.tab.o $(SRC)/scanner.o $(SRC)/aes.o $(SRC)/geom.o $(SRC)/cta.o $(SRC)/qual.o $(SRC)/scale.o $(SRC)/keyword.o $(SRC)/title_mapping.o $(SRC)/aes_mapping.o $(SRC)/scale_mapping.o $(SRC)/case.o $(SRC)/cgs_order.o $(SRC)/cgs_free.o
+TEST_OBJS=$(TEST)/test_sgl_to_cgs.o $(TEST)/test_aes.o $(TEST)/test_geom.o $(TEST)/test_cta.o $(TEST)/test_qual.o $(TEST)/test_scale.o $(TEST)/test_keyword.o $(TEST)/test_title_mapping.o $(TEST)/test_aes_mapping.o $(TEST)/test_scale_mapping.o $(TEST)/test_case.o $(TEST)/test_cgs_order.o $(TEST)/stubs.o
 
 test : $(TEST)/test
 	$(TEST)/test -j1
